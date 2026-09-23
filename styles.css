@@ -1031,3 +1031,15 @@ p { margin: 0 0 1em; }
 .ins-foot { font-size: 12px; }
 .agent-card .field { font-size: 13px; }
 .arow .aw { font-size: 12.5px; }
+
+/* Two flows */
+.ftitle { font: 500 12px var(--font-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--accent); margin: 14px 0 8px; }
+.ftitle:first-child { margin-top: 0; }
+.frow { display: grid; gap: 10px; position: relative; }
+.frow.five { grid-template-columns: repeat(5, 1fr); }
+.frow.four { grid-template-columns: repeat(4, 1fr); }
+.frow .fnode:not(:last-child)::after { content: ""; position: absolute; right: -9px; top: 50%; width: 8px; height: 8px; border-top: 2px solid var(--line-strong); border-right: 2px solid var(--line-strong); transform: translateY(-50%) rotate(45deg); }
+.fnode b { margin-top: 6px; }
+@media (max-width: 960px) { .frow.five, .frow.four { grid-template-columns: repeat(2, 1fr); } .frow .fnode::after { display: none; } }
+@media (max-width: 560px) { .frow.five, .frow.four { grid-template-columns: 1fr; } }
+.value p { margin-bottom: 12px; }

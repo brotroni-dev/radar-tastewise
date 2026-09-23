@@ -102,8 +102,9 @@ insight, the flow on the page. Round by round in `process-log.md`.
 
 ## In this repo
 
-- `index.html`, `styles.css`, `prototype.js`: the page with the prototype embedded
-- `prototype.html`: the prototype full screen
+- `index.html`, `styles.css`: the write-up page
+- `prototype.html`, `prototype.js`: the prototype, seven steps
+- `assets/`: Maya's portrait
 - `content.md`: all the copy, the single source for the build
 - `PLAN.md`: the approved plan
 - `process-log.md`: how the AI tool was used, round by round

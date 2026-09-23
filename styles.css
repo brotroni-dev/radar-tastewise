@@ -1100,3 +1100,9 @@ body.page { font-size: 15px; }
 .fchart .fnt { font-size: 13px; }
 .fchart .fns { font-size: 11px; }
 .fchart .fe.dark { stroke: var(--ink); stroke-width: 2.2; }
+.explored{background:var(--surface);border:1px solid var(--line);border-radius:14px}
+.explored>div{display:grid;grid-template-columns:220px 110px 1fr;gap:16px;padding:14px 20px;border-top:1px solid var(--line);align-items:baseline}
+.explored>div:first-child{border-top:0}
+.explored h4{font:600 15.5px var(--font-display);margin:0}
+.explored .why{color:var(--muted);font-size:14px}
+@media(max-width:640px){.explored>div{grid-template-columns:1fr;gap:2px}}

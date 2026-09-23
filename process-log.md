@@ -149,3 +149,14 @@ README only.
 **Got wrong, fixed after the look:** the progress segments used a class
 name (done) that the completion card also used, so the bar rendered 70px
 tall. Renamed.
+
+**Roni added, same round:** the phone notification should look like a real
+iOS Slack notification (she sent a screenshot), and Maya should have a
+picture instead of the "M" avatar.
+
+**Claude changed:** the lock-screen notification is now the iOS card: the
+Slack (or Gmail) app icon drawn in SVG, a "Time sensitive" label with "now",
+the app name in bold, then the message. Maya's portrait is a free-to-use
+mockup photo (randomuser.me) saved in the repo as assets/maya.jpg, with an
+illustrated SVG fallback; it appears in the scene, the Slack window, the
+Gmail window, the platform nav and the persona card on the page.

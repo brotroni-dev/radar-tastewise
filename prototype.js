@@ -73,6 +73,7 @@
     snooze: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 2M18 2l3 3M3 5l3-3',
     task: 'M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11'
   };
+  var AVA = '<img class="ava" src="assets/maya.jpg" alt="Maya" onerror="this.onerror=null;this.src=\'assets/maya.svg\'">';
   function ic(name, cls) {
     return '<svg class="ic' + (cls ? ' ' + cls : '') + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + P[name] + '"/></svg>';
   }
@@ -150,7 +151,7 @@
     var side = function (icon, label, cls) { return '<div class="it' + (cls ? ' ' + cls : '') + '">' + (icon ? ic(icon) : '') + label + '</div>'; };
     return '<div class="sl" aria-label="Slack, desktop">' +
       '<div class="sl-top"><div class="lights"><i></i><i></i><i></i></div><div class="nav">' + ic('arrowl') + ic('arrowr') + ic('clock') + '</div>' +
-      '<div class="search">' + ic('search') + ' Search Kindroot</div>' + ic('help') + '<div class="me"></div></div>' +
+      '<div class="search">' + ic('search') + ' Search Kindroot</div>' + ic('help') + '<div class="me">' + AVA + '</div></div>' +
       '<div class="sl-body">' +
       '<div class="sl-rail"><div class="ws">K</div><div class="ws2">A</div><div class="plus">+</div></div>' +
       '<div class="sl-side"><div class="hd">Kindroot ' + ic('chevd') + '<span class="grow"></span><span class="ed">' + ic('edit') + '</span></div>' +
@@ -174,13 +175,31 @@
       '</div></div></div>';
   }
 
+  function slackLogo() {
+    return '<svg viewBox="0 0 24 24" aria-hidden="true">' +
+      '<rect x="6" y="1.5" width="4" height="11" rx="2" fill="#36C5F0"/><path d="M5 9.5v3H3a2 2 0 1 1 0-4h2z" fill="#36C5F0"/>' +
+      '<rect x="11.5" y="6" width="11" height="4" rx="2" fill="#2EB67D"/><path d="M14.5 5h-3V3a2 2 0 1 1 4 0v2z" fill="#2EB67D"/>' +
+      '<rect x="14" y="11.5" width="4" height="11" rx="2" fill="#E01E5A"/><path d="M19 11.5v3h2a2 2 0 1 0 0-4h-2z" fill="#E01E5A"/>' +
+      '<rect x="1.5" y="14" width="11" height="4" rx="2" fill="#ECB22E"/><path d="M9.5 19h3v2a2 2 0 1 1-4 0v-2z" fill="#ECB22E"/></svg>';
+  }
+  function gmailLogo() {
+    return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 8v10h4V11l6 4.5L18 11v7h4V8l-10 7.5z" fill="#EA4335"/><path d="M2 8V6.5a1.5 1.5 0 0 1 2.4-1.2L12 11 2 8z" fill="#4285F4"/><path d="M22 8V6.5a1.5 1.5 0 0 0-2.4-1.2L12 11l10-3z" fill="#34A853"/><path d="M2 8v10h4v-7z" fill="#4285F4"/><path d="M22 8v10h-4v-7z" fill="#34A853"/></svg>';
+  }
+  function phone() {
+    var slack = ui.channel === 'slack';
+    return '<div class="phone"><div class="notch"></div><div class="clock">8:41</div><div class="date">Tuesday, September 22</div>' +
+      '<div class="notif"><div class="appic">' + (slack ? slackLogo() : gmailLogo()) + '</div>' +
+      '<div class="nt"><div class="nm"><span>Time sensitive</span><span>now</span></div><b>' + (slack ? 'Slack' : 'Gmail') + '</b>' +
+      '<p>Radar: window closes Oct 1. Bloomwell\'s Magnesium Sleep Gummies are gaining fast at Target. Here\'s why it matters for Kindroot.</p></div></div></div>';
+  }
+
   function emailWin() {
     var nav = function (icon, label, on, n) { return '<div class="gm-it' + (on ? ' on' : '') + '">' + ic(icon) + '<span>' + label + '</span>' + (n ? '<b>' + n + '</b>' : '') + '</div>'; };
     var lab = function (color, label) { return '<div class="gm-it"><i class="lab" style="background:' + color + '"></i><span>' + label + '</span></div>'; };
     return '<div class="gm" aria-label="Gmail">' +
       '<div class="gm-top">' + ic('menu') + '<span class="gm-logo"><b>M</b>Gmail</span>' +
       '<div class="gm-search">' + ic('search') + '<span>Search mail</span><span class="grow"></span>' + ic('tune') + '</div>' +
-      '<div class="gm-icons">' + ic('help') + ic('gear') + ic('apps') + '<span class="gm-me">M</span></div></div>' +
+      '<div class="gm-icons">' + ic('help') + ic('gear') + ic('apps') + '<span class="gm-me">' + AVA + '</span></div></div>' +
       '<div class="gm-body">' +
       '<div class="gm-nav"><div class="gm-compose">' + ic('edit') + 'Compose</div>' +
       nav('inbox', 'Inbox', true, '14') + nav('star', 'Starred') + nav('snooze', 'Snoozed') + nav('send', 'Sent') + nav('draft', 'Drafts') + nav('chevd', 'More') +
@@ -207,7 +226,7 @@
       '<nav class="app-nav"><div class="ws"><span class="logo"><i></i></span>Kindroot' + ic('chevd') + '</div>' +
       nav('home', 'Home') + nav('ask', 'Ask') + nav('radar', 'Radar', true, '1') + nav('reports', 'Reports') + nav('brand', 'Brand profile') +
       '<div class="sec">Radar</div>' + '<a data-go="5">' + ic('sun') + 'Daily</a><a data-go="5">' + ic('week') + 'Weekly</a><a data-go="5">' + ic('flag') + 'Periodic</a>' +
-      '<div class="me"><span class="av">M</span><div>Maya K.<span>Brand Manager</span></div></div></nav>' +
+      '<div class="me"><span class="av">' + AVA + '</span><div>Maya K.<span>Brand Manager</span></div></div></nav>' +
       '<div class="app-main"><div class="app-top"><div class="crumb">' + crumb + '</div><span class="ask">' + ic('sparkle') + 'Ask anything</span><span class="bell">' + ic('bell') + '<i></i></span></div>' +
       '<div class="app-body">' + body + '</div></div></div>';
   }
@@ -244,7 +263,7 @@
       where: 'Maya\'s week, not the product', when: 'Tuesday, September 22, 8:40',
       notes: ['Maya isn\'t in the product. The story starts in her day, not ours.', 'She works in three rhythms: daily, weekly, periodic. Radar reports in them, not on a schedule of its own (principle 3).'],
       render: function () {
-        return '<div class="scene"><div class="scene-top"><div class="who"><span class="avatar-lg">M</span><div><h4>Maya is between meetings.</h4><p class="role">Brand Manager, Kindroot. Five SKUs. Measured on sales and launches.</p></div></div>' +
+        return '<div class="scene"><div class="scene-top"><div class="who"><span class="avatar-lg">' + AVA + '</span><div><h4>Maya is between meetings.</h4><p class="role">Brand Manager, Kindroot. Five SKUs. Measured on sales and launches.</p></div></div>' +
           '<div class="clock">8:40<small>Tue, Sep 22 &middot; last in the platform 3 weeks ago</small></div></div>' +
           '<div class="scene-body"><p>Her work runs in three rhythms. Radar will report in them.</p>' +
           '<div class="rhythms">' +
@@ -264,9 +283,7 @@
       ],
       render: function () {
         return '<div class="moment">' +
-          '<div class="phone"><div class="notch"></div><div class="clock">8:41</div><div class="date">Tuesday, September 22</div>' +
-          '<div class="notif"><div class="appic' + (ui.channel === 'slack' ? '' : ' mail') + '">' + (ui.channel === 'slack' ? 'S' : 'M') + '</div><div><div class="nm"><span>' + (ui.channel === 'slack' ? 'SLACK' : 'MAIL') + '</span><span>now</span></div>' +
-          '<b>Radar: window closes Oct 1</b>Bloomwell\'s Magnesium Sleep Gummies are gaining fast at Target. Here\'s why it matters for Kindroot.</div></div></div>' +
+          phone() +
           '<div><div class="moment-top"><div class="channel-toggle" role="group" aria-label="View as">' +
           '<button data-channel="slack" aria-pressed="' + (ui.channel === 'slack') + '">Slack</button>' +
           '<button data-channel="email" aria-pressed="' + (ui.channel === 'email') + '">Email</button></div>' +

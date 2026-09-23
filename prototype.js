@@ -386,7 +386,7 @@
     var nav = function (icon, label, on, badge) { return '<a' + (on ? ' class="on"' : '') + '>' + ic(icon) + label + (badge ? '<span class="badge">' + badge + '</span>' : '') + '</a>'; };
     return '<div class="app" aria-label="The platform">' +
       '<div class="app-chrome"><div class="lights"><i></i><i></i><i></i></div><div class="url">app.platform/' + (opts.url || 'radar') + '</div></div>' +
-      '<nav class="app-nav"><div class="ws"><span class="logo"><i></i></span>Kindroot' + ic('chevd') + '</div>' +
+      '<nav class="app-nav"><div class="ws"><span class="kr-logo">K</span>Kindroot' + ic('chevd') + '</div>' +
       nav('home', 'Home') + nav('ask', 'Ask') + nav('radar', 'Radar', true, '1') + nav('reports', 'Reports') + nav('brand', 'Brand profile') +
       '<div class="sec">Radar</div>' + '<a data-go="5">' + ic('sun') + 'Daily</a><a data-go="5">' + ic('week') + 'Weekly</a><a data-go="5">' + ic('flag') + 'Periodic</a>' +
       '<div class="me"><span class="av">' + AVA + '</span><div>Maya K.<span>Brand Manager</span></div></div></nav>' +

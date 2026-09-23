@@ -1139,3 +1139,4 @@ body.page { font-size: 15px; }
 .bk-why.ok{color:#007A5A}
 .bk-why .ic{width:13px;height:13px}
 .bk-chip{border:1px solid #BBBABB;background:#fff;border-radius:999px;padding:2px 9px;font:12px var(--font-body);cursor:pointer;color:#1D1C1D}
+.kr-logo{width:24px;height:24px;border-radius:7px;background:#C98A3C;color:#fff;display:grid;place-items:center;font:700 13px var(--font-display);flex:none}

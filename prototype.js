@@ -202,7 +202,7 @@
 
   /* Agents: the presets, in Maya's words */
   var AGENTS = [
-    { name: 'Competitor launches', rh: 'daily', slack: true, email: false, ask: 'who\'s launching against my magnesium line at Target, CVS and Amazon', chips: ['Magnesium', 'Sleep claims', 'Target, CVS, Amazon', 'Bloomwell, Sunveil, Nature\'s Path'], watch: 'Magnesium, sleep claims. Target, CVS, Amazon.', last: '<b>Today, 1 new</b>' },
+    { name: 'Competitor launches', rh: 'daily', slack: true, email: false, ask: 'Who\u2019s launching against my magnesium line at Target, CVS and Amazon?', chips: ['Magnesium', 'Sleep claims', 'Target, CVS, Amazon', 'Bloomwell, Sunveil, Nature\'s Path'], watch: 'Magnesium, sleep claims. Target, CVS, Amazon.', last: '<b>Today, 1 new</b>' },
     { name: 'My share at key retailers', rh: 'weekly', slack: true, email: false, ask: 'how my five SKUs are doing at Target, CVS and Amazon, every Monday', chips: ['Kindroot, 5 SKUs', 'Share and velocity', 'Target, CVS, Amazon'], watch: 'Kindroot\'s 5 SKUs at Target, CVS, Amazon. For Monday\'s numbers.', last: 'Monday' },
     { name: 'Claims and ingredients gaining traction', rh: 'weekly', slack: false, email: true, ask: 'which claims and ingredients are rising in natural supplements', chips: ['Natural supplements', 'Claims', 'Ingredients'], watch: 'Claims and ingredients on the rise in natural supplements. For the management update.', last: 'Monday' },
     { name: 'Consumer trends: sleep, stress, gut', rh: 'periodic', slack: false, email: true, ask: 'what consumers say and search in sleep, stress and gut health, for the Q4 plan', chips: ['Sleep', 'Stress', 'Gut health', 'Conversation and search'], watch: 'Consumer conversation and search in your three need states. Feeds the Q4 plan and the innovation pipeline.', last: 'Sep 8' },
@@ -258,7 +258,7 @@
     return '<div class="c agent-card">' +
       '<div class="ed-sec"><div class="ed-title">' + ic('sparkle') + 'Your prompt' + (o.pill ? '<span class="r">' + o.pill + '</span>' : '') + '</div>' +
       '<div class="ed-prompt">' + ic('edit') + '<input id="edq" value="' + e.ask.replace(/"/g, '&quot;') + '" aria-label="Your prompt" spellcheck="false"></div>' +
-      '<span class="hint">Edit the words here. When you leave the field, Radar reads it again and the card below follows.</span></div>' +
+      '<span class="hint">' + (o.isNew ? 'Edit the words here. When you leave the field, Radar reads it again and the card below follows.' : 'Edit the prompt to change what the agent watches.') + '</span></div>' +
       '<div class="ed-sec"><div class="ed-title">' + ic('radar') + 'The agent</div>' +
       '<div class="field"><span>Name</span><div><span class="name" contenteditable="true" spellcheck="false">' + e.name + '</span></div></div>' +
       '<div class="field"><span>Watches</span><div class="tags">' + chips + '</div></div></div>' +
@@ -565,9 +565,9 @@
       }
     },
     {
-      title: 'Tune', desc: 'Feedback, adjust', cap: 'One card: what the agent watches, and how it reaches her.',
+      title: 'Adjust', desc: 'Review and update', cap: 'One card: what the agent watches, and how it reaches her.',
       where: 'The platform, Radar, the same insight', when: 'Tuesday, 8:47',
-      notes: ['The same card she saw when she created an agent. One place to change things, and she can get here from Slack, from email, or from the insight.', 'What she taught it from the insight shows up here as a tag, so she can see that it learned.'],
+      notes: ['Maya can return to this setup from the insight, Slack or email.', 'It uses the same structure she saw when creating the agent.', 'Any feedback she gives is reflected here, so she can see what changed.'],
       render: function () {
         var a = AGENTS[ui.editAgent];
         var fb = '';
@@ -579,9 +579,9 @@
           cta: '<button class="btn btn-primary btn-sm" data-toast="Saved. Applies from the next update.">' + ic('check') + 'Save</button>',
           secondary: '<button class="btn btn-ghost btn-sm" data-go="5">See all agents</button>'
         });
-        var head = ph(ic('radar') + '<span>Radar</span><span>&middot;</span>' + ic(RH_ICON[a.rh]) + '<span>' + RH_LABEL[a.rh] + '</span>', 'Here\'s what I understood', 'What ' + a.name + ' is watching, and how it reaches you. Change anything you like.',
+        var head = ph(ic('radar') + '<span>Radar</span><span>&middot;</span>' + ic(RH_ICON[a.rh]) + '<span>' + RH_LABEL[a.rh] + '</span>', 'Review this agent', 'See what it watches, when it runs and where it reaches you.',
           '<button class="btn btn-ghost btn-sm" data-go="5">' + ic('radar') + 'All agents</button>');
-        return app('<a data-go="5">Radar</a>' + sep + '<a data-go="2">' + a.name + '</a>' + sep + '<b>Tune</b>', head + '<div class="one">' + fb + card + '</div>', { url: 'radar/' + a.name.toLowerCase().replace(/[^a-z]+/g, '-') + '/tune' });
+        return app('<a data-go="5">Radar</a>' + sep + '<a data-go="2">' + a.name + '</a>' + sep + '<b>Adjust</b>', head + '<div class="one">' + fb + card + '</div>', { url: 'radar/' + a.name.toLowerCase().replace(/[^a-z]+/g, '-') + '/tune' });
       }
     },
     {

@@ -124,3 +124,28 @@ page, README and content deck updated.
 
 **Got wrong before this:** treated cadence as a system setting (immediate /
 daily / weekly) and had no notion of a closing window.
+
+## Round 5: final design look, real Slack and Gmail, the prototype on its own
+
+**Roni asked for:** the Slack screen built from a Figma Slack desktop kit,
+the email screen from a Figma Gmail kit, a finished visual system for the
+product screens instead of the schematic one, better orientation, the
+prototype living separately from the presentation, the persona (Maya) on
+the page, a simpler "What I asked for", and no "Ask away" section.
+
+**Claude changed:** rebuilt the Slack screen after the kit (aubergine
+sidebar and rail, app message with the APP tag, a Block Kit card with
+fields and buttons, the composer); built the Gmail view after its kit
+(Compose pill, Inbox selected, the rounded white panel, the opened message
+with sender row and reply bar); a product app shell for the platform
+screens (nav with Radar sections, top bar with breadcrumb and "Ask
+anything", page headers, one card system, stat tiles, an icon set); a
+progress bar, a "where and when" line and step descriptions in the
+prototype shell for orientation; the presentation now links to the
+prototype page and to each step (prototype.html#step-N) instead of
+embedding it; a persona card in the brief section; the "why"s moved to the
+README only.
+
+**Got wrong, fixed after the look:** the progress segments used a class
+name (done) that the completion card also used, so the bar rendered 70px
+tall. Renamed.

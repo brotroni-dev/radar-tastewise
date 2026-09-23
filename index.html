@@ -23,14 +23,13 @@
       <a href="#thinking">Thinking</a>
       <a href="#prototype">Prototype</a>
       <a href="#ai">Working with AI</a>
-      <a href="#why">Why</a>
       <a href="#measure">Measure</a>
     </div>
     <span class="grow"></span>
     <button class="theme-btn" id="theme-btn" aria-label="Switch theme" title="Switch theme">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="6"/><path d="M8 2a6 6 0 0 1 0 12z" fill="currentColor" stroke="none"/></svg>
     </button>
-    <a class="btn btn-primary btn-sm" href="#prototype">Try the prototype</a>
+    <a class="btn btn-primary btn-sm" href="prototype.html" target="_blank" rel="noopener">Open the prototype</a>
   </div>
 </nav>
 
@@ -43,7 +42,7 @@
     <div class="meta"><span>Roni Brot-Kolinkó</span><span>4 hours</span><span>Built with Claude Code</span></div>
     <div class="btns">
       <a class="btn btn-ghost" href="#brief">Read the thinking</a>
-      <a class="btn btn-primary" href="#prototype">Try the prototype</a>
+      <a class="btn btn-primary" href="prototype.html" target="_blank" rel="noopener">Open the prototype</a>
     </div>
   </div>
 </header>
@@ -55,6 +54,17 @@
       <h2>A platform that only answers when asked, and a person who doesn't ask.</h2>
       <p class="lede">The platform is excellent at answering, and it only answers when asked. Maya is a brand manager, not an analyst. She's in the product twice a month, when something forces her in, and her team waits on her for answers. The brief asks what push should mean here, and to design one piece of it.</p>
       <blockquote class="quote">Push isn't notifications. It's delegation. Maya needs someone watching her category so she doesn't have to know the question.<small>The reframe everything else follows from</small></blockquote>
+    </div>
+    <div class="persona">
+      <div class="persona-id"><span class="avatar-lg">M</span><div><h3>Maya, the person this is for</h3><p class="hint" style="margin:0">Brand Manager at a mid-size CPG company. Natural supplements, five SKUs. Fictional, drawn from the brief.</p></div></div>
+      <div class="persona-grid">
+        <div><div class="kicker">Measured on</div><p>Sales of the existing range, and new products that win the market.</p></div>
+        <div><div class="kicker">Her day</div><p>Meetings, email, spreadsheets and decks. Not an analyst, not a power user.</p></div>
+        <div><div class="kicker">The platform today</div><p>Twice a month, when something forces her in: a quarterly review, a retailer meeting, a launch brief.</p></div>
+        <div><div class="kicker">Her three rhythms</div><p><b>Daily:</b> meetings, approvals, the team's questions. <b>Weekly:</b> performance, status, the management update. <b>Periodic:</b> the retailer review, the quarterly plan, the launch brief.</p></div>
+        <div><div class="kicker">What she needs</div><p>Walk into the retailer meeting with data she can defend. Decide the next launch and explain why. Never be caught off guard by a competitor, a claim or a trend.</p></div>
+        <div><div class="kicker">The problem</div><p>The product is pull. She has to know what to ask, and the most valuable things are the ones she doesn't know to ask. Her team waits on her.</p></div>
+      </div>
     </div>
   </div>
 </section>
@@ -102,16 +112,16 @@
         <table class="table">
           <thead><tr><th>#</th><th>Principle</th><th>Best-practice root</th><th>See it</th></tr></thead>
           <tbody>
-            <tr><td class="n">1</td><td><b>Start full, not empty, named by the job.</b> Presets on by default from her brand profile, called "Competitor launches", not "Agent #3". She turns off, not on.</td><td>Default effect. Zero-config start for occasional users. Plain language.</td><td><a class="see" href="#prototype" data-proto-go="5">Radar home</a></td></tr>
-            <tr><td class="n">2</td><td><b>Progressive disclosure, with a preview.</b> Presets, then tweak, then create by prompt. A new agent shows its first update before it's enabled.</td><td>Expert paths behind the simple path. A preview kills the fear of noise.</td><td><a class="see" href="#prototype" data-proto-go="6">New agent</a></td></tr>
-            <tr><td class="n">3</td><td><b>Her rhythms, not ours.</b> Daily, weekly, periodic: every agent reports in one of Maya's three rhythms, so an update lands where it will be used: today's reaction, Monday's status, the retailer review.</td><td>Fit the user's cadence. Don't invent one.</td><td><a class="see" href="#prototype" data-proto-go="5">Radar home</a></td></tr>
-            <tr><td class="n">4</td><td><b>Urgency breaks the rhythm.</b> A closing window (a planogram reset, a promo end, a launch) carries a date and comes today, whatever the agent's rhythm. It's the only thing that interrupts.</td><td>Interrupt for deadlines, not for volume.</td><td><a class="see" href="#prototype" data-proto-go="1">The moment</a></td></tr>
-            <tr><td class="n">5</td><td><b>Earn the interruption.</b> Every update opens with why it matters to Kindroot. Caps and batching per agent.</td><td>Notification hygiene. Relevance over recency.</td><td><a class="see" href="#prototype" data-proto-go="1">The moment</a></td></tr>
-            <tr><td class="n">6</td><td><b>Control at the point of delivery.</b> "Why you're seeing this", Adjust, Not relevant, inside the message.</td><td>Fix noise where it's read. No trip to settings.</td><td><a class="see" href="#prototype" data-proto-go="4">Tune</a></td></tr>
-            <tr><td class="n">7</td><td><b>Ready, not raw.</b> Outputs are her artifacts: slide, email, meeting. Editable, never auto-sent. The window travels with them.</td><td>Human in the loop. Output matches her job.</td><td><a class="see" href="#prototype" data-proto-go="3">Act</a></td></tr>
-            <tr><td class="n">8</td><td><b>Defensible by default.</b> Every number has a source, a timeframe and a confidence.</td><td>Trust. Her name is on it in the room.</td><td><a class="see" href="#prototype" data-proto-go="2">The insight</a></td></tr>
-            <tr><td class="n">9</td><td><b>One system across channels.</b> The same structure in Slack, email and the product. Channel is a preference, not a product.</td><td>Consistency. Recognition over recall.</td><td><a class="see" href="#prototype" data-proto-go="1">The moment</a></td></tr>
-            <tr><td class="n">10</td><td><b>Visible learning.</b> Feedback changes the next update, and says so.</td><td>Feedback loops. Perceived control.</td><td><a class="see" href="#prototype" data-proto-go="4">Tune</a></td></tr>
+            <tr><td class="n">1</td><td><b>Start full, not empty, named by the job.</b> Presets on by default from her brand profile, called "Competitor launches", not "Agent #3". She turns off, not on.</td><td>Default effect. Zero-config start for occasional users. Plain language.</td><td><a class="see" href="prototype.html#step-6" target="_blank" rel="noopener">Radar home</a></td></tr>
+            <tr><td class="n">2</td><td><b>Progressive disclosure, with a preview.</b> Presets, then tweak, then create by prompt. A new agent shows its first update before it's enabled.</td><td>Expert paths behind the simple path. A preview kills the fear of noise.</td><td><a class="see" href="prototype.html#step-7" target="_blank" rel="noopener">New agent</a></td></tr>
+            <tr><td class="n">3</td><td><b>Her rhythms, not ours.</b> Daily, weekly, periodic: every agent reports in one of Maya's three rhythms, so an update lands where it will be used: today's reaction, Monday's status, the retailer review.</td><td>Fit the user's cadence. Don't invent one.</td><td><a class="see" href="prototype.html#step-6" target="_blank" rel="noopener">Radar home</a></td></tr>
+            <tr><td class="n">4</td><td><b>Urgency breaks the rhythm.</b> A closing window (a planogram reset, a promo end, a launch) carries a date and comes today, whatever the agent's rhythm. It's the only thing that interrupts.</td><td>Interrupt for deadlines, not for volume.</td><td><a class="see" href="prototype.html#step-2" target="_blank" rel="noopener">The moment</a></td></tr>
+            <tr><td class="n">5</td><td><b>Earn the interruption.</b> Every update opens with why it matters to Kindroot. Caps and batching per agent.</td><td>Notification hygiene. Relevance over recency.</td><td><a class="see" href="prototype.html#step-2" target="_blank" rel="noopener">The moment</a></td></tr>
+            <tr><td class="n">6</td><td><b>Control at the point of delivery.</b> "Why you're seeing this", Adjust, Not relevant, inside the message.</td><td>Fix noise where it's read. No trip to settings.</td><td><a class="see" href="prototype.html#step-5" target="_blank" rel="noopener">Tune</a></td></tr>
+            <tr><td class="n">7</td><td><b>Ready, not raw.</b> Outputs are her artifacts: slide, email, meeting. Editable, never auto-sent. The window travels with them.</td><td>Human in the loop. Output matches her job.</td><td><a class="see" href="prototype.html#step-4" target="_blank" rel="noopener">Act</a></td></tr>
+            <tr><td class="n">8</td><td><b>Defensible by default.</b> Every number has a source, a timeframe and a confidence.</td><td>Trust. Her name is on it in the room.</td><td><a class="see" href="prototype.html#step-3" target="_blank" rel="noopener">The insight</a></td></tr>
+            <tr><td class="n">9</td><td><b>One system across channels.</b> The same structure in Slack, email and the product. Channel is a preference, not a product.</td><td>Consistency. Recognition over recall.</td><td><a class="see" href="prototype.html#step-2" target="_blank" rel="noopener">The moment</a></td></tr>
+            <tr><td class="n">10</td><td><b>Visible learning.</b> Feedback changes the next update, and says so.</td><td>Feedback loops. Perceived control.</td><td><a class="see" href="prototype.html#step-5" target="_blank" rel="noopener">Tune</a></td></tr>
           </tbody>
         </table>
       </div>
@@ -124,9 +134,23 @@
     <div class="section-head reading">
       <div class="kicker">03 &middot; The prototype</div>
       <h2>Tuesday, 8:40. Maya is between meetings.</h2>
-      <p class="lede">Seven steps, in order. Click through with Next, the step list, or the arrow keys. Nothing works behind the screen; every button leads somewhere on purpose. <a href="prototype.html" target="_blank" rel="noopener">Open it full screen</a>.</p>
+      <p class="lede">The prototype lives on its own page. Seven steps, in order, from the update reaching Maya to the agent she creates herself. Nothing works behind the screen; every button leads somewhere on purpose.</p>
     </div>
-    <div id="radar-proto" data-mode="embed"></div>
+    <div class="launch">
+      <ol class="launch-steps">
+        <li><span class="k">1</span><a href="prototype.html#step-1" target="_blank" rel="noopener">Scene<span class="d">Her three rhythms, and the Target review in 9 days</span></a></li>
+        <li><span class="k">2</span><a href="prototype.html#step-2" target="_blank" rel="noopener">The moment<span class="d">A daily update in Slack or email, made urgent by a closing window</span></a></li>
+        <li><span class="k">3</span><a href="prototype.html#step-3" target="_blank" rel="noopener">The insight<span class="d">The window first, then signal, why it matters, evidence, three moves</span></a></li>
+        <li><span class="k">4</span><a href="prototype.html#step-4" target="_blank" rel="noopener">Act<span class="d">A slide, an email, a meeting. Drafted, never auto-sent</span></a></li>
+        <li><span class="k">5</span><a href="prototype.html#step-5" target="_blank" rel="noopener">Tune<span class="d">One tap teaches the agent, and it says what changed</span></a></li>
+        <li><span class="k">6</span><a href="prototype.html#step-6" target="_blank" rel="noopener">Radar home<span class="d">Five agents in her three rhythms. She turns off, not on</span></a></li>
+        <li><span class="k">7</span><a href="prototype.html#step-7" target="_blank" rel="noopener">New agent<span class="d">A prompt becomes a card, with a sample before it starts</span></a></li>
+      </ol>
+      <div class="launch-cta">
+        <a class="btn btn-primary" href="prototype.html" target="_blank" rel="noopener">Open the prototype</a>
+        <p class="hint">Opens in a new tab. Arrow keys move between steps. "Design notes" on the right explain each screen.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -141,10 +165,10 @@
       <div class="card">
         <h3>What I asked for</h3>
         <ul class="list">
-          <li>The plan before any code: read the brief and my CV, propose the best solution, ask me questions, work to UX best practice.</li>
-          <li>All the copy for the seven states and this page in one file, reviewed before the build.</li>
-          <li>The build in rounds: skeleton and states 1-4, then 5-7, then the write-up. One look per round, then fixes, then a commit.</li>
-          <li>This page on GitHub Pages, like my portfolio, so the commit history doubles as a process log.</li>
+          <li>A plan before any code. Read the brief, propose the best solution, ask me questions.</li>
+          <li>All the copy in one file, reviewed before the build.</li>
+          <li>Build in rounds. One look per round, then fixes, then a commit.</li>
+          <li>Host it on GitHub Pages, like my portfolio.</li>
         </ul>
       </div>
       <div class="card">
@@ -164,6 +188,7 @@
           <li>The concept, twice. From a calendar briefing, to "set up once and get insights", to agents Maya can set, adjust and create by prompt, with presets, cadence, and actions beyond slides.</li>
           <li>The trigger. Not the meeting: "it's her responsibility to be ready way before."</li>
           <li>The three rhythms and the urgency window, after the first full build. Maya's week runs daily, weekly, periodic, and a window can close. Radar home was regrouped by rhythm, "how often" became "rhythm", and every update got a place for a date.</li>
+          <li>The look, after the first finished build. I sent Figma kits for Slack and Gmail so the moment looks like the real tools, asked for a finished system for the product screens with clearer orientation, moved the prototype out of the presentation to live on its own, and added this persona card.</li>
           <li>The metric, the hosting, the writing rule.</li>
           <li>Copy and design after review: [Roni fills this in before publishing.]</li>
         </ul>
@@ -172,27 +197,11 @@
   </div>
 </section>
 
-<section class="section" id="why">
-  <div class="wrap">
-    <div class="reading">
-      <div class="kicker">05 &middot; The "why"s I expect</div>
-      <h2>Ask away.</h2>
-      <dl class="qa">
-        <div><dt>Why agents, not alerts?</dt><dd>Alerts need her to know the threshold. Agents need her to know the goal. She has goals.</dd></div>
-        <div><dt>Why not tie it to the meeting?</dt><dd>Readiness is her job all quarter. The meeting is the deadline, not the trigger. Agents keep her ahead, and the meeting finds her already informed.</dd></div>
-        <div><dt>Why three rhythms, and why urgency?</dt><dd>Because that's how her week already works: a daily digest before her 9:00, a weekly before Monday's status, a periodic that builds toward the review. Radar doesn't add a rhythm, it fits hers. And some things can't wait for a rhythm: a planogram reset, a promo end. Those carry a date and come today. Nothing else interrupts.</dd></div>
-        <div><dt>What stops it becoming noise?</dt><dd>Caps per agent, a cadence she chose, "why you're seeing this" on every update, one-tap feedback that visibly changes the next one, and a sample before anything new is enabled.</dd></div>
-        <div><dt>How does this make her a daily user?</dt><dd>A daily digest at 8:30 in Slack, and actions that produce things she has to ship anyway: slides, emails, meetings. The platform becomes the place her outputs come from.</dd></div>
-        <div><dt>Why presets on by default?</dt><dd>Twice-a-month users don't configure. Value on day one, or never.</dd></div>
-      </dl>
-    </div>
-  </div>
-</section>
 
 <section class="section" id="measure">
   <div class="wrap">
     <div class="section-head reading">
-      <div class="kicker">06 &middot; What I'd measure</div>
+      <div class="kicker">05 &middot; What I'd measure</div>
       <h2>Three numbers that would tell me it worked.</h2>
     </div>
     <div class="metrics">
@@ -207,7 +216,6 @@
   <div class="wrap">Fictional brands, illustrative data. This brief is hypothetical. <a href="https://github.com/brotroni-dev/radar-tastewise">Source and process on GitHub</a>.</div>
 </footer>
 
-<script src="prototype.js"></script>
 <script>
   (function () {
     var root = document.documentElement;
@@ -218,13 +226,6 @@
       var next = dark ? 'light' : 'dark';
       root.setAttribute('data-theme', next);
       try { localStorage.setItem('radar-theme', next); } catch (e) {}
-    });
-    document.querySelectorAll('[data-proto-go]').forEach(function (a) {
-      a.addEventListener('click', function (e) {
-        e.preventDefault();
-        if (window.radarProto) window.radarProto.go(+a.getAttribute('data-proto-go'));
-        document.getElementById('prototype').scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
     });
   })();
 </script>

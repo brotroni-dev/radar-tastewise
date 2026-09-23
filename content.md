@@ -325,3 +325,29 @@ create-by-prompt are shown as one screen each, the "how it knows".
 
 Footer: Fictional brands, illustrative data. This brief is hypothetical.
 Source on GitHub.
+
+---
+
+## Round 4 additions: three rhythms and urgency (Roni)
+
+Maya works in three rhythms, and that's how she works with the agents:
+
+| Rhythm | What occupies her |
+|---|---|
+| Daily | Meetings, emails, approvals, questions from the team, problems in a campaign or a launch |
+| Weekly | Performance, sales, project status, decks and management updates |
+| Periodic | Retailer review, quarterly planning, innovation pipeline, launch brief |
+
+Every agent lives in one rhythm. Radar home is grouped by rhythm. "How
+often" becomes "Rhythm": Daily 8:30 / Weekly, Monday / Periodic, before the
+moment. A fifth preset, "Retailer review prep", lives in the periodic rhythm
+and builds the Target deck as things change.
+
+Urgency is a separate parameter: some windows close. In the scenario,
+endcap requests for Target's Q4 reset close Oct 1, the day of her review;
+the planogram locks Oct 6; after that the next shot at placement is January.
+The window is the first thing on the insight, appears on the Slack and
+email update, on the slide's ask, on the meeting invite, and on the sample
+for a new agent. Urgency is the only thing that breaks a rhythm; one rule at
+the top of Radar home, on by default. "Not urgent" is a feedback reason:
+"keep items like this in the rhythm, break through only under a week."

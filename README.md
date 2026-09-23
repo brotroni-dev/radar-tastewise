@@ -32,8 +32,14 @@ watching her category so she doesn't have to know the question.
 **The bet.** Radar keeps the good parts of each: cadence from the digest,
 noticing from alerts, readiness from the briefing, team reach from sharing,
 under one mental model Maya already understands: delegation. She tells Radar
-what matters once (or accepts what it suggests), picks where and how often,
-and every update arrives with the next action already drafted.
+what matters once (or accepts what it suggests), picks where and in which
+rhythm, and every update arrives with the next action already drafted.
+
+Her week already runs in three rhythms: daily (meetings, approvals, the
+team's questions), weekly (performance, status, the management update) and
+periodic (the retailer review, the quarterly plan, the launch brief). Radar
+reports in those rhythms, not on a schedule of its own. Urgency is the only
+thing that breaks a rhythm: a closing window carries a date and comes today.
 
 The one piece I designed is the update reaching her and what she does with
 it. The hub and create-by-prompt are shown as one screen each, the "how it
@@ -45,21 +51,22 @@ knows".
 - Slack and email integrations exist.
 - Agents run on the platform's existing data and query capability.
 - Retailer-level share data is available for her SKUs.
+- Retailer calendars (resets, promo windows) are available, so windows can carry a date.
 - Her team can receive shares without a seat.
 - Nothing is sent to anyone without Maya.
 
 ## Design values, and where each one lives
 
-1. **Start full, not empty.** Presets on by default. She turns off, not on. (Radar home)
-2. **Progressive disclosure.** Presets, then tweak, then create by prompt. (Radar home, New agent)
-3. **Preview before commit.** A new agent shows its first update before it's enabled. (New agent)
-4. **Earn the interruption.** Every update opens with why it matters to Kindroot. (The moment)
-5. **Control at the point of delivery.** Adjust and Not relevant live inside the message. (The moment, Tune)
-6. **Ready, not raw.** Outputs are her artifacts: slide, email, meeting. Editable, never auto-sent. (Act)
-7. **Defensible by default.** Every number has a source, a timeframe, a confidence. (The insight)
-8. **One system across channels.** Same structure in Slack, email and the product. (The moment)
-9. **Visible learning.** Feedback changes the next update, and says so. (Tune)
-10. **Name by the job, in her words.** "Competitor launches", not "Agent #3". (Radar home)
+1. **Start full, not empty, named by the job.** Presets on by default, called "Competitor launches", not "Agent #3". She turns off, not on. (Radar home)
+2. **Progressive disclosure, with a preview.** Presets, then tweak, then create by prompt. A new agent shows its first update before it's enabled. (New agent)
+3. **Her rhythms, not ours.** Daily, weekly, periodic: every agent reports in one of Maya's three rhythms, so an update lands where it will be used. (Radar home)
+4. **Urgency breaks the rhythm.** A closing window carries a date and comes today, whatever the rhythm. It's the only thing that interrupts. (The moment)
+5. **Earn the interruption.** Every update opens with why it matters to Kindroot. (The moment)
+6. **Control at the point of delivery.** Adjust and Not relevant live inside the message. (Tune)
+7. **Ready, not raw.** Outputs are her artifacts: slide, email, meeting. Editable, never auto-sent. The window travels with them. (Act)
+8. **Defensible by default.** Every number has a source, a timeframe, a confidence. (The insight)
+9. **One system across channels.** Same structure in Slack, email and the product. (The moment)
+10. **Visible learning.** Feedback changes the next update, and says so. (Tune)
 
 ## Working with AI
 
@@ -70,9 +77,10 @@ GitHub Pages so the commits double as a process log.
 **Got wrong:** a calendar-triggered first bet (too narrow); an unmeasurable
 "team questions" metric; a Claude artifact instead of one GitHub URL; long
 dashes everywhere; a Slack sidebar that squeezed the message at medium
-widths.
+widths; cadence as a system setting, with no notion of a closing window.
 
 **Changed by hand:** the concept, twice; the trigger (not the meeting); the
+three rhythms and the urgency window, after the first full build; the
 metric, the hosting, the writing rule. Copy and design edits after review:
 see `process-log.md`.
 
@@ -80,7 +88,8 @@ see `process-log.md`.
 
 - **Why agents, not alerts?** Alerts need her to know the threshold. Agents need her to know the goal. She has goals.
 - **Why not tie it to the meeting?** Readiness is her job all quarter. The meeting is the deadline, not the trigger.
-- **What stops it becoming noise?** Caps per agent, a cadence she chose, "why you're seeing this" on every update, one-tap feedback that visibly changes the next one, and a sample before anything new is enabled.
+- **Why three rhythms, and why urgency?** That's how her week already works. Radar fits her rhythm instead of adding one. Some things can't wait for a rhythm: those carry a date and come today. Nothing else interrupts.
+- **What stops it becoming noise?** Caps per agent, a rhythm she chose, "why you're seeing this" on every update, one-tap feedback that visibly changes the next one, and a sample before anything new is enabled.
 - **How does this make her a daily user?** A daily digest at 8:30 in Slack, and actions that produce things she has to ship anyway.
 - **Why presets on by default?** Twice-a-month users don't configure. Value on day one, or never.
 

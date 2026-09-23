@@ -104,3 +104,23 @@ check (no horizontal scroll at 375px) and a dark-mode check.
 
 **Open before publishing:** the "changed by hand" card has a placeholder for
 Roni's copy and design edits after review.
+
+## Round 4: three rhythms and urgency (Roni's addition)
+
+**Roni changed by hand:** after the first full build she added two things.
+Maya works in three rhythms (daily: meetings, emails, approvals, questions
+from the team, campaign or launch problems; weekly: performance, sales,
+project status, decks, management updates; periodic: retailer review,
+quarterly planning, innovation pipeline, launch brief), and that is how she
+should work with the agents. And an urgency parameter: a window can close.
+
+**Claude changed:** cadence became rhythm everywhere; Radar home regrouped
+by rhythm, with a fifth preset (Retailer review prep) in the periodic
+rhythm; one urgency rule at the top of home; a "window closing" strip on the
+update, the insight, the slide's ask, the meeting invite and the new-agent
+sample; "Not urgent" as a feedback reason; the scene shows her three
+rhythms; the ten principles reworked with rhythms and urgency as 3 and 4;
+page, README and content deck updated.
+
+**Got wrong before this:** treated cadence as a system setting (immediate /
+daily / weekly) and had no notion of a closing window.

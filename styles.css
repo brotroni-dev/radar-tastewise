@@ -973,3 +973,12 @@ p { margin: 0 0 1em; }
 .ed-sec .seg-hint { margin-top: 6px; }
 .ed-prompt > .ic { width: 16px; height: 16px; color: var(--muted); flex: none; }
 .ed-prompt { padding: 10px 14px; }
+
+/* Agent rows open on click; thicker dots */
+.arow[data-editagent] { cursor: pointer; transition: border-color .12s ease, box-shadow .12s ease, transform .12s ease; }
+.arow[data-editagent]:hover, .arow[data-editagent]:focus-visible { border-color: var(--accent); box-shadow: var(--shadow); transform: translateY(-1px); }
+.arow[data-editagent]:hover .anl b { color: var(--accent); }
+.arow[data-editagent]:hover .ai { background: var(--accent); color: var(--accent-ink); }
+.arow .toggle, .arow .more { cursor: pointer; }
+.arow .more .ic { width: 20px; height: 20px; stroke-width: 4; }
+.arow .more:hover { background: var(--surface-2); }

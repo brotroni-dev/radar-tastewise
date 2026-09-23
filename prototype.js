@@ -347,7 +347,7 @@
   /* Radar home: one list, grouped by rhythm */
   function row(a, on, idx, isNew) {
     var chans = (a.slack ? '<span>' + ic('hash') + 'Slack</span>' : '') + (a.email ? '<span>' + ic('mail') + 'Email</span>' : '');
-    return '<div class="arow' + (on ? '' : ' off') + '">' +
+    return '<div class="arow' + (on ? '' : ' off') + '"' + (idx !== null ? ' data-editagent="' + idx + '" role="link" tabindex="0" aria-label="Open ' + a.name + '"' : '') + '>' +
       '<span class="ai" title="' + RH_LABEL[a.rh] + '">' + ic(RH_ICON[a.rh]) + '</span>' +
       '<div class="an"><div class="anl"><b>' + a.name + '</b><span class="pill neutral">' + (isNew ? 'Yours' : 'Preset') + '</span>' + (isNew ? '<span class="pill">New</span>' : '') + '</div><div class="aw">' + a.watch + '</div></div>' +
       '<div class="ach">' + chans + '</div>' +

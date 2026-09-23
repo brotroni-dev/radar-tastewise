@@ -898,3 +898,5 @@ p { margin: 0 0 1em; }
 .sl-comp .in { padding: 7px 10px; font-size: 13px; }
 .gm { aspect-ratio: 16 / 10; min-height: 0; max-height: 680px; }
 .gm-panel { overflow: auto; }
+.sl { aspect-ratio: 16 / 10.5; max-height: 720px; }
+.sl-msg.dim .txt { font-size: 12.5px; }

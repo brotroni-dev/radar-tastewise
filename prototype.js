@@ -242,7 +242,7 @@
       '<div class="sl-tabs"><span class="on">' + ic('thread') + ' Messages</span><span>' + ic('help') + ' About</span><span>' + ic('plus') + '</span></div>' +
       '<div class="sl-msgs">' +
       '<div class="sl-day"><span>Monday, September 21</span></div>' +
-      '<div class="sl-msg dim"><div class="av">R</div><div><div class="who"><b>Radar</b><span class="apptag">APP</span><span class="ts">8:30</span></div><div class="txt">Weekly, for Monday\'s status: your share at Target, CVS and Amazon held at 12.4%. Nothing urgent. 2 items for the management update.</div></div></div>' +
+      '<div class="sl-msg dim"><div class="av">R</div><div><div class="who"><b>Radar</b><span class="apptag">APP</span><span class="ts">8:30</span></div><div class="txt">Weekly: your share held at 12.4% across Target, CVS and Amazon. Nothing urgent. Two items for the management update.</div></div></div>' +
       '<div class="sl-day"><span>Today</span></div>' +
       '<div class="sl-msg"><div class="av">R</div><div><div class="who"><b>Radar</b><span class="apptag">APP</span><span class="ts">8:41</span></div>' +
       '<div class="txt">Good morning, Maya. Three updates in your daily. The first one comes with a date.</div>' + blockKit() + '</div></div>' +

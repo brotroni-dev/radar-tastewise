@@ -560,7 +560,7 @@
             '<div class="act-btns"><button class="btn btn-primary btn-sm" data-toast="Posted to #brand-kindroot.">' + ic('hash') + 'Post to #brand-kindroot</button>' +
             '<button class="btn btn-ghost btn-sm" data-toast="Link copied.">' + ic('link') + 'Copy link</button></div>';
         }
-        var head = ph(ic('radar') + '<span>Competitor launches</span><span>&middot;</span><span>Bloomwell gummies at Target</span>', 'Act on it', 'Everything here is a draft until Maya sends it.');
+        var head = ph(ic('radar') + '<span>Competitor launches</span><span>&middot;</span><span>Bloomwell gummies at Target</span>', 'Use this insight', 'Everything here is a draft until Maya sends it.');
         return app('<a data-go="5">Radar</a>' + sep + '<a data-go="2">Bloomwell gummies at Target</a>' + sep + '<b>Act</b>', head + t + body, { url: 'radar/competitor-launches/sep-22/act' });
       }
     },

@@ -1106,3 +1106,6 @@ body.page { font-size: 15px; }
 .explored h4{font:600 15.5px var(--font-display);margin:0}
 .explored .why{color:var(--muted);font-size:14px}
 @media(max-width:640px){.explored>div{grid-template-columns:1fr;gap:2px}}
+.bet{background:var(--note-bg);border:1px solid var(--note-line);border-radius:14px;padding:22px 24px}
+.bet h3{color:var(--note-ink);font-size:20px}
+.bet p:last-child{margin:0}

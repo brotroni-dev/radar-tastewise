@@ -866,3 +866,35 @@ p { margin: 0 0 1em; }
 .hop svg { width: 96px; }
 .hop span, .hop small { display: none; }
 .moment-row { gap: 12px 8px; }
+
+/* Slack as a desktop window: landscape, compact, scrolls inside */
+.proto.full .proto-body { grid-template-columns: 1fr 230px; }
+.proto.full .stage { padding: 16px; }
+.moment { max-width: none; }
+.sl { aspect-ratio: 16 / 10; min-height: 0; max-height: 680px; font-size: 12.5px; }
+.sl-body { grid-template-columns: 44px 180px 1fr; }
+.sl-side .hd { padding: 10px 12px; font-size: 14px; }
+.sl-side .it { font-size: 13px; padding: 3px 12px; }
+.sl-side .it.sub { padding-left: 22px; }
+.sl-side .sec { font-size: 13px; padding: 8px 12px 3px; }
+.sl-head { padding: 8px 14px; }
+.sl-tabs { padding: 4px 14px; font-size: 12px; }
+.sl-msgs { overflow: auto; justify-content: flex-start; padding: 10px 14px 6px; gap: 8px; min-height: 0; }
+.sl-msg .who b { font-size: 14px; }
+.sl-msg .txt { font-size: 13px; }
+.bk { gap: 6px; }
+.bk-h { font-size: 14.5px; }
+.bk-s { font-size: 13px; }
+.bk-ctx { font-size: 11.5px; }
+.bk-win { font-size: 12.5px; padding: 5px 10px; }
+.bk-f { padding: 6px 8px; }
+.bk-f .n { font-size: 15px; }
+.bk-f .l { font-size: 10.5px; }
+.bk-btn { padding: 5px 10px; font-size: 12px; }
+.bk-links { font-size: 11.5px; }
+.bk-more { padding-top: 8px; gap: 6px; }
+.bk-row { font-size: 12.5px; }
+.sl-comp { margin: 4px 14px 10px; }
+.sl-comp .in { padding: 7px 10px; font-size: 13px; }
+.gm { aspect-ratio: 16 / 10; min-height: 0; max-height: 680px; }
+.gm-panel { overflow: auto; }

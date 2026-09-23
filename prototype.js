@@ -368,7 +368,7 @@
           '<span class="hint">Maya picked Slack for this agent. The email says the same.</span></div>' +
           '<div class="moment-row"><div class="phone-wrap">' + phone() + '</div>' +
           '<div class="hop" aria-hidden="true"><svg viewBox="0 0 96 300"><defs><marker id="hopArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5 0 10z"/></marker></defs>' +
-          '<circle cx="6" cy="112" r="3.5"/><path d="M6 112 C 62 112, 48 236, 101 236" marker-end="url(#hopArrow)"/></svg></div>' +
+          '<circle cx="6" cy="112" r="3.5"/><path d="M6 112 C 64 112, 44 158, 101 158" marker-end="url(#hopArrow)"/></svg></div>' +
           '<div class="moment-screen">' + (ui.channel === 'slack' ? slackWin() : emailWin()) + '</div></div></div>';
       }
     },
@@ -621,6 +621,8 @@
     mount.querySelector('[data-prev]').disabled = ui.i === 0;
     mount.querySelector('[data-next]').innerHTML = ui.i === STATES.length - 1 ? 'Restart' : 'Next ' + ic('arrowr');
     stage.scrollTop = 0;
+    var m = stage.querySelector('.sl-msgs');
+    if (m) { var days = m.querySelectorAll('.sl-day'); var t = days[days.length - 1]; if (t) m.scrollTop = t.getBoundingClientRect().top - m.getBoundingClientRect().top - 4; }
   }
 
   function go(i, keepFb) {

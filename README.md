@@ -29,21 +29,12 @@ watching her category so she doesn't have to know the question.
 | "For you" home in the product | She isn't in the product. Doesn't fix pull. |
 | Slides plugin | Lives in her output, but heavy and narrow. |
 
-**The bet.** Radar keeps the good parts of each: cadence from the digest,
-noticing from alerts, readiness from the briefing, team reach from sharing,
-under one mental model Maya already understands: delegation. She tells Radar
-what matters once (or accepts what it suggests), picks where and in which
-rhythm, and every update arrives with the next action already drafted.
-
-Her week already runs in three rhythms: daily (meetings, approvals, the
-team's questions), weekly (performance, status, the management update) and
-periodic (the retailer review, the quarterly plan, the launch brief). Radar
-reports in those rhythms, not on a schedule of its own. Urgency is the only
-thing that breaks a rhythm: a closing window carries a date and comes today.
-
-The one piece I designed is the update reaching her and what she does with
-it. The hub and create-by-prompt are shown as one screen each, the "how it
-knows".
+**The bet.** Radar is delegation. Maya tells it what matters once, in her
+words, and it does the noticing: agents that report in her three rhythms,
+daily, weekly and periodic, in Slack or email, with the next action already
+drafted. Only one thing may interrupt a rhythm: a closing window. It comes
+with a date. The piece I designed: the update reaching her, and what she
+does with it.
 
 ## Assumptions, written as decisions
 

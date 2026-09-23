@@ -92,3 +92,15 @@ driving the prototype's own state machine rather than clicking.
 **Roni's review:** (to fill)
 
 **Changed by hand:** (to fill)
+
+## Round 3: write-up and README
+
+**Asked:** fill the "Working with AI" section from this log (asked for / got
+wrong / changed by hand), write README.md as the standalone one-page
+write-up with the live links, and add the styles for the section.
+
+**Claude produced:** the section as three cards, README.md, a phone-width
+check (no horizontal scroll at 375px) and a dark-mode check.
+
+**Open before publishing:** the "changed by hand" card has a placeholder for
+Roni's copy and design edits after review.

@@ -134,7 +134,37 @@
     <div class="reading">
       <div class="kicker">04 &middot; Working with AI</div>
       <h2>What I asked for, what it got wrong, what I changed by hand.</h2>
-      <div class="placeholder">Written last, from the process log and the commit history. Round 3.</div>
+      <p class="lede">Built in Claude Code, in one session, in rounds: think first, lock the words, then build. One look in the browser per round, one fix pass, one commit. The full log and the commit history are in the repo.</p>
+    </div>
+    <div class="cards ai-cards">
+      <div class="card">
+        <h3>What I asked for</h3>
+        <ul class="list">
+          <li>The plan before any code: read the brief and my CV, propose the best solution, ask me questions, work to UX best practice.</li>
+          <li>All the copy for the seven states and this page in one file, reviewed before the build.</li>
+          <li>The build in rounds: skeleton and states 1-4, then 5-7, then the write-up. One look per round, then fixes, then a commit.</li>
+          <li>This page on GitHub Pages, like my portfolio, so the commit history doubles as a process log.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>What it got wrong</h3>
+        <ul class="list">
+          <li>Its first bet was a briefing triggered by my calendar. Sharp, but it only fires around meetings, and a brand manager should be ready weeks before. "Before meetings" became one setting, not the idea.</li>
+          <li>It proposed "team questions to Maya per week" as a metric. Not measurable from the product. Replaced with agent retention and the "not relevant" rate.</li>
+          <li>It assumed a Claude artifact link was the deliverable. I wanted one GitHub URL.</li>
+          <li>It wrote everything with long dashes, which read as a machine tell. Rewritten, and the rule now lives in its memory.</li>
+          <li>After the first build, the Slack sidebar squeezed the message at medium widths. Fixed after the one look.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>What I changed by hand</h3>
+        <ul class="list">
+          <li>The concept, twice. From a calendar briefing, to "set up once and get insights", to agents Maya can set, adjust and create by prompt, with presets, cadence, and actions beyond slides.</li>
+          <li>The trigger. Not the meeting: "it's her responsibility to be ready way before."</li>
+          <li>The metric, the hosting, the writing rule.</li>
+          <li>Copy and design after review: [Roni fills this in before publishing.]</li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>

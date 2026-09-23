@@ -272,7 +272,7 @@
     return '<div class="phone"><div class="notch"></div><div class="clock">8:41</div><div class="date">Tuesday, September 22</div>' +
       '<div class="notif"><div class="appic">' + (slack ? slackLogo() : gmailLogo()) + '</div>' +
       '<div class="nt"><div class="nm"><span>Time sensitive</span><span>now</span></div><b>' + (slack ? 'Slack' : 'Gmail') + '</b>' +
-      '<p>Radar: window closes Oct 1. Bloomwell\'s Magnesium Sleep Gummies are gaining fast at Target. Here\'s why it matters for Kindroot.</p></div></div></div>';
+      '<p>Radar: your daily is ready. 3 updates, one with a window closing Oct 1.</p></div></div></div>';
   }
 
   function emailWin() {

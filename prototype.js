@@ -11,7 +11,7 @@
     agents: [true, true, true, true, true],
     presets: [false, false, false, false, false],
     phase: 0, created: false, createdAgent: null,
-    liked: false, ed: null, editAgent: 0, menu: -1, prompt: 'anything that could hurt my magnesium line at Target'
+    liked: false, sfb: {}, ed: null, editAgent: 0, menu: -1, prompt: 'anything that could hurt my magnesium line at Target'
   };
 
   /* Icons: one small stroke set, currentColor */
@@ -274,9 +274,22 @@
   /* The Block Kit card, shared by Slack and email */
   function blockKit() {
     var btn = function (cls, attrs, label) { return '<button class="bk-btn' + (cls ? ' ' + cls : '') + '" ' + attrs + '>' + label + '</button>'; };
+    var idx = 0;
     var item = function (title, why, urg, cls, actions) {
+      var k = idx++, st = ui.sfb[k];
+      var thumbs = '<span class="bk-thumbs"><button class="bk-thumb" data-sfb="' + k + '|up" aria-pressed="' + (st === 'up') + '" aria-label="Relevant">' + ic('up') + '</button><button class="bk-thumb" data-sfb="' + k + '|down" aria-pressed="' + (st === 'down' || (st && st.indexOf('r:') === 0)) + '" aria-label="Not relevant">' + ic('down') + '</button></span>';
+      var after = '';
+      if (st === 'down') {
+        after = '<div class="bk-why">What was off? ';
+        for (var r = 0; r < REASONS.length; r++) after += '<button class="bk-chip" data-sfb="' + k + '|r:' + REASONS[r][0] + '">' + REASONS[r][1] + '</button>';
+        after += '</div>';
+      } else if (st && st.indexOf('r:') === 0) {
+        after = '<div class="bk-why done">' + ic('check') + 'Got it. Competitor launches will adjust. Next update tomorrow, 8:30.</div>';
+      } else if (st === 'up') {
+        after = '<div class="bk-why done">' + ic('check') + 'Thanks. More like this in your daily.</div>';
+      }
       return '<div class="bk-item"><div class="bk-h">' + title + '</div><div class="bk-s"><b>Why it matters:</b> ' + why + '</div>' +
-        '<div class="bk-urg ' + cls + '">' + ic('clock') + '<span>' + urg + '</span></div><div class="bk-actions">' + actions + '</div></div>';
+        '<div class="bk-urg ' + cls + '">' + ic('clock') + '<span>' + urg + '</span></div><div class="bk-actions">' + actions + '<span class="grow"></span>' + thumbs + '</div>' + after + '</div>';
     };
     var other = 'data-toast="Opens that insight. This walkthrough follows the Bloomwell one."';
     return '<div class="bk">' +
@@ -701,7 +714,7 @@
 
   mount.addEventListener('click', function (e) {
     if (!ui.hinted && e.target.closest('#p-stage button, #p-stage a')) ui.hinted = true;
-    var t = e.target.closest('[data-go],[data-channel],[data-tab],[data-toast],[data-edit],[data-copy],[data-ask],[data-prev],[data-next],[data-restart],[data-fb],[data-reason],[data-agent],[data-preset],[data-phase],[data-fill],[data-rmchip],[data-seg],[data-urgent],[data-menu],[data-editagent],[data-where],[data-like],[data-day]');
+    var t = e.target.closest('[data-go],[data-channel],[data-tab],[data-toast],[data-edit],[data-copy],[data-ask],[data-prev],[data-next],[data-restart],[data-fb],[data-reason],[data-agent],[data-preset],[data-phase],[data-fill],[data-rmchip],[data-seg],[data-urgent],[data-menu],[data-editagent],[data-where],[data-like],[data-day],[data-sfb]');
     var menuWasOpen = ui.menu !== -1;
     if (!t || !mount.contains(t)) { if (menuWasOpen) { ui.menu = -1; render(); } return; }
     if (t.hasAttribute('data-tab')) ui.tab = t.getAttribute('data-tab');
@@ -717,6 +730,7 @@
     if (t.hasAttribute('data-edit')) { ui.edit = !ui.edit; render(); if (ui.edit) { var b = stage.querySelector('#draft-body'); if (b) b.focus(); } return; }
     if (t.hasAttribute('data-fb')) { ui.fb = ui.fb === 'no' ? null : t.getAttribute('data-fb'); ui.liked = false; if (!ui.fb) ui.reason = null; render(); return; }
     if (t.hasAttribute('data-reason')) { ui.reason = t.getAttribute('data-reason'); render(); return; }
+    if (t.hasAttribute('data-sfb')) { var sp = t.getAttribute('data-sfb').split('|'), cur = ui.sfb[sp[0]]; ui.sfb[sp[0]] = (cur === sp[1] || (sp[1] === 'down' && cur && cur.indexOf('r:') === 0)) ? null : sp[1]; render(); return; }
     if (t.hasAttribute('data-day')) { var di = +t.getAttribute('data-day'); ui.ed.days[di] = !ui.ed.days[di]; render(); return; }
     if (t.hasAttribute('data-like')) { ui.liked = !ui.liked; if (ui.liked) { ui.fb = null; } render(); toast(ui.liked ? 'Thanks. More like this in your daily.' : 'Noted.'); return; }
     if (t.hasAttribute('data-urgent')) { ui.urgent = !ui.urgent; render(); toast(ui.urgent ? 'Urgent updates break through to today again.' : 'Urgent updates will wait for their rhythm. Windows can close.'); return; }

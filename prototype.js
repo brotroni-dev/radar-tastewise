@@ -136,6 +136,23 @@
   var RHY = [['daily', 'Daily', 'sun'], ['weekly', 'Weekly', 'week'], ['periodic', 'Periodic', 'flag']];
   var RH_HINT = { daily: 'Every morning at 8:30, before her first meeting.', weekly: 'Monday morning, before the status and the management update.', periodic: 'Builds toward the moment: the Target review on Oct 1, the Q4 plan, the launch brief.' };
   var RH_ICON = { daily: 'sun', weekly: 'week', periodic: 'flag' };
+  var REASONS = [['retailer', 'Wrong retailer'], ['product', 'Wrong product'], ['small', 'Too small'], ['urgent', 'Not urgent'], ['knew', 'Already knew']];
+  var REASON_MSG = {
+    retailer: 'Competitor launches will focus on Target and CVS, where your magnesium sells.',
+    product: 'Competitor launches will stay on your magnesium and probiotic lines.',
+    small: 'Competitor launches will skip launches under 1x category velocity and stay on magnesium at Target.',
+    urgent: 'Competitor launches will keep items like this in your daily rhythm, and only break through when a window is under a week.',
+    knew: 'Competitor launches will report right away when it\'s big, instead of waiting for the digest.'
+  };
+  function feedbackRow() {
+    var h = '<div class="thumbs"><button class="btn btn-ghost btn-ic" data-like aria-pressed="' + !!ui.liked + '" aria-label="Relevant">' + ic('up') + '</button><button class="btn btn-ghost btn-ic" data-fb="no" aria-pressed="' + (ui.fb === 'no') + '" aria-label="Not relevant">' + ic('down') + '</button></div>';
+    if (ui.fb === 'no') {
+      h += '<div class="whyoff"><span class="hint">What was off?</span><div class="chips">';
+      for (var r = 0; r < REASONS.length; r++) h += '<button class="chip" data-reason="' + REASONS[r][0] + '" aria-pressed="' + (ui.reason === REASONS[r][0]) + '">' + REASONS[r][1] + '</button>';
+      h += '</div>' + (ui.reason ? '<div class="confirm"><b>Got it.</b> ' + REASON_MSG[ui.reason] + ' Next update tomorrow, 8:30.</div>' : '') + '</div>';
+    }
+    return h;
+  }
   var RH_LABEL = { daily: 'Daily', weekly: 'Weekly', periodic: 'Periodic' };
 
   function urgencyBanner(text, src) {
@@ -229,7 +246,7 @@
         'your Ashwagandha SKU sits on the same shelf. 0.9x category velocity in week one.',
         'No window. Worth watching, not acting.', 'none',
         btn('', other, 'Open insight') + btn('', 'data-go="4"', 'Tune this agent')) +
-      '<div class="bk-links"><a data-toast="You asked Competitor launches to watch magnesium at Target, in your daily. The window made the first one urgent.">Why you\'re seeing this</a><a data-go="4" data-fb="no">Not relevant</a></div>' +
+      '<div class="bk-links"><a data-toast="You asked Competitor launches to watch magnesium at Target, in your daily. The window made the first one urgent.">Why you\'re seeing this</a><a data-go="2" data-fb="no">Not relevant</a></div>' +
       '</div>';
   }
 
@@ -398,7 +415,7 @@
           'Launched 6 weeks ago. Magnesium glycinate + L-theanine. Positioned "sleep + stress".',
           '<button class="btn btn-primary btn-sm" data-go="3" data-tab="slide">' + ic('slide') + 'Create slide</button><button class="btn btn-ghost btn-sm" data-go="3" data-tab="share">' + ic('share') + 'Share</button>',
           '<button class="btn btn-ghost btn-ic" data-go="4" aria-label="Tune this agent" title="Tune this agent">' + ic('tune') + '</button>',
-          '<div class="thumbs"><button class="btn btn-ghost btn-ic" data-like aria-pressed="' + !!ui.liked + '" aria-label="Relevant">' + ic('up') + '</button><button class="btn btn-ghost btn-ic" data-go="4" data-fb="no" aria-label="Not relevant">' + ic('down') + '</button></div>') +
+          feedbackRow()) +
           urgencyBanner('Target locks Q4 planograms on <b>Oct 6</b>. Endcap requests close <b>Oct 1</b>, the day of your review. After that, the next shot at placement is January.', 'Target vendor calendar, Q4') +
           '<div class="tiles"><div class="tile"><div class="n">2.1x</div><div class="l">Category velocity at Target, last 6 weeks</div><div class="s">Retail sales data, weeks 32-37</div></div>' +
           '<div class="tile"><div class="n">+38%</div><div class="l">"Magnesium for sleep" searches, quarter over quarter</div><div class="s">Search data, US, Q3 vs Q2</div></div>' +
@@ -493,24 +510,9 @@
       notes: ['The same card she saw when she created an agent. One place to change things, and she can get here from Slack, from email, or from the insight.', 'When she says what was off, the agent answers with what it will do differently.', '"Not urgent" teaches it to wait for the rhythm, unless a window is under a week.'],
       render: function () {
         var a = AGENTS[ui.editAgent];
-        var reasons = [['retailer', 'Wrong retailer'], ['product', 'Wrong product'], ['small', 'Too small'], ['urgent', 'Not urgent'], ['knew', 'Already knew']];
-        var msg = {
-          retailer: 'Competitor launches will focus on Target and CVS, where your magnesium sells.',
-          product: 'Competitor launches will stay on your magnesium and probiotic lines.',
-          small: 'Competitor launches will skip launches under 1x category velocity and stay on magnesium at Target.',
-          urgent: 'Competitor launches will keep items like this in your daily rhythm, and only break through when a window is under a week.',
-          knew: 'Competitor launches will report right away when it\'s big, instead of waiting for the digest.'
-        };
         var fb = '';
-        if (ui.editAgent === 0 && ui.fb === 'no') {
-          fb = '<div class="c fb"><div class="c-head">' + ic('down') + 'You said the Bloomwell update wasn\'t relevant. What was off?</div><div class="chips">';
-          for (var r = 0; r < reasons.length; r++) fb += '<button class="chip" data-reason="' + reasons[r][0] + '" aria-pressed="' + (ui.reason === reasons[r][0]) + '">' + reasons[r][1] + '</button>';
-          fb += '</div>' + (ui.reason ? '<div class="confirm"><b>Got it.</b> ' + msg[ui.reason] + ' Next update tomorrow, 8:30.</div>' : '') + '</div>';
-        }
-        if (ui.editAgent === 0 && ui.fb === 'more') fb = '<div class="confirm"><b>Got it.</b> I\'ll also watch Bloomwell at CVS and Amazon, and flag format launches across the rest of your range.</div>';
-        var learned = (ui.fb === 'no' && ui.reason === 'small') ? '<span class="tag learned">Skips launches under 1x</span>' :
-          (ui.fb === 'no' && ui.reason === 'urgent') ? '<span class="tag learned">Breaks through only under a week</span>' :
-          (ui.fb === 'more') ? '<span class="tag learned">Bloomwell at CVS, Amazon</span>' : '';
+        var learned = (ui.reason === 'small') ? '<span class="tag learned">Skips launches under 1x</span>' :
+          (ui.reason === 'urgent') ? '<span class="tag learned">Breaks through only under a week</span>' : '';
         var card = editor({
           pill: learned ? '<span class="pill">Changed just now</span>' : '<span class="pill">On &middot; ' + RH_LABEL[ui.ed.rh].toLowerCase() + '</span>',
           learned: learned,
@@ -631,7 +633,7 @@
   function go(i, keepFb) {
     if (i < 0 || i >= STATES.length) return;
     ui.i = i; ui.edit = false; ui.ask = -1; ui.menu = -1; ui.phase = 0;
-    if (!keepFb) { ui.fb = null; ui.reason = null; }
+    if (!keepFb) { ui.fb = null; }
     if (i === 4) ui.ed = fromAgent(ui.editAgent);
     if (FULL) { try { history.replaceState(null, '', '#step-' + (i + 1)); } catch (e) {} }
     render();
@@ -664,9 +666,9 @@
     if (t.hasAttribute('data-tab')) { ui.edit = false; ui.ask = -1; render(); return; }
     if (t.hasAttribute('data-ask')) { ui.ask = +t.getAttribute('data-ask'); render(); return; }
     if (t.hasAttribute('data-edit')) { ui.edit = !ui.edit; render(); if (ui.edit) { var b = stage.querySelector('#draft-body'); if (b) b.focus(); } return; }
-    if (t.hasAttribute('data-fb')) { ui.fb = t.getAttribute('data-fb'); ui.reason = null; render(); return; }
+    if (t.hasAttribute('data-fb')) { ui.fb = ui.fb === 'no' ? null : t.getAttribute('data-fb'); ui.liked = false; if (!ui.fb) ui.reason = null; render(); return; }
     if (t.hasAttribute('data-reason')) { ui.reason = t.getAttribute('data-reason'); render(); return; }
-    if (t.hasAttribute('data-like')) { ui.liked = !ui.liked; render(); toast(ui.liked ? 'Thanks. More like this in your daily.' : 'Noted.'); return; }
+    if (t.hasAttribute('data-like')) { ui.liked = !ui.liked; if (ui.liked) { ui.fb = null; } render(); toast(ui.liked ? 'Thanks. More like this in your daily.' : 'Noted.'); return; }
     if (t.hasAttribute('data-urgent')) { ui.urgent = !ui.urgent; render(); toast(ui.urgent ? 'Urgent updates break through to today again.' : 'Urgent updates will wait for their rhythm. Windows can close.'); return; }
     if (t.hasAttribute('data-menu')) { var mi = +t.getAttribute('data-menu'); ui.menu = ui.menu === mi ? -1 : mi; render(); return; }
     if (t.hasAttribute('data-agent')) { var ai = +t.getAttribute('data-agent'); ui.agents[ai] = !ui.agents[ai]; ui.menu = -1; render(); toast(ui.agents[ai] ? AGENTS[ai].name + ' is back on.' : AGENTS[ai].name + ' paused. Nothing from it until you turn it on.'); return; }

@@ -953,3 +953,5 @@ p { margin: 0 0 1em; }
 .one .mini { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; background: var(--surface-2); margin-bottom: 6px; }
 .one .mini .bk { max-width: none; }
 .one .mini .bk-btn { cursor: default; }
+.whyoff { margin-top: 10px; display: grid; gap: 8px; max-width: 720px; }
+.whyoff .confirm { margin-top: 2px; }

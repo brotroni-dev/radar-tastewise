@@ -155,6 +155,44 @@
   }
   var RH_LABEL = { daily: 'Daily', weekly: 'Weekly', periodic: 'Periodic' };
 
+  var TIMES = ['7:00', '7:30', '8:00', '8:30', '9:00', '12:00', '17:00'];
+  var WDAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+  var DAYS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+  var DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  var EVENTS = [['target', 'Target category review', 'Oct 1'], ['q4', 'Q4 plan', 'Oct 15'], ['innovation', 'Innovation pipeline review', 'Nov 3'], ['launch', 'Launch brief', 'Nov 20']];
+  var LEADS = [3, 7, 14, 21];
+  function sel(field, opts, value, fmt) {
+    var h = '<select class="sel" data-ed="' + field + '" aria-label="' + field + '">';
+    for (var i = 0; i < opts.length; i++) {
+      var v = fmt ? fmt(opts[i]) : opts[i];
+      h += '<option value="' + v[0] + '"' + (String(v[0]) === String(value) ? ' selected' : '') + '>' + v[1] + '</option>';
+    }
+    return h + '</select>';
+  }
+  function schedule(e) {
+    if (e.rh === 'daily') {
+      var d = '<div class="days">';
+      for (var i = 0; i < 7; i++) d += '<button class="day" data-day="' + i + '" aria-pressed="' + !!e.days[i] + '" aria-label="' + DAY_NAMES[i] + '">' + DAYS[i] + '</button>';
+      d += '</div>';
+      return '<div class="sched"><span>At</span>' + sel('time', TIMES, e.time, function (t) { return [t, t]; }) + '<span>on</span>' + d + '</div>';
+    }
+    if (e.rh === 'weekly') {
+      return '<div class="sched"><span>Every</span>' + sel('wday', WDAYS, e.wday, function (t) { return [t, t]; }) + '<span>at</span>' + sel('time', TIMES, e.time, function (t) { return [t, t]; }) + '</div>';
+    }
+    return '<div class="sched">' + sel('lead', LEADS, e.lead, function (n) { return [n, n + ' days']; }) + '<span>before</span>' + sel('event', EVENTS, e.event, function (ev) { return [ev[0], ev[1] + ', ' + ev[2]]; }) + '<span>then as things change</span></div>';
+  }
+  function eventOf(e) { for (var i = 0; i < EVENTS.length; i++) if (EVENTS[i][0] === e.event) return EVENTS[i]; return EVENTS[0]; }
+  function schedHint(e) {
+    if (e.rh === 'daily') {
+      var on = []; for (var i = 0; i < 7; i++) if (e.days[i]) on.push(DAY_NAMES[i]);
+      var when = (on.length === 5 && !e.days[5] && !e.days[6]) ? 'Every weekday' : on.length === 7 ? 'Every day' : on.length ? on.join(', ') : 'No days picked';
+      return when + ' at ' + e.time + '. Her first meeting is at 9:00.';
+    }
+    if (e.rh === 'weekly') return 'Every ' + e.wday + ' at ' + e.time + ', before the status and the management update.';
+    var ev = eventOf(e);
+    return 'First brief ' + e.lead + ' days before the ' + ev[1] + ' (' + ev[2] + '), then whenever something changes until the day.';
+  }
+
   function urgencyBanner(text, src) {
     return '<div class="urg" role="status">' + ic('clock') + '<div><span class="urg-k">Window closing</span> ' + text + (src ? '<span class="src">' + src + '</span>' : '') + '</div><div class="date"><b>Oct 1</b><span>9 days</span></div></div>';
   }
@@ -184,14 +222,18 @@
 
   function fromAgent(i) {
     var a = AGENTS[i];
-    return { name: a.name, ask: a.ask, chips: a.chips.slice(), rh: a.rh, slack: a.slack, email: a.email, src: i };
+    return { name: a.name, ask: a.ask, chips: a.chips.slice(), rh: a.rh, slack: a.slack, email: a.email, src: i, time: '8:30', days: [true, true, true, true, true, false, false], wday: 'Monday', event: a.name === 'Retailer review prep' ? 'target' : 'q4', lead: 7 };
   }
   function fromPrompt(text) {
     var t = (text || '').toLowerCase();
-    if (t.indexOf('gut') >= 0) return { name: 'Launches in gut health', ask: text, chips: ['Competitor launches (gut health)', 'Probiotics, fiber, prebiotics', 'Target, CVS, Amazon'], rh: 'weekly', slack: true, email: false, src: 'new' };
-    if (t.indexOf('price') >= 0) return { name: 'Price moves on my SKUs at Amazon', ask: text, chips: ['Price and promo moves (your SKUs)', 'Competitor prices (magnesium, probiotic)', 'Promo calendars at your retailers'], rh: 'daily', slack: true, email: false, src: 'new' };
-    if (t.indexOf('claim') >= 0) return { name: 'Claims growing in women\'s health', ask: text, chips: ['Claims (women\'s health)', 'Ingredients on the rise', 'Search and conversation'], rh: 'weekly', slack: false, email: true, src: 'new' };
-    return { name: 'Threats to magnesium at Target', ask: text || ui.prompt, chips: ['Competitor launches (magnesium, Target)', 'Price and promo moves (magnesium, Target)', 'Share drops (Kindroot Magnesium Glycinate, Target)', 'Negative review spikes (Kindroot Magnesium)'], rh: 'daily', slack: true, email: false, src: 'new' };
+    var base = { src: 'new', time: '8:30', days: [true, true, true, true, true, false, false], wday: 'Monday', event: 'target', lead: 7 };
+    var out;
+    if (t.indexOf('gut') >= 0) out = { name: 'Launches in gut health', ask: text, chips: ['Competitor launches (gut health)', 'Probiotics, fiber, prebiotics', 'Target, CVS, Amazon'], rh: 'weekly', slack: true, email: false };
+    else if (t.indexOf('price') >= 0) out = { name: 'Price moves on my SKUs at Amazon', ask: text, chips: ['Price and promo moves (your SKUs)', 'Competitor prices (magnesium, probiotic)', 'Promo calendars at your retailers'], rh: 'daily', slack: true, email: false };
+    else if (t.indexOf('claim') >= 0) out = { name: 'Claims growing in women\'s health', ask: text, chips: ['Claims (women\'s health)', 'Ingredients on the rise', 'Search and conversation'], rh: 'weekly', slack: false, email: true };
+    else out = { name: 'Threats to magnesium at Target', ask: text || ui.prompt, chips: ['Competitor launches (magnesium, Target)', 'Price and promo moves (magnesium, Target)', 'Share drops (Kindroot Magnesium Glycinate, Target)', 'Negative review spikes (Kindroot Magnesium)'], rh: 'daily', slack: true, email: false };
+    for (var k in base) out[k] = base[k];
+    return out;
   }
   function whereText(e) {
     if (e.slack && e.email) return 'in Slack and by email';
@@ -200,9 +242,9 @@
   function firstUpdate() {
     var e = ui.ed || fromPrompt(ui.prompt);
     var w = whereText(e);
-    if (e.rh === 'weekly') return 'Monday, ' + w + ', in your weekly';
-    if (e.rh === 'periodic') return 'before the Target review, Oct 1, ' + w;
-    return 'tomorrow, 8:30, ' + w + ', in your daily';
+    if (e.rh === 'weekly') return e.wday + ' at ' + e.time + ', ' + w;
+    if (e.rh === 'periodic') { var ev = eventOf(e); return e.lead + ' days before the ' + ev[1] + ', ' + w; }
+    return 'tomorrow at ' + e.time + ', ' + w;
   }
 
   /* The editor: "Here's what I understood", for a new agent and for an existing one */
@@ -221,7 +263,8 @@
       '<div class="field"><span>Name</span><div><span class="name" contenteditable="true" spellcheck="false">' + e.name + '</span></div></div>' +
       '<div class="field"><span>Watches</span><div class="tags">' + chips + '</div></div></div>' +
       '<div class="ed-sec"><div class="ed-title">' + ic('clock') + 'When and where</div>' +
-      '<div class="field"><span>Rhythm</span><div>' + seg('ed', 'rh', RHY) + '<span class="hint seg-hint">' + RH_HINT[e.rh] + '</span></div></div>' +
+      '<div class="field"><span>Rhythm</span><div>' + seg('ed', 'rh', RHY) + '</div></div>' +
+      '<div class="field"><span>Schedule</span><div>' + schedule(e) + '<span class="hint seg-hint">' + schedHint(e) + '</span></div></div>' +
       '<div class="field"><span>Where</span><div><div class="wsel"><button class="wopt" data-where="slack" aria-pressed="' + e.slack + '">' + ic('hash') + 'Slack DM</button><button class="wopt" data-where="email" aria-pressed="' + e.email + '">' + ic('mail') + 'Email</button></div><span class="hint">' + (bothOff ? 'Pick at least one.' : 'One or both.') + '</span></div></div>' +
       urgencyToggle() + '</div>' +
       (o.sample ? '<div class="ed-sec"><div class="ed-title">' + ic('eye') + 'Sample of the first update</div>' + o.sample + '</div>' : '') +
@@ -657,7 +700,7 @@
   }
 
   mount.addEventListener('click', function (e) {
-    var t = e.target.closest('[data-go],[data-channel],[data-tab],[data-toast],[data-edit],[data-copy],[data-ask],[data-prev],[data-next],[data-restart],[data-fb],[data-reason],[data-agent],[data-preset],[data-phase],[data-fill],[data-rmchip],[data-seg],[data-urgent],[data-menu],[data-editagent],[data-where],[data-like]');
+    var t = e.target.closest('[data-go],[data-channel],[data-tab],[data-toast],[data-edit],[data-copy],[data-ask],[data-prev],[data-next],[data-restart],[data-fb],[data-reason],[data-agent],[data-preset],[data-phase],[data-fill],[data-rmchip],[data-seg],[data-urgent],[data-menu],[data-editagent],[data-where],[data-like],[data-day]');
     var menuWasOpen = ui.menu !== -1;
     if (!t || !mount.contains(t)) { if (menuWasOpen) { ui.menu = -1; render(); } return; }
     if (t.hasAttribute('data-tab')) ui.tab = t.getAttribute('data-tab');
@@ -673,7 +716,7 @@
     if (t.hasAttribute('data-edit')) { ui.edit = !ui.edit; render(); if (ui.edit) { var b = stage.querySelector('#draft-body'); if (b) b.focus(); } return; }
     if (t.hasAttribute('data-fb')) { ui.fb = ui.fb === 'no' ? null : t.getAttribute('data-fb'); ui.liked = false; if (!ui.fb) ui.reason = null; render(); return; }
     if (t.hasAttribute('data-reason')) { ui.reason = t.getAttribute('data-reason'); render(); return; }
-    if (t.hasAttribute('data-reread')) { reread(); return; }
+    if (t.hasAttribute('data-day')) { var di = +t.getAttribute('data-day'); ui.ed.days[di] = !ui.ed.days[di]; render(); return; }
     if (t.hasAttribute('data-like')) { ui.liked = !ui.liked; if (ui.liked) { ui.fb = null; } render(); toast(ui.liked ? 'Thanks. More like this in your daily.' : 'Noted.'); return; }
     if (t.hasAttribute('data-urgent')) { ui.urgent = !ui.urgent; render(); toast(ui.urgent ? 'Urgent updates break through to today again.' : 'Urgent updates will wait for their rhythm. Windows can close.'); return; }
     if (t.hasAttribute('data-menu')) { var mi = +t.getAttribute('data-menu'); ui.menu = ui.menu === mi ? -1 : mi; render(); return; }
@@ -701,7 +744,12 @@
   });
 
   mount.querySelector('#p-notes').addEventListener('change', function (e) { ui.notes = e.target.checked; notesBox.hidden = !ui.notes; });
-  mount.addEventListener('change', function (e) { if (e.target && e.target.id === 'edq') reread(); });
+  mount.addEventListener('change', function (e) {
+    if (!e.target) return;
+    if (e.target.id === 'edq') { reread(); return; }
+    var f = e.target.getAttribute && e.target.getAttribute('data-ed');
+    if (f && ui.ed) { ui.ed[f] = e.target.value; render(); }
+  });
 
   function reread() {
     var q = stage.querySelector('#edq');

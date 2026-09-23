@@ -11,7 +11,7 @@
     agents: [true, true, true, true, true],
     presets: [false, false, false, false, false],
     phase: 0, created: false, createdAgent: null,
-    ed: null, editAgent: 0, menu: -1, prompt: 'anything that could hurt my magnesium line at Target'
+    liked: false, ed: null, editAgent: 0, menu: -1, prompt: 'anything that could hurt my magnesium line at Target'
   };
 
   /* Icons: one small stroke set, currentColor */
@@ -77,7 +77,9 @@
     dollar: 'M12 2v20M17 6.5a4 4 0 0 0-4-2.5H11a3.5 3.5 0 0 0 0 7h2a3.5 3.5 0 0 1 0 7h-2a4 4 0 0 1-4-2.5',
     back: 'M15 5l-7 7 7 7',
     fwd: 'M9 5l7 7-7 7',
-    history: 'M3 12a9 9 0 1 0 3-6.7M3 4v5h5M12 8v4l3 2'
+    history: 'M3 12a9 9 0 1 0 3-6.7M3 4v5h5M12 8v4l3 2',
+    up: 'M7 11v10H3V11zM7 11l4-8a2 2 0 0 1 2 2v4h5a2 2 0 0 1 2 2.3l-1.4 7A2 2 0 0 1 16.6 21H7',
+    down: 'M17 13V3h4v10zM17 13l-4 8a2 2 0 0 1-2-2v-4H6a2 2 0 0 1-2-2.3l1.4-7A2 2 0 0 1 7.4 3H17'
   };
   function ic(name, cls) {
     return '<svg class="ic' + (cls ? ' ' + cls : '') + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + P[name] + '"/></svg>';
@@ -312,8 +314,9 @@
       '<div class="app-main"><div class="app-top"><div class="crumb">' + crumb + '</div><span class="ask">' + ic('sparkle') + 'Ask anything</span><span class="bell">' + ic('bell') + '<i></i></span></div>' +
       '<div class="app-body">' + body + '</div></div></div>';
   }
-  function ph(eyebrow, title, meta, actions) {
-    return '<div class="ph"><div><div class="eyebrow">' + eyebrow + '</div><h4>' + title + '</h4>' + (meta ? '<p class="pm">' + meta + '</p>' : '') + '</div>' + (actions ? '<div class="actions">' + actions + '</div>' : '') + '</div>';
+  function ph(eyebrow, title, meta, actions, right) {
+    return '<div class="ph"><div class="eyebrow">' + eyebrow + '</div><div class="ph-r">' + (right || '') + '</div>' +
+      '<div class="ph-t"><h4>' + title + '</h4>' + (meta ? '<p class="pm">' + meta + '</p>' : '') + '</div><div class="actions">' + (actions || '') + '</div></div>';
   }
   var sep = ' ' + ic('chevr') + ' ';
 
@@ -390,7 +393,8 @@
         var body = ph(ic('radar') + '<span>Competitor launches</span><span>&middot;</span>' + ic('sun') + '<span>Daily</span><span>&middot;</span><span class="pill warn">' + ic('clock') + 'Breaks through</span>',
           'Bloomwell Magnesium Sleep Gummies is gaining fast at Target',
           'Launched 6 weeks ago. Magnesium glycinate + L-theanine. Positioned "sleep + stress". <span class="pill">' + ic('check') + 'Confidence: high</span>',
-          '<button class="btn btn-primary btn-sm" data-go="3" data-tab="slide">' + ic('slide') + 'Create slide</button><button class="btn btn-ghost btn-sm" data-go="3" data-tab="share">' + ic('share') + 'Share</button><button class="btn btn-ghost btn-sm" data-go="4">' + ic('tune') + 'Tune this agent</button>') +
+          '<button class="btn btn-primary btn-sm" data-go="3" data-tab="slide">' + ic('slide') + 'Create slide</button><button class="btn btn-ghost btn-sm" data-go="3" data-tab="share">' + ic('share') + 'Share</button>',
+          '<button class="btn btn-ghost btn-sm" data-go="4">' + ic('tune') + 'Tune this agent</button>') +
           urgencyBanner('Target locks Q4 planograms on <b>Oct 6</b>. Endcap requests close <b>Oct 1</b>, the day of your review. After that, the next shot at placement is January.', 'Target vendor calendar, Q4') +
           '<div class="tiles"><div class="tile"><div class="n">2.1x</div><div class="l">Category velocity at Target, last 6 weeks</div><div class="s">Retail sales data, weeks 32-37</div></div>' +
           '<div class="tile"><div class="n">+38%</div><div class="l">"Magnesium for sleep" searches, quarter over quarter</div><div class="s">Search data, US, Q3 vs Q2</div></div>' +
@@ -414,7 +418,7 @@
           '<div class="also"><div class="c-head" style="margin-bottom:4px">' + ic('radar') + 'Also on your radar</div>' +
           '<div class="row">' + ic('flag') + '<div><span class="ag">Consumer trends &middot; periodic</span>"GLP-1 companion" searches (fiber, electrolytes) +61% in 6 months. For the Q4 plan.</div><span class="when">no window</span></div>' +
           '<div class="row">' + ic('week') + '<div><span class="ag">Claims and ingredients &middot; weekly</span>Ashwagandha conversation cooling, -12% in 90 days. Your Ashwagandha SKU.</div><span class="when">Monday</span></div></div>' +
-          '<div class="ins-foot"><span>Why you\'re seeing this: you asked Competitor launches to watch magnesium at Target. The window made it urgent.</span><span class="grow"></span><a data-go="4">Tune this agent</a><a data-go="4" data-fb="no">Not relevant</a><a data-go="4" data-fb="more">More like this</a></div>';
+          '<div class="ins-foot"><div class="btns"><button class="btn btn-ghost btn-sm" data-like aria-pressed="' + !!ui.liked + '">' + ic('up') + 'Relevant</button><button class="btn btn-ghost btn-sm" data-go="4" data-fb="no">' + ic('down') + 'Not relevant</button></div><span class="grow"></span><span>Why you\'re seeing this: you asked Competitor launches to watch magnesium at Target. The window made it urgent.</span></div>';
         return app('<a data-go="5">Radar</a>' + sep + '<a data-go="5">Competitor launches</a>' + sep + '<b>September 22</b>', body, { url: 'radar/competitor-launches/sep-22' });
       }
     },
@@ -653,7 +657,7 @@
   }
 
   mount.addEventListener('click', function (e) {
-    var t = e.target.closest('[data-go],[data-channel],[data-tab],[data-toast],[data-edit],[data-copy],[data-ask],[data-prev],[data-next],[data-restart],[data-fb],[data-reason],[data-agent],[data-preset],[data-phase],[data-fill],[data-rmchip],[data-seg],[data-urgent],[data-menu],[data-editagent],[data-where]');
+    var t = e.target.closest('[data-go],[data-channel],[data-tab],[data-toast],[data-edit],[data-copy],[data-ask],[data-prev],[data-next],[data-restart],[data-fb],[data-reason],[data-agent],[data-preset],[data-phase],[data-fill],[data-rmchip],[data-seg],[data-urgent],[data-menu],[data-editagent],[data-where],[data-like]');
     var menuWasOpen = ui.menu !== -1;
     if (!t || !mount.contains(t)) { if (menuWasOpen) { ui.menu = -1; render(); } return; }
     if (t.hasAttribute('data-tab')) ui.tab = t.getAttribute('data-tab');
@@ -669,6 +673,7 @@
     if (t.hasAttribute('data-edit')) { ui.edit = !ui.edit; render(); if (ui.edit) { var b = stage.querySelector('#draft-body'); if (b) b.focus(); } return; }
     if (t.hasAttribute('data-fb')) { ui.fb = t.getAttribute('data-fb'); ui.reason = null; render(); return; }
     if (t.hasAttribute('data-reason')) { ui.reason = t.getAttribute('data-reason'); render(); return; }
+    if (t.hasAttribute('data-like')) { ui.liked = !ui.liked; render(); toast(ui.liked ? 'Thanks. More like this in your daily.' : 'Noted.'); return; }
     if (t.hasAttribute('data-urgent')) { ui.urgent = !ui.urgent; render(); toast(ui.urgent ? 'Urgent updates break through to today again.' : 'Urgent updates will wait for their rhythm. Windows can close.'); return; }
     if (t.hasAttribute('data-menu')) { var mi = +t.getAttribute('data-menu'); ui.menu = ui.menu === mi ? -1 : mi; render(); return; }
     if (t.hasAttribute('data-agent')) { var ai = +t.getAttribute('data-agent'); ui.agents[ai] = !ui.agents[ai]; ui.menu = -1; render(); toast(ui.agents[ai] ? AGENTS[ai].name + ' is back on.' : AGENTS[ai].name + ' paused. Nothing from it until you turn it on.'); return; }

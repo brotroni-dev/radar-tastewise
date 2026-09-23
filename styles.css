@@ -931,3 +931,12 @@ p { margin: 0 0 1em; }
 .bk-urg.none { color: var(--sl-muted, var(--muted)); }
 .sl { aspect-ratio: 16 / 11; }
 .gm { aspect-ratio: 16 / 11; }
+
+/* page header: eyebrow row with a right side, title row with actions */
+.ph { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; align-items: start; margin-bottom: 18px; }
+.ph .eyebrow { margin: 0; align-self: center; }
+.ph .ph-r { justify-self: end; align-self: center; }
+.ph .ph-t { min-width: 0; }
+.ph .actions { margin-left: 0; justify-self: end; align-self: end; }
+@media (max-width: 640px) { .ph { grid-template-columns: 1fr; } .ph .ph-r, .ph .actions { justify-self: start; } }
+.ins-foot .btn[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }

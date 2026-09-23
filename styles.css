@@ -1077,3 +1077,20 @@ body.page { font-size: 15px; }
 .frow { gap: 12px; }
 .frow .fnode:not(:last-child)::after { right: -10px; }
 .ftitle { margin: 18px 0 8px; }
+
+/* Flow diagrams */
+.fchart { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 10px; }
+.fchart svg { width: 100%; min-width: 980px; height: auto; display: block; }
+.fchart .fnr { fill: var(--surface); stroke: var(--line-strong); stroke-width: 1.3; transition: stroke .15s ease; }
+.fchart a:hover .fnr { stroke: var(--accent); stroke-width: 1.8; }
+.fchart .fnp { fill: var(--ink); }
+.fchart a:hover .fnp { fill: var(--accent); }
+.fchart .fnd { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.3; }
+.fchart .fnt { font: 600 13px var(--font-display); fill: var(--ink); }
+.fchart .fns { font: 11px var(--font-body); fill: var(--muted); }
+.fchart .fnt.light { fill: var(--bg); }
+.fchart .fns.light { fill: var(--bg); opacity: .8; }
+.fchart .fe { fill: none; stroke: var(--line-strong); stroke-width: 1.5; }
+.fchart marker path { fill: var(--line-strong); }
+.fchart .fel { font: 500 10.5px var(--font-mono); fill: var(--accent); text-transform: uppercase; letter-spacing: .06em; }
+.fchart a { text-decoration: none; }

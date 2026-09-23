@@ -865,3 +865,4 @@ p { margin: 0 0 1em; }
 .hop { width: 96px; }
 .hop svg { width: 96px; }
 .hop span, .hop small { display: none; }
+.moment-row { gap: 12px 8px; }

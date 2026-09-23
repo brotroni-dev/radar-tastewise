@@ -203,15 +203,15 @@
   /* Agents: the presets, in Maya's words */
   var AGENTS = [
     { name: 'Competitor launches', rh: 'daily', slack: true, email: false, ask: 'Who\u2019s launching against my magnesium line at Target, CVS and Amazon?', chips: ['Magnesium', 'Sleep claims', 'Target, CVS, Amazon', 'Bloomwell, Sunveil, Nature\'s Path'], watch: 'Magnesium, sleep claims. Target, CVS, Amazon.', last: '<b>Today, 1 new</b>' },
-    { name: 'My share at key retailers', rh: 'weekly', slack: true, email: false, ask: 'how my five SKUs are doing at Target, CVS and Amazon, every Monday', chips: ['Kindroot, 5 SKUs', 'Share and velocity', 'Target, CVS, Amazon'], watch: 'Kindroot\'s 5 SKUs at Target, CVS, Amazon. For Monday\'s numbers.', last: 'Monday' },
+    { name: 'Kindroot\u2019s share at key retailers', rh: 'weekly', slack: true, email: false, ask: 'how my five SKUs are doing at Target, CVS and Amazon, every Monday', chips: ['Kindroot, 5 SKUs', 'Share and velocity', 'Target, CVS, Amazon'], watch: 'Kindroot\'s 5 SKUs at Target, CVS, Amazon. For Monday\'s numbers.', last: 'Monday' },
     { name: 'Claims and ingredients gaining traction', rh: 'weekly', slack: false, email: true, ask: 'which claims and ingredients are rising in natural supplements', chips: ['Natural supplements', 'Claims', 'Ingredients'], watch: 'Claims and ingredients on the rise in natural supplements. For the management update.', last: 'Monday' },
     { name: 'Consumer trends: sleep, stress, gut', rh: 'periodic', slack: false, email: true, ask: 'what consumers say and search in sleep, stress and gut health, for the Q4 plan', chips: ['Sleep', 'Stress', 'Gut health', 'Conversation and search'], watch: 'Consumer conversation and search in your three need states. Feeds the Q4 plan and the innovation pipeline.', last: 'Sep 8' },
     { name: 'Retailer review prep', rh: 'periodic', slack: false, email: true, ask: 'everything I need for the Target review on Oct 1', chips: ['Target', 'Kindroot range', 'Category and competitors', 'Deck, built over time'], watch: 'Everything for Target, Oct 1. Builds the deck as things change.', last: '<b>Draft deck: 4 slides</b>' }
   ];
   var RHYTHMS = [
-    ['daily', 'Daily, 8:30', 'What needs a reaction today'],
+    ['daily', 'Daily, 8:30', 'What may need attention today'],
     ['weekly', 'Weekly, Monday', 'What goes into Monday\'s status and the management update'],
-    ['periodic', 'Periodic', 'What builds toward the review, the plan, the launch']
+    ['periodic', 'Periodic', 'For reviews, planning and launches']
   ];
   var PRESETS = [['Format shifts', 'weekly', 'Monday, by email'], ['Price and promo moves', 'daily', 'tomorrow 8:30, in Slack'], ['GLP-1 companion', 'periodic', 'before the Q4 plan'], ['Regulatory and claims watch', 'weekly', 'Monday, by email'], ['Retailer assortment changes', 'daily', 'tomorrow 8:30, in Slack']];
   var EXAMPLES = [
@@ -585,14 +585,14 @@
       }
     },
     {
-      title: 'Radar home', desc: 'Agents by rhythm', cap: 'Five agents, three rhythms. She switches things off, not on.',
+      title: 'Your radar', desc: 'Agents by rhythm', cap: 'Five agents, three rhythms. She switches things off, not on.',
       where: 'The platform, Radar home', when: 'Tuesday, 8:48',
-      notes: ['She doesn\'t start from zero. Five agents came with her brand profile, named the way she\'d say them.', 'One list, in her three rhythms, so it reads like her week.', 'One rule at the top: a closing window is allowed to interrupt. Nothing else is.', 'Three dots on every agent: adjust, pause, duplicate, delete.'],
+      notes: ['This view gives Maya a starting point instead of an empty setup.', 'Radar creates five agents from her brand profile and organizes them around her daily, weekly and periodic work.', 'She can turn off, adjust or add agents as her needs change. Only a closing window interrupts the usual rhythm.'],
       render: function () {
         var count = ui.agents.filter(Boolean).length + (ui.created ? 1 : 0);
-        var h = ph(ic('radar') + '<span>Radar</span>', 'Your radar', count + ' agents are watching Kindroot for you, in your three rhythms. We set them up from your brand profile. Switch off anything you don\'t need.',
+        var h = ph(ic('radar') + '<span>Radar</span>', 'Your radar', 'Five agents are already watching Kindroot for you, based on your brand profile and organized by rhythm. Turn off anything you don\u2019t need.',
           '<button class="btn btn-primary btn-sm" data-go="6">' + ic('plus') + 'New agent</button>') +
-          '<div class="rule">' + ic('clock') + '<span><b>A closing window is allowed to interrupt.</b> When one is closing, you hear today, in Slack, with the date. Everything else waits for its rhythm.' + (ui.urgent ? '' : ' <span class="pill warn">Off: windows wait for their rhythm</span>') + '</span><span class="grow"></span><button class="toggle" role="switch" aria-checked="' + ui.urgent + '" data-urgent aria-label="Urgent updates break through"></button></div>';
+          '<div class="rule">' + ic('clock') + '<span><b>Only a closing window interrupts the usual rhythm.</b> When one is approaching, Radar alerts you in Slack with the date.' + (ui.urgent ? '' : ' <span class="pill warn">Off: windows wait for their rhythm</span>') + '</span><span class="grow"></span><button class="toggle" role="switch" aria-checked="' + ui.urgent + '" data-urgent aria-label="Urgent updates break through"></button></div>';
         for (var g = 0; g < RHYTHMS.length; g++) {
           var rh = RHYTHMS[g];
           h += '<div class="rgroup"><div class="rhead"><span class="k">' + ic(RH_ICON[rh[0]]) + rh[1] + '</span><span class="hint">' + rh[2] + '</span></div><div class="alist">';

@@ -1097,3 +1097,5 @@ body.page { font-size: 15px; }
 .fchart svg { min-width: 1000px; }
 .fchart .fnt { font-size: 13.5px; }
 .fchart .fns { font-size: 11.5px; }
+.fchart .fnt { font-size: 13px; }
+.fchart .fns { font-size: 11px; }

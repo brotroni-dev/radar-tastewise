@@ -861,3 +861,7 @@ p { margin: 0 0 1em; }
 .hop marker path { fill: currentColor; stroke: none; }
 .hop span { position: absolute; left: 50%; top: 150px; transform: translateX(-50%); font: 500 11px var(--font-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--accent); background: var(--surface); padding: 2px 6px; border-radius: 999px; white-space: nowrap; }
 .hop small { position: absolute; left: 50%; top: 268px; transform: translateX(-50%); font: 11px var(--font-body); color: var(--muted); white-space: nowrap; }
+.moment-row { grid-template-columns: 150px 96px 1fr; gap: 12px 18px; }
+.hop { width: 96px; }
+.hop svg { width: 96px; }
+.hop span, .hop small { display: none; }

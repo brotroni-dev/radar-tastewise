@@ -367,8 +367,8 @@
           '<button data-channel="email" aria-pressed="' + (ui.channel === 'email') + '">Email</button></div>' +
           '<span class="hint">Maya picked Slack for this agent. The email says the same.</span></div>' +
           '<div class="moment-row"><div class="phone-wrap">' + phone() + '</div>' +
-          '<div class="hop" aria-hidden="true"><svg viewBox="0 0 64 300"><defs><marker id="hopArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5 0 10z"/></marker></defs>' +
-          '<circle cx="4" cy="112" r="3.5"/><path d="M4 112 C 36 112, 28 236, 58 236" marker-end="url(#hopArrow)"/></svg><span>taps it</span><small>opens on her laptop</small></div>' +
+          '<div class="hop" aria-hidden="true"><svg viewBox="0 0 96 300"><defs><marker id="hopArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5 0 10z"/></marker></defs>' +
+          '<circle cx="6" cy="112" r="3.5"/><path d="M6 112 C 60 112, 40 236, 90 236" marker-end="url(#hopArrow)"/></svg></div>' +
           '<div class="moment-screen">' + (ui.channel === 'slack' ? slackWin() : emailWin()) + '</div></div></div>';
       }
     },

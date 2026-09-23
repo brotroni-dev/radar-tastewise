@@ -412,7 +412,7 @@
     {
       title: 'Scene', desc: 'Her three rhythms', cap: 'Tuesday, 8:40. This is Maya.',
       where: 'Maya\'s desk, between meetings', when: 'Tuesday, September 22, 8:40',
-      notes: ['Maya isn\'t in the product. The story starts with her, not with us.', 'Her week already has three rhythms. Radar fits into them instead of adding a fourth.'],
+      notes: ['This screen establishes the context Radar needs: what Maya is responsible for, how her week is structured, and which moments are worth interrupting.', 'Her three rhythms become the system\u2019s delivery logic.'],
       render: function () {
         return '<div class="scene"><div class="scene-top"><div class="who"><span class="avatar-lg">' + AVA + '</span><div><h4>Maya K.</h4><p class="role">Brand Manager at Kindroot, a mid-size natural supplements brand. Five SKUs.</p></div></div>' +
           '<div class="clock">8:40<small>Tue, Sep 22 &middot; between meetings</small></div></div>' +

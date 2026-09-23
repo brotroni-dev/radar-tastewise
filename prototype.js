@@ -465,10 +465,9 @@
       title: 'The insight', desc: 'Window, signal, why, moves', cap: 'The window first. Then what changed, why it matters, and what to do.',
       where: 'The platform, Radar', when: 'Tuesday, 8:43',
       notes: [
-        'The window comes first: what closes, when, and what it costs to miss it.',
-        'Every number says where it came from. She can put this in front of a buyer.',
-        'Three moves, one for each thing she\'s measured on: the retailer, the campaign, the next launch.',
-        'Thumbs under the title. A thumbs-down asks what was off, and the agent answers with what it will do differently.'
+        'The deadline comes first, so Maya immediately knows whether this needs action now.',
+        'The supporting numbers are sourced, so she can use them in front of a buyer.',
+        'The insight ends with three concrete paths forward: retailer, campaign or product.'
       ],
       render: function () {
         var body = ph(ic('radar') + '<span>Competitor launches</span><span>&middot;</span>' + ic('sun') + '<span>Daily</span><span>&middot;</span><span class="pill warn">' + ic('clock') + 'Window closes Oct 1</span>',

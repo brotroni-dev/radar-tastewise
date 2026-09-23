@@ -51,3 +51,23 @@ code, so the words are reviewed first.
 **Claude produced:** `content.md`, the single source for the build.
 
 **Roni's edits:** (to fill)
+
+## Round 1: build, page skeleton and states 1-4
+
+**Asked:** the page with the locked copy (cover, brief, thinking, principles
+table with "see it" links, prototype section, placeholder for Working with
+AI, the "why"s, metrics), the prototype engine (7 steps, Next / Back, step
+list, design notes toggle, arrow keys, restart, full-screen page) and states
+1-4 fully working: scene, the moment with a Slack / email toggle, the insight
+with sourced evidence and a chart, act with slide / email / meeting / ask /
+share.
+
+**Claude produced:** index.html, prototype.html, styles.css, prototype.js in
+one pass. One look in the browser, no console errors.
+
+**Got wrong, fixed after the look:** the Slack sidebar squeezed the message
+at medium widths. It now hides below 1000px.
+
+**Roni's review:** (to fill)
+
+**Changed by hand:** (to fill)

@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Radar</title>
+<meta name="description" content="A push concept for a market-intelligence platform: agents that notice for Maya, so she doesn't have to know the question. Tastewise product designer assignment by Roni Brot-Kolinkó.">
+<script>
+  try { var t = localStorage.getItem('radar-theme'); if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav" aria-label="Sections">
+  <div class="wrap nav-in">
+    <a class="wordmark" href="#top"><i></i>Radar</a>
+    <div class="nav-links">
+      <a href="#brief">Brief</a>
+      <a href="#thinking">Thinking</a>
+      <a href="#prototype">Prototype</a>
+      <a href="#ai">Working with AI</a>
+      <a href="#why">Why</a>
+      <a href="#measure">Measure</a>
+    </div>
+    <span class="grow"></span>
+    <button class="theme-btn" id="theme-btn" aria-label="Switch theme" title="Switch theme">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="6"/><path d="M8 2a6 6 0 0 1 0 12z" fill="currentColor" stroke="none"/></svg>
+    </button>
+    <a class="btn btn-primary btn-sm" href="#prototype">Try the prototype</a>
+  </div>
+</nav>
+
+<header class="cover" id="top">
+  <div class="sweep" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="kicker">Tastewise, Product Designer home assignment</div>
+    <h1>Radar</h1>
+    <p class="sub">Agents that notice for Maya, so she doesn't have to know the question.</p>
+    <div class="meta"><span>Roni Brot-Kolinkó</span><span>4 hours</span><span>Built with Claude Code</span></div>
+    <div class="btns">
+      <a class="btn btn-ghost" href="#brief">Read the thinking</a>
+      <a class="btn btn-primary" href="#prototype">Try the prototype</a>
+    </div>
+  </div>
+</header>
+
+<section class="section" id="brief">
+  <div class="wrap">
+    <div class="reading">
+      <div class="kicker">01 &middot; The brief, as I read it</div>
+      <h2>A platform that only answers when asked, and a person who doesn't ask.</h2>
+      <p class="lede">The platform is excellent at answering, and it only answers when asked. Maya is a brand manager, not an analyst. She's in the product twice a month, when something forces her in, and her team waits on her for answers. The brief asks what push should mean here, and to design one piece of it.</p>
+      <blockquote class="quote">Push isn't notifications. It's delegation. Maya needs someone watching her category so she doesn't have to know the question.<small>The reframe everything else follows from</small></blockquote>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="thinking">
+  <div class="wrap">
+    <div class="section-head reading">
+      <div class="kicker">02 &middot; The thinking</div>
+      <h2>What I explored, and why I bet on Radar.</h2>
+      <p class="lede">Six ways push could reach Maya. Each solves a piece. One of them can hold all the pieces.</p>
+    </div>
+    <div class="cards">
+      <div class="card"><h3>Weekly digest</h3><p class="why"><b>By email.</b> A newsletter she skims. No ownership, no control.</p></div>
+      <div class="card"><h3>Alerts with thresholds</h3><p class="why"><b>In the product.</b> Needs configuration skill she doesn't have.</p></div>
+      <div class="card"><h3>Briefing before each meeting</h3><p class="why"><b>From her calendar.</b> Sharp, but a brand manager should know her category weeks before the meeting, not the night before. Only fires around meetings.</p></div>
+      <div class="card"><h3>Team bot</h3><p class="why"><b>In Slack.</b> Makes the team the user. Maya stays a bystander.</p></div>
+      <div class="card"><h3>"For you" home</h3><p class="why"><b>In the product.</b> She isn't in the product. Doesn't fix pull.</p></div>
+      <div class="card"><h3>Slides plugin</h3><p class="why"><b>In PowerPoint.</b> Lives in her output, but heavy and narrow.</p></div>
+    </div>
+
+    <div class="two-col" style="margin-top:44px">
+      <div>
+        <h3>The bet</h3>
+        <p>Radar keeps the good parts of each: cadence from the digest, noticing from alerts, readiness from the briefing, team reach from sharing, under one mental model Maya already understands: delegation. She tells Radar what matters once (or accepts what it suggests), picks where and how often, and every update arrives with the next action already drafted.</p>
+        <p>The one piece I designed is the update reaching her and what she does with it. The hub and create-by-prompt are shown as one screen each, the "how it knows".</p>
+      </div>
+      <div>
+        <h3>Assumptions, written as decisions</h3>
+        <ul class="list">
+          <li>The platform can build a brand profile from Maya's company and products.</li>
+          <li>Slack and email integrations exist.</li>
+          <li>Agents run on the platform's existing data and query capability.</li>
+          <li>Retailer-level share data is available for her SKUs.</li>
+          <li>Her team can receive shares without a seat.</li>
+          <li>Nothing is sent to anyone without Maya.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:44px">
+      <h3>Design values, and where each one lives</h3>
+      <p class="hint" style="margin-bottom:14px">Ten principles. Every one is pointable in the prototype: click "see it".</p>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>#</th><th>Principle</th><th>Best-practice root</th><th>See it</th></tr></thead>
+          <tbody>
+            <tr><td class="n">1</td><td><b>Start full, not empty.</b> Presets on by default from her brand profile. She turns off, not on.</td><td>Default effect. Zero-config start for occasional users.</td><td><a class="see" href="#prototype" data-proto-go="5">Radar home</a></td></tr>
+            <tr><td class="n">2</td><td><b>Progressive disclosure.</b> Presets, then tweak, then create by prompt. Power never blocks the basic path.</td><td>Expert paths behind the simple path.</td><td><a class="see" href="#prototype" data-proto-go="6">New agent</a></td></tr>
+            <tr><td class="n">3</td><td><b>Preview before commit.</b> A new agent shows "here's your first update" before it's enabled.</td><td>Expectation setting. Kills the fear of noise.</td><td><a class="see" href="#prototype" data-proto-go="6">New agent</a></td></tr>
+            <tr><td class="n">4</td><td><b>Earn the interruption.</b> Every update opens with why it matters to Kindroot. Caps and batching per agent.</td><td>Notification hygiene. Relevance over recency.</td><td><a class="see" href="#prototype" data-proto-go="1">The moment</a></td></tr>
+            <tr><td class="n">5</td><td><b>Control at the point of delivery.</b> "Why you're seeing this", Adjust, Not relevant, inside the message.</td><td>Fix noise where it's read. No trip to settings.</td><td><a class="see" href="#prototype" data-proto-go="1">The moment</a></td></tr>
+            <tr><td class="n">6</td><td><b>Ready, not raw.</b> Outputs are her artifacts: slide, email, meeting. Editable, never auto-sent.</td><td>Human in the loop. Output matches her job.</td><td><a class="see" href="#prototype" data-proto-go="3">Act</a></td></tr>
+            <tr><td class="n">7</td><td><b>Defensible by default.</b> Every number has a source, a timeframe and a confidence.</td><td>Trust. Her name is on it in the room.</td><td><a class="see" href="#prototype" data-proto-go="2">The insight</a></td></tr>
+            <tr><td class="n">8</td><td><b>One system across channels.</b> The same structure in Slack, email and the product. Channel is a preference, not a product.</td><td>Consistency. Recognition over recall.</td><td><a class="see" href="#prototype" data-proto-go="1">The moment</a></td></tr>
+            <tr><td class="n">9</td><td><b>Visible learning.</b> Feedback changes the next update, and says so.</td><td>Feedback loops. Perceived control.</td><td><a class="see" href="#prototype" data-proto-go="4">Tune</a></td></tr>
+            <tr><td class="n">10</td><td><b>Name by the job, in her words.</b> "Competitor launches", not "Agent #3".</td><td>Match the real world. Plain language.</td><td><a class="see" href="#prototype" data-proto-go="5">Radar home</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="prototype">
+  <div class="wrap">
+    <div class="section-head reading">
+      <div class="kicker">03 &middot; The prototype</div>
+      <h2>Tuesday, 8:40. Maya is between meetings.</h2>
+      <p class="lede">Seven steps, in order. Click through with Next, the step list, or the arrow keys. Nothing works behind the screen; every button leads somewhere on purpose. <a href="prototype.html" target="_blank" rel="noopener">Open it full screen</a>.</p>
+    </div>
+    <div id="radar-proto" data-mode="embed"></div>
+  </div>
+</section>
+
+<section class="section" id="ai">
+  <div class="wrap">
+    <div class="reading">
+      <div class="kicker">04 &middot; Working with AI</div>
+      <h2>What I asked for, what it got wrong, what I changed by hand.</h2>
+      <div class="placeholder">Written last, from the process log and the commit history. Round 3.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="why">
+  <div class="wrap">
+    <div class="reading">
+      <div class="kicker">05 &middot; The "why"s I expect</div>
+      <h2>Ask away.</h2>
+      <dl class="qa">
+        <div><dt>Why agents, not alerts?</dt><dd>Alerts need her to know the threshold. Agents need her to know the goal. She has goals.</dd></div>
+        <div><dt>Why not tie it to the meeting?</dt><dd>Readiness is her job all quarter. The meeting is the deadline, not the trigger. Agents keep her ahead, and the meeting finds her already informed.</dd></div>
+        <div><dt>What stops it becoming noise?</dt><dd>Caps per agent, a cadence she chose, "why you're seeing this" on every update, one-tap feedback that visibly changes the next one, and a sample before anything new is enabled.</dd></div>
+        <div><dt>How does this make her a daily user?</dt><dd>A daily digest at 8:30 in Slack, and actions that produce things she has to ship anyway: slides, emails, meetings. The platform becomes the place her outputs come from.</dd></div>
+        <div><dt>Why presets on by default?</dt><dd>Twice-a-month users don't configure. Value on day one, or never.</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="measure">
+  <div class="wrap">
+    <div class="section-head reading">
+      <div class="kicker">06 &middot; What I'd measure</div>
+      <h2>Three numbers that would tell me it worked.</h2>
+    </div>
+    <div class="metrics">
+      <div class="metric"><div class="kicker">Habit</div>From about 2 sessions a month to weekly-plus active. Updates opened, by channel.</div>
+      <div class="metric"><div class="kicker">Insight to action</div>Slides, emails and meetings created per update.</div>
+      <div class="metric"><div class="kicker">Not noise</div>Agent retention at 30 days, and the "not relevant" rate trending down.</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">Fictional brands, illustrative data. This brief is hypothetical. <a href="https://github.com/brotroni-dev/radar-tastewise">Source and process on GitHub</a>.</div>
+</footer>
+
+<script src="prototype.js"></script>
+<script>
+  (function () {
+    var root = document.documentElement;
+    var btn = document.getElementById('theme-btn');
+    btn.addEventListener('click', function () {
+      var dark = root.getAttribute('data-theme') === 'dark' ||
+        (!root.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      var next = dark ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('radar-theme', next); } catch (e) {}
+    });
+    document.querySelectorAll('[data-proto-go]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (window.radarProto) window.radarProto.go(+a.getAttribute('data-proto-go'));
+        document.getElementById('prototype').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  })();
+</script>
+</body>
+</html>

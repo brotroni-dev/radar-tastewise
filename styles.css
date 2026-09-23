@@ -940,3 +940,8 @@ p { margin: 0 0 1em; }
 .ph .actions { margin-left: 0; justify-self: end; align-self: end; }
 @media (max-width: 640px) { .ph { grid-template-columns: 1fr; } .ph .ph-r, .ph .actions { justify-self: start; } }
 .ins-foot .btn[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+.btn-ic { width: 34px; height: 34px; padding: 0; justify-content: center; border-radius: 50%; }
+.btn-ic .ic { width: 16px; height: 16px; }
+.ph .ph-sub { grid-column: 1 / -1; }
+.thumbs { display: flex; gap: 6px; margin-top: 2px; }
+.thumbs .btn[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }

@@ -314,9 +314,10 @@
       '<div class="app-main"><div class="app-top"><div class="crumb">' + crumb + '</div><span class="ask">' + ic('sparkle') + 'Ask anything</span><span class="bell">' + ic('bell') + '<i></i></span></div>' +
       '<div class="app-body">' + body + '</div></div></div>';
   }
-  function ph(eyebrow, title, meta, actions, right) {
+  function ph(eyebrow, title, meta, actions, right, sub) {
     return '<div class="ph"><div class="eyebrow">' + eyebrow + '</div><div class="ph-r">' + (right || '') + '</div>' +
-      '<div class="ph-t"><h4>' + title + '</h4>' + (meta ? '<p class="pm">' + meta + '</p>' : '') + '</div><div class="actions">' + (actions || '') + '</div></div>';
+      '<div class="ph-t"><h4>' + title + '</h4>' + (meta ? '<p class="pm">' + meta + '</p>' : '') + '</div><div class="actions">' + (actions || '') + '</div>' +
+      (sub ? '<div class="ph-sub">' + sub + '</div>' : '') + '</div>';
   }
   var sep = ' ' + ic('chevr') + ' ';
 
@@ -390,11 +391,12 @@
         'Three moves, one for each thing she\'s measured on: the retailer, the campaign, the next launch.'
       ],
       render: function () {
-        var body = ph(ic('radar') + '<span>Competitor launches</span><span>&middot;</span>' + ic('sun') + '<span>Daily</span><span>&middot;</span><span class="pill warn">' + ic('clock') + 'Breaks through</span>',
+        var body = ph(ic('radar') + '<span>Competitor launches</span><span>&middot;</span>' + ic('sun') + '<span>Daily</span><span>&middot;</span><span class="pill warn">' + ic('clock') + 'Window closes Oct 1</span>',
           'Bloomwell Magnesium Sleep Gummies is gaining fast at Target',
-          'Launched 6 weeks ago. Magnesium glycinate + L-theanine. Positioned "sleep + stress". <span class="pill">' + ic('check') + 'Confidence: high</span>',
+          'Launched 6 weeks ago. Magnesium glycinate + L-theanine. Positioned "sleep + stress".',
           '<button class="btn btn-primary btn-sm" data-go="3" data-tab="slide">' + ic('slide') + 'Create slide</button><button class="btn btn-ghost btn-sm" data-go="3" data-tab="share">' + ic('share') + 'Share</button>',
-          '<button class="btn btn-ghost btn-sm" data-go="4">' + ic('tune') + 'Tune this agent</button>') +
+          '<button class="btn btn-ghost btn-ic" data-go="4" aria-label="Tune this agent" title="Tune this agent">' + ic('tune') + '</button>',
+          '<div class="thumbs"><button class="btn btn-ghost btn-ic" data-like aria-pressed="' + !!ui.liked + '" aria-label="Relevant" title="Relevant">' + ic('up') + '</button><button class="btn btn-ghost btn-ic" data-go="4" data-fb="no" aria-label="Not relevant" title="Not relevant">' + ic('down') + '</button></div>') +
           urgencyBanner('Target locks Q4 planograms on <b>Oct 6</b>. Endcap requests close <b>Oct 1</b>, the day of your review. After that, the next shot at placement is January.', 'Target vendor calendar, Q4') +
           '<div class="tiles"><div class="tile"><div class="n">2.1x</div><div class="l">Category velocity at Target, last 6 weeks</div><div class="s">Retail sales data, weeks 32-37</div></div>' +
           '<div class="tile"><div class="n">+38%</div><div class="l">"Magnesium for sleep" searches, quarter over quarter</div><div class="s">Search data, US, Q3 vs Q2</div></div>' +
@@ -418,7 +420,7 @@
           '<div class="also"><div class="c-head" style="margin-bottom:4px">' + ic('radar') + 'Also on your radar</div>' +
           '<div class="row">' + ic('flag') + '<div><span class="ag">Consumer trends &middot; periodic</span>"GLP-1 companion" searches (fiber, electrolytes) +61% in 6 months. For the Q4 plan.</div><span class="when">no window</span></div>' +
           '<div class="row">' + ic('week') + '<div><span class="ag">Claims and ingredients &middot; weekly</span>Ashwagandha conversation cooling, -12% in 90 days. Your Ashwagandha SKU.</div><span class="when">Monday</span></div></div>' +
-          '<div class="ins-foot"><div class="btns"><button class="btn btn-ghost btn-sm" data-like aria-pressed="' + !!ui.liked + '">' + ic('up') + 'Relevant</button><button class="btn btn-ghost btn-sm" data-go="4" data-fb="no">' + ic('down') + 'Not relevant</button></div><span class="grow"></span><span>Why you\'re seeing this: you asked Competitor launches to watch magnesium at Target. The window made it urgent.</span></div>';
+          '<div class="ins-foot"><span>Why you\'re seeing this: you asked Competitor launches to watch magnesium at Target. The window made it urgent.</span></div>';
         return app('<a data-go="5">Radar</a>' + sep + '<a data-go="5">Competitor launches</a>' + sep + '<b>September 22</b>', body, { url: 'radar/competitor-launches/sep-22' });
       }
     },

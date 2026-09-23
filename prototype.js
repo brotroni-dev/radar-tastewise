@@ -214,14 +214,18 @@
     chips += '<span class="tag add" data-toast="Type another thing to watch. Radar adds it to the list.">+ add</span>';
     var bothOff = !e.slack && !e.email;
     return '<div class="c agent-card">' +
-      '<div class="top">' + ic(RH_ICON[e.rh]) + '<span class="name" contenteditable="true" spellcheck="false">' + e.name + '</span>' + (o.pill || '') + '</div>' +
-      '<p class="askline">' + (o.isNew ? 'You asked' : 'You asked for') + ': <b>"' + e.ask + '"</b></p>' +
-      '<div class="field"><span>I\'ll watch</span><div class="tags">' + chips + '</div></div>' +
+      '<div class="ed-sec"><div class="ed-title">' + ic('sparkle') + 'Your request' + (o.pill ? '<span class="r">' + o.pill + '</span>' : '') + '</div>' +
+      '<div class="ed-prompt"><input id="edq" value="' + e.ask.replace(/"/g, '&quot;') + '" aria-label="Your request"><button class="btn btn-ghost btn-sm" data-reread>Re-read</button></div>' +
+      '<span class="hint">Change the words and Radar reads it again. The card below follows.</span></div>' +
+      '<div class="ed-sec"><div class="ed-title">' + ic('radar') + 'The agent</div>' +
+      '<div class="field"><span>Name</span><div><span class="name" contenteditable="true" spellcheck="false">' + e.name + '</span></div></div>' +
+      '<div class="field"><span>Watches</span><div class="tags">' + chips + '</div></div></div>' +
+      '<div class="ed-sec"><div class="ed-title">' + ic('clock') + 'When and where</div>' +
       '<div class="field"><span>Rhythm</span><div>' + seg('ed', 'rh', RHY) + '<span class="hint seg-hint">' + RH_HINT[e.rh] + '</span></div></div>' +
       '<div class="field"><span>Where</span><div><div class="wsel"><button class="wopt" data-where="slack" aria-pressed="' + e.slack + '">' + ic('hash') + 'Slack DM</button><button class="wopt" data-where="email" aria-pressed="' + e.email + '">' + ic('mail') + 'Email</button></div><span class="hint">' + (bothOff ? 'Pick at least one.' : 'One or both.') + '</span></div></div>' +
-      urgencyToggle() +
-      (o.sample ? '<div class="field"><span>Sample</span><div>' + o.sample + '</div></div>' : '') +
-      '<div class="btns">' + o.cta + (o.secondary || '') + '</div></div>';
+      urgencyToggle() + '</div>' +
+      (o.sample ? '<div class="ed-sec"><div class="ed-title">' + ic('eye') + 'Sample of the first update</div>' + o.sample + '</div>' : '') +
+      '<div class="ed-foot">' + o.cta + (o.secondary || '') + '</div></div>';
   }
 
   /* The Block Kit card, shared by Slack and email */
@@ -669,6 +673,7 @@
     if (t.hasAttribute('data-edit')) { ui.edit = !ui.edit; render(); if (ui.edit) { var b = stage.querySelector('#draft-body'); if (b) b.focus(); } return; }
     if (t.hasAttribute('data-fb')) { ui.fb = ui.fb === 'no' ? null : t.getAttribute('data-fb'); ui.liked = false; if (!ui.fb) ui.reason = null; render(); return; }
     if (t.hasAttribute('data-reason')) { ui.reason = t.getAttribute('data-reason'); render(); return; }
+    if (t.hasAttribute('data-reread')) { reread(); return; }
     if (t.hasAttribute('data-like')) { ui.liked = !ui.liked; if (ui.liked) { ui.fb = null; } render(); toast(ui.liked ? 'Thanks. More like this in your daily.' : 'Noted.'); return; }
     if (t.hasAttribute('data-urgent')) { ui.urgent = !ui.urgent; render(); toast(ui.urgent ? 'Urgent updates break through to today again.' : 'Urgent updates will wait for their rhythm. Windows can close.'); return; }
     if (t.hasAttribute('data-menu')) { var mi = +t.getAttribute('data-menu'); ui.menu = ui.menu === mi ? -1 : mi; render(); return; }
@@ -697,8 +702,21 @@
 
   mount.querySelector('#p-notes').addEventListener('change', function (e) { ui.notes = e.target.checked; notesBox.hidden = !ui.notes; });
 
+  function reread() {
+    var q = stage.querySelector('#edq');
+    if (!q || !ui.ed) return;
+    var text = q.value.trim();
+    if (!text) return;
+    var n = fromPrompt(text);
+    ui.ed.ask = text; ui.ed.chips = n.chips;
+    if (ui.ed.src === 'new') ui.ed.name = n.name;
+    render();
+    toast('Read it again. Check what changed.');
+  }
+
   var keyTarget = FULL ? document : mount;
   keyTarget.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && e.target.id === 'edq') { reread(); e.preventDefault(); return; }
     if (e.key === 'Enter' && e.target.id === 'np') { ui.prompt = e.target.value.trim() || ui.prompt; ui.ed = fromPrompt(ui.prompt); ui.phase = 1; render(); e.preventDefault(); return; }
     if (e.key === 'Escape' && ui.menu !== -1) { ui.menu = -1; render(); return; }
     var tag = (e.target.tagName || '').toLowerCase();

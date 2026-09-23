@@ -955,3 +955,17 @@ p { margin: 0 0 1em; }
 .one .mini .bk-btn { cursor: default; }
 .whyoff { margin-top: 10px; display: grid; gap: 8px; max-width: 720px; }
 .whyoff .confirm { margin-top: 2px; }
+
+/* The editor card, in sections */
+.one .agent-card { padding: 0; gap: 0; }
+.ed-sec { padding: 16px 20px 18px; border-top: 1px solid var(--line); display: grid; gap: 12px; }
+.ed-sec:first-child { border-top: 0; }
+.ed-title { display: flex; align-items: center; gap: 8px; font: 500 11.5px var(--font-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.ed-title .ic { width: 14px; height: 14px; color: var(--accent); }
+.ed-title .r { margin-left: auto; }
+.ed-prompt { display: flex; gap: 10px; align-items: center; border: 1px solid var(--line-strong); border-radius: 12px; padding: 6px 6px 6px 14px; background: var(--surface); }
+.ed-prompt:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.ed-prompt input { flex: 1; border: 0; background: transparent; font: 15.5px var(--font-body); color: var(--ink); outline: none; min-width: 0; }
+.ed-sec .hint { margin-top: -6px; }
+.ed-foot { padding: 14px 20px; border-top: 1px solid var(--line); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.one .mini { margin: 0; }

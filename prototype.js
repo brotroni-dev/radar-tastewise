@@ -288,11 +288,11 @@
       item('Sunveil cut its magnesium price 15% at Target',
         'your price gap is now 22%, on the shelf where you\'re already losing share.',
         '<b>Promo ends Oct 5, 12 days.</b> Worth a decision before then.', 'warm',
-        btn('', other, 'Open insight') + btn('', 'data-go="4"', 'Tune this agent')) +
+        btn('primary', other, 'Open insight') + btn('', 'data-go="4"', 'Tune this agent')) +
       item('Nature\'s Path launched Ashwagandha Calm Gummies at CVS',
         'your Ashwagandha SKU sits on the same shelf. 0.9x category velocity in week one.',
         'No window. Worth watching, not acting.', 'none',
-        btn('', other, 'Open insight') + btn('', 'data-go="4"', 'Tune this agent')) +
+        btn('primary', other, 'Open insight') + btn('', 'data-go="4"', 'Tune this agent')) +
       '<div class="bk-links"><a data-toast="You asked Competitor launches to watch magnesium at Target, in your daily. The window made the first one urgent.">Why you\'re seeing this</a><a data-go="2" data-fb="no">Not relevant</a></div>' +
       '</div>';
   }

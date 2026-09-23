@@ -1119,3 +1119,5 @@ body.page { font-size: 15px; }
 .kept b{font-weight:600}
 .assume{margin-top:28px;max-width:720px}
 .cover-note{font-size:13.5px;color:var(--muted);margin:-10px 0 22px}
+.sl{aspect-ratio:auto;height:auto;max-height:none}
+.sl-msgs{overflow:visible}

@@ -7,13 +7,11 @@
 
   var ui = {
     i: 0, channel: 'slack', tab: 'slide', notes: true, edit: false, ask: -1, toastTimer: null,
-    fb: null, reason: null, adjust: false, urgent: true,
-    seg: { rh: 'daily', where: 'slack', out: 'talk' },
+    fb: null, reason: null, urgent: true,
     agents: [true, true, true, true, true],
     presets: [false, false, false, false, false],
-    phase: 0, created: false,
-    chips: ['Competitor launches (magnesium, Target)', 'Price and promo moves (magnesium, Target)', 'Share drops (Kindroot Magnesium Glycinate, Target)', 'Negative review spikes (Kindroot Magnesium)'],
-    nseg: { rh: 'daily', where: 'slack', out: 'talk' }
+    phase: 0, created: false, createdAgent: null,
+    ed: null, editAgent: 0, menu: -1, prompt: 'anything that could hurt my magnesium line at Target'
   };
 
   /* Icons: one small stroke set, currentColor */
@@ -63,7 +61,7 @@
     shelf: 'M3 5h18M3 12h18M3 19h18M6 5v7M12 5v7M18 5v7M8 12v7M16 12v7',
     star: 'M12 3l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3 6.4 20.2l1.1-6.2L3 9.6l6.2-.9z',
     menu: 'M4 7h16M4 12h16M4 17h16',
-    tune: 'M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h.01',
+    tune: 'M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h.01M14 4v4M8 10v4M16 16v4',
     gear: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z',
     apps: 'M5 5h.01M12 5h.01M19 5h.01M5 12h.01M12 12h.01M19 12h.01M5 19h.01M12 19h.01M19 19h.01',
     archive: 'M3 4h18v4H3zM5 8v12h14V8M10 12h4',
@@ -71,57 +69,71 @@
     reply: 'M9 17l-5-5 5-5M4 12h11a5 5 0 0 1 5 5v2',
     label: 'M3 6a2 2 0 0 1 2-2h10l6 6-6 6H5a2 2 0 0 1-2-2z',
     snooze: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 2M18 2l3 3M3 5l3-3',
-    task: 'M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11'
+    task: 'M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11',
+    pause: 'M8 5v14M16 5v14',
+    play: 'M7 4l12 8-12 8z',
+    copy: 'M9 9h10v10H9zM5 15V5h10',
+    tag: 'M20.6 13.4L13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8zM7.5 7.5h.01',
+    dollar: 'M12 2v20M17 6.5a4 4 0 0 0-4-2.5H11a3.5 3.5 0 0 0 0 7h2a3.5 3.5 0 0 1 0 7h-2a4 4 0 0 1-4-2.5',
+    back: 'M15 5l-7 7 7 7',
+    fwd: 'M9 5l7 7-7 7',
+    history: 'M3 12a9 9 0 1 0 3-6.7M3 4v5h5M12 8v4l3 2'
   };
-  var AVA = '<img class="ava" src="assets/maya.jpg" alt="Maya" onerror="this.onerror=null;this.src=\'assets/maya.svg\'">';
   function ic(name, cls) {
     return '<svg class="ic' + (cls ? ' ' + cls : '') + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + P[name] + '"/></svg>';
   }
+  var AVA = '<img class="ava" src="assets/maya.jpg" alt="Maya" onerror="this.onerror=null;this.src=\'assets/maya.svg\'">';
 
   /* Weekly velocity index at Target, weeks 28 to 37. Index 100 = category average. */
-  function chart() {
+  function chart(id) {
+    id = id || 'c';
     var xs = [48, 102.7, 157.3, 212, 266.7, 321.3, 376, 430.7, 485.3, 540];
-    var y = function (v) { return (200 - (v - 60) / 180 * 184).toFixed(1); };
+    var BASE = 190;
+    var y = function (v) { return +(BASE - (v - 60) / 180 * 172).toFixed(1); };
     var kr = [112, 110, 111, 109, 108, 104, 101, 99, 97, 95];
     var bw = [null, null, null, null, 90, 120, 150, 175, 200, 210];
-    var pts = function (arr) {
-      var out = [];
-      for (var i = 0; i < arr.length; i++) if (arr[i] !== null) out.push(xs[i] + ',' + y(arr[i]));
-      return out.join(' ');
-    };
-    return '<svg viewBox="0 0 560 240" role="img" aria-label="Weekly velocity index at Target, last 10 weeks. Bloomwell gummies rise to 2.1 times the category average since launch; Kindroot capsules drift down.">' +
-      '<line class="grid" x1="48" y1="' + y(100) + '" x2="540" y2="' + y(100) + '"/>' +
-      '<line class="grid" x1="48" y1="' + y(150) + '" x2="540" y2="' + y(150) + '"/>' +
-      '<line class="grid" x1="48" y1="' + y(200) + '" x2="540" y2="' + y(200) + '"/>' +
-      '<text x="40" y="' + (+y(100) + 4) + '" text-anchor="end">100</text>' +
-      '<text x="40" y="' + (+y(150) + 4) + '" text-anchor="end">150</text>' +
-      '<text x="40" y="' + (+y(200) + 4) + '" text-anchor="end">200</text>' +
-      '<line class="launch" x1="266.7" y1="30" x2="266.7" y2="206"/>' +
-      '<text x="272" y="30">Bloomwell on shelf</text>' +
-      '<polyline class="l-cat" fill="none" stroke-width="1.5" points="48,' + y(100) + ' 540,' + y(100) + '"/>' +
-      '<polyline class="l-kr" fill="none" stroke-width="2.5" stroke-linejoin="round" points="' + pts(kr) + '"/>' +
-      '<polyline class="l-bw" fill="none" stroke-width="2.5" stroke-linejoin="round" points="' + pts(bw) + '"/>' +
-      '<circle cx="540" cy="' + y(210) + '" r="3.5" style="fill: var(--risk)"/>' +
-      '<circle cx="540" cy="' + y(95) + '" r="3.5" style="fill: var(--accent)"/>' +
-      '<text class="lab-bw" x="536" y="' + (+y(210) - 8) + '" text-anchor="end">Bloomwell gummies, 2.1x</text>' +
-      '<text class="lab-kr" x="536" y="' + (+y(95) + 16) + '" text-anchor="end">Kindroot capsules</text>' +
-      '<text x="52" y="' + (+y(100) + 14) + '">category average</text>' +
-      '<text x="48" y="226">W28</text><text x="212" y="226" text-anchor="middle">W31</text>' +
-      '<text x="376" y="226" text-anchor="middle">W34</text><text x="540" y="226" text-anchor="end">W37</text>' +
+    function curve(arr) {
+      var pts = [];
+      for (var i = 0; i < arr.length; i++) if (arr[i] !== null) pts.push([xs[i], y(arr[i])]);
+      var d = 'M' + pts[0][0] + ',' + pts[0][1];
+      for (var k = 0; k < pts.length - 1; k++) {
+        var p0 = pts[k - 1] || pts[k], p1 = pts[k], p2 = pts[k + 1], p3 = pts[k + 2] || p2;
+        d += ' C' + (p1[0] + (p2[0] - p0[0]) / 6).toFixed(1) + ',' + (p1[1] + (p2[1] - p0[1]) / 6).toFixed(1) + ' ' +
+          (p2[0] - (p3[0] - p1[0]) / 6).toFixed(1) + ',' + (p2[1] - (p3[1] - p1[1]) / 6).toFixed(1) + ' ' + p2[0] + ',' + p2[1];
+      }
+      return { d: d, first: pts[0], last: pts[pts.length - 1] };
+    }
+    var K = curve(kr), B = curve(bw);
+    var area = function (c) { return c.d + ' L' + c.last[0] + ',' + BASE + ' L' + c.first[0] + ',' + BASE + ' Z'; };
+    return '<div class="chart-legend"><span><i class="sw bw"></i>Bloomwell gummies <b>2.1x</b></span><span><i class="sw kr"></i>Kindroot capsules <b>0.95x</b></span><span><i class="sw cat"></i>Category average <b>1.0x</b></span></div>' +
+      '<svg viewBox="0 0 560 226" role="img" aria-label="Weekly velocity index at Target, last 10 weeks. Bloomwell gummies rise to 2.1 times the category average since launch; Kindroot capsules drift down to 0.95.">' +
+      '<defs><linearGradient id="gbw' + id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--risk);stop-opacity:.22"/><stop offset="1" style="stop-color:var(--risk);stop-opacity:0"/></linearGradient>' +
+      '<linearGradient id="gkr' + id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--accent);stop-opacity:.18"/><stop offset="1" style="stop-color:var(--accent);stop-opacity:0"/></linearGradient></defs>' +
+      '<line class="grid" x1="44" y1="' + y(200) + '" x2="548" y2="' + y(200) + '"/><line class="grid" x1="44" y1="' + y(150) + '" x2="548" y2="' + y(150) + '"/>' +
+      '<line class="grid base" x1="44" y1="' + BASE + '" x2="548" y2="' + BASE + '"/>' +
+      '<text x="36" y="' + (y(200) + 4) + '" text-anchor="end">200</text><text x="36" y="' + (y(150) + 4) + '" text-anchor="end">150</text><text x="36" y="' + (y(100) + 4) + '" text-anchor="end">100</text>' +
+      '<path class="area kr" d="' + area(K) + '" fill="url(#gkr' + id + ')"/>' +
+      '<path class="area bw" d="' + area(B) + '" fill="url(#gbw' + id + ')"/>' +
+      '<line class="l-cat" x1="44" y1="' + y(100) + '" x2="548" y2="' + y(100) + '"/>' +
+      '<line class="launch" x1="266.7" y1="18" x2="266.7" y2="' + BASE + '"/>' +
+      '<rect class="chip" x="204" y="2" width="126" height="17" rx="8.5"/><text class="chipt" x="267" y="13.5" text-anchor="middle">Bloomwell on shelf</text>' +
+      '<path class="l-kr" d="' + K.d + '" fill="none" stroke-width="2.5" stroke-linecap="round"/>' +
+      '<path class="l-bw" d="' + B.d + '" fill="none" stroke-width="2.5" stroke-linecap="round"/>' +
+      '<circle class="dot kr" cx="' + K.last[0] + '" cy="' + K.last[1] + '" r="4.5"/><circle class="dot bw" cx="' + B.last[0] + '" cy="' + B.last[1] + '" r="4.5"/>' +
+      '<text x="48" y="211">W28</text><text x="212" y="211" text-anchor="middle">W31</text><text x="376" y="211" text-anchor="middle">W34</text><text x="540" y="211" text-anchor="end">W37</text>' +
       '</svg>';
   }
 
   function seg(obj, key, opts) {
     var h = '<div class="seg">';
     for (var i = 0; i < opts.length; i++) {
-      h += '<button data-seg="' + obj + '|' + key + '|' + opts[i][0] + '" aria-pressed="' + (ui[obj][key] === opts[i][0]) + '">' + opts[i][1] + '</button>';
+      h += '<button data-seg="' + obj + '|' + key + '|' + opts[i][0] + '" aria-pressed="' + (ui[obj][key] === opts[i][0]) + '">' + (opts[i][2] ? ic(opts[i][2]) : '') + opts[i][1] + '</button>';
     }
     return h + '</div>';
   }
-  var RHY = [['daily', 'Daily, 8:30'], ['weekly', 'Weekly, Monday'], ['periodic', 'Periodic, before the moment']];
-  var WHERE = [['slack', 'Slack DM'], ['email', 'Email'], ['both', 'Both']];
-  var OUT = [['talk', 'Insight + talking points'], ['slide', '+ slide'], ['email', '+ email draft']];
+  var RHY = [['daily', 'Daily, 8:30', 'sun'], ['weekly', 'Weekly, Monday', 'week'], ['periodic', 'Periodic, before the moment', 'flag']];
   var RH_ICON = { daily: 'sun', weekly: 'week', periodic: 'flag' };
+  var RH_LABEL = { daily: 'Daily', weekly: 'Weekly', periodic: 'Periodic' };
 
   function urgencyBanner(text, src) {
     return '<div class="urg" role="status">' + ic('clock') + '<div><span class="urg-k">Window closing</span> ' + text + (src ? '<span class="src">' + src + '</span>' : '') + '</div><div class="date"><b>Oct 1</b><span>9 days</span></div></div>';
@@ -130,8 +142,69 @@
     return '<div class="field"><span>Urgency</span><div class="urgrow"><button class="toggle" role="switch" aria-checked="' + ui.urgent + '" data-urgent aria-label="Break through when a window is closing"></button><span class="hint">Break through to today when a window is closing, whatever the rhythm.</span></div></div>';
   }
 
+  /* Agents: the presets, in Maya's words */
+  var AGENTS = [
+    { name: 'Competitor launches', rh: 'daily', slack: true, email: false, ask: 'who\'s launching against my magnesium line at Target, CVS and Amazon', chips: ['Magnesium', 'Sleep claims', 'Target, CVS, Amazon', 'Bloomwell, Sunveil, Nature\'s Path'], watch: 'Magnesium, sleep claims. Target, CVS, Amazon.', last: '<b>Today, 1 new</b>' },
+    { name: 'My share at key retailers', rh: 'weekly', slack: true, email: false, ask: 'how my five SKUs are doing at Target, CVS and Amazon, every Monday', chips: ['Kindroot, 5 SKUs', 'Share and velocity', 'Target, CVS, Amazon'], watch: 'Kindroot\'s 5 SKUs at Target, CVS, Amazon. For Monday\'s numbers.', last: 'Monday' },
+    { name: 'Claims and ingredients gaining traction', rh: 'weekly', slack: false, email: true, ask: 'which claims and ingredients are rising in natural supplements', chips: ['Natural supplements', 'Claims', 'Ingredients'], watch: 'Claims and ingredients on the rise in natural supplements. For the management update.', last: 'Monday' },
+    { name: 'Consumer trends: sleep, stress, gut', rh: 'periodic', slack: false, email: true, ask: 'what consumers say and search in sleep, stress and gut health, for the Q4 plan', chips: ['Sleep', 'Stress', 'Gut health', 'Conversation and search'], watch: 'Consumer conversation and search in your three need states. Feeds the Q4 plan and the innovation pipeline.', last: 'Sep 8' },
+    { name: 'Retailer review prep', rh: 'periodic', slack: false, email: true, ask: 'everything I need for the Target review on Oct 1', chips: ['Target', 'Kindroot range', 'Category and competitors', 'Deck, built over time'], watch: 'Everything for Target, Oct 1. Builds the deck as things change.', last: '<b>Draft deck: 4 slides</b>' }
+  ];
+  var RHYTHMS = [
+    ['daily', 'Daily, 8:30', 'What needs a reaction today'],
+    ['weekly', 'Weekly, Monday', 'What goes into Monday\'s status and the management update'],
+    ['periodic', 'Periodic', 'What builds toward the review, the plan, the launch']
+  ];
+  var PRESETS = [['Format shifts', 'weekly', 'Monday, by email'], ['Price and promo moves', 'daily', 'tomorrow 8:30, in Slack'], ['GLP-1 companion', 'periodic', 'before the Q4 plan'], ['Regulatory and claims watch', 'weekly', 'Monday, by email'], ['Retailer assortment changes', 'daily', 'tomorrow 8:30, in Slack']];
+  var EXAMPLES = [
+    ['who\'s launching in gut health', 'Who\'s launching in gut health', 'Competitor launches, weekly', 'shelf'],
+    ['price moves on my SKUs at Amazon', 'Price moves on my SKUs at Amazon', 'Price and promo, daily', 'dollar'],
+    ['claims growing in women\'s health', 'Claims growing in women\'s health', 'Claims and ingredients, weekly', 'tag']
+  ];
+
+  function fromAgent(i) {
+    var a = AGENTS[i];
+    return { name: a.name, ask: a.ask, chips: a.chips.slice(), rh: a.rh, slack: a.slack, email: a.email, src: i };
+  }
+  function fromPrompt(text) {
+    var t = (text || '').toLowerCase();
+    if (t.indexOf('gut') >= 0) return { name: 'Launches in gut health', ask: text, chips: ['Competitor launches (gut health)', 'Probiotics, fiber, prebiotics', 'Target, CVS, Amazon'], rh: 'weekly', slack: true, email: false, src: 'new' };
+    if (t.indexOf('price') >= 0) return { name: 'Price moves on my SKUs at Amazon', ask: text, chips: ['Price and promo moves (Kindroot, Amazon)', 'Competitor prices (magnesium, probiotic)', 'Buy box changes'], rh: 'daily', slack: true, email: false, src: 'new' };
+    if (t.indexOf('claim') >= 0) return { name: 'Claims growing in women\'s health', ask: text, chips: ['Claims (women\'s health)', 'Ingredients on the rise', 'Search and conversation'], rh: 'weekly', slack: false, email: true, src: 'new' };
+    return { name: 'Threats to magnesium at Target', ask: text || ui.prompt, chips: ['Competitor launches (magnesium, Target)', 'Price and promo moves (magnesium, Target)', 'Share drops (Kindroot Magnesium Glycinate, Target)', 'Negative review spikes (Kindroot Magnesium)'], rh: 'daily', slack: true, email: false, src: 'new' };
+  }
+  function whereText(e) {
+    if (e.slack && e.email) return 'in Slack and by email';
+    return e.slack ? 'in Slack' : 'by email';
+  }
+  function firstUpdate() {
+    var e = ui.ed || fromPrompt(ui.prompt);
+    var w = whereText(e);
+    if (e.rh === 'weekly') return 'Monday, ' + w + ', in your weekly';
+    if (e.rh === 'periodic') return 'before the Target review, Oct 1, ' + w;
+    return 'tomorrow, 8:30, ' + w + ', in your daily';
+  }
+
+  /* The editor: "Here's what I understood", for a new agent and for an existing one */
+  function editor(o) {
+    var e = ui.ed;
+    var chips = '';
+    for (var c = 0; c < e.chips.length; c++) chips += '<span class="tag">' + e.chips[c] + '<button data-rmchip="' + c + '" aria-label="Remove">&times;</button></span>';
+    if (o.learned) chips += o.learned;
+    chips += '<span class="tag add" data-toast="Type another thing to watch. Radar adds it to the list.">+ add</span>';
+    var bothOff = !e.slack && !e.email;
+    return '<div class="c agent-card">' +
+      '<div class="top">' + ic(RH_ICON[e.rh]) + '<span class="name" contenteditable="true" spellcheck="false">' + e.name + '</span>' + (o.pill || '') + '</div>' +
+      '<p class="askline">' + (o.isNew ? 'You asked' : 'You asked for') + ': <b>"' + e.ask + '"</b></p>' +
+      '<div class="field"><span>I\'ll watch</span><div class="tags">' + chips + '</div></div>' +
+      '<div class="field"><span>Rhythm</span>' + seg('ed', 'rh', RHY) + '</div>' +
+      '<div class="field"><span>Where</span><div><div class="wsel"><button class="wopt" data-where="slack" aria-pressed="' + e.slack + '">' + ic('hash') + 'Slack DM</button><button class="wopt" data-where="email" aria-pressed="' + e.email + '">' + ic('mail') + 'Email</button></div><span class="hint">' + (bothOff ? 'Pick at least one.' : 'One or both.') + '</span></div></div>' +
+      urgencyToggle() +
+      '<div class="btns">' + o.cta + (o.secondary || '') + '</div></div>';
+  }
+
   /* The Block Kit card, shared by Slack and email */
-  function blockKit(inSlack) {
+  function blockKit() {
     var btn = function (cls, attrs, label) { return '<button class="bk-btn' + (cls ? ' ' + cls : '') + '" ' + attrs + '>' + label + '</button>'; };
     return '<div class="bk">' +
       '<div class="bk-ctx">' + ic('radar') + '<span>Competitor launches</span><span>&middot;</span>' + ic('sun') + '<span>Daily</span><span>&middot;</span><span class="urgt">Breaks through: window closing</span></div>' +
@@ -142,15 +215,18 @@
       '<div class="bk-f"><div class="n">2.1x</div><div class="l">category velocity, Target, last 6 weeks</div></div>' +
       '<div class="bk-f"><div class="n">+38%</div><div class="l">"magnesium for sleep" searches, quarter over quarter</div></div>' +
       '<div class="bk-f"><div class="n risk">-1.4 pts</div><div class="l">your share of magnesium at Target, 8 weeks</div></div></div>' +
-      '<div class="bk-actions">' + btn('primary', 'data-go="2"', 'Open insight') + btn('', 'data-go="3" data-tab="slide"', 'Create slide') + btn('', 'data-go="4"', 'Not relevant') + '</div>' +
-      '<div class="bk-links"><a data-toast="You asked Competitor launches to watch magnesium at Target, in your daily. The window made it urgent.">Why you\'re seeing this</a><a data-go="4">Adjust this agent</a></div>' +
+      '<div class="bk-actions">' + btn('primary', 'data-go="2"', 'Open insight') + btn('', 'data-go="3" data-tab="slide"', 'Create slide') + btn('', 'data-go="4"', 'Tune this agent') + '</div>' +
+      '<div class="bk-links"><a data-toast="You asked Competitor launches to watch magnesium at Target, in your daily. The window made it urgent.">Why you\'re seeing this</a><a data-go="4" data-fb="no">Not relevant</a></div>' +
+      '<div class="bk-more"><div class="bk-ctx">Also in today\'s daily</div>' +
+      '<div class="bk-row"><div><b>Nature\'s Path launched Ashwagandha Calm Gummies at CVS.</b> 0.9x category velocity in week one. Your Ashwagandha SKU is at CVS too. No window.</div><button class="bk-btn sm" data-toast="Opens that insight. This walkthrough follows the Bloomwell one.">Open</button></div>' +
+      '<div class="bk-row"><div><b>Sunveil cut its magnesium price 15% at Target.</b> Promo runs to Oct 5. Your price gap is now 22%.</div><button class="bk-btn sm" data-toast="Opens that insight. This walkthrough follows the Bloomwell one.">Open</button></div></div>' +
       '</div>';
   }
 
   function slackWin() {
     var side = function (icon, label, cls) { return '<div class="it' + (cls ? ' ' + cls : '') + '">' + (icon ? ic(icon) : '') + label + '</div>'; };
     return '<div class="sl" aria-label="Slack, desktop">' +
-      '<div class="sl-top"><div class="lights"><i></i><i></i><i></i></div><div class="nav">' + ic('arrowl') + ic('arrowr') + ic('clock') + '</div>' +
+      '<div class="sl-top"><div class="lights"><i></i><i></i><i></i></div><div class="nav">' + ic('back') + ic('fwd') + ic('history') + '</div>' +
       '<div class="search">' + ic('search') + ' Search Kindroot</div>' + ic('help') + '<div class="me">' + AVA + '</div></div>' +
       '<div class="sl-body">' +
       '<div class="sl-rail"><div class="ws">K</div><div class="ws2">A</div><div class="plus">+</div></div>' +
@@ -162,14 +238,14 @@
       '<div class="sec">' + ic('chevd') + ' Apps</div>' + '<div class="it sub on"><span class="appic">R</span>Radar</div>' +
       '</div>' +
       '<div class="sl-main">' +
-      '<div class="sl-head"><b>Radar</b><span class="apptag" style="font:700 10px var(--font-body);background:#E8E8E8;color:#616061;border-radius:3px;padding:1px 4px">APP</span>' + ic('chevd') + '<span class="desc">Agents that notice for Kindroot</span><span class="members"><i></i><i></i><i></i>3</span></div>' +
+      '<div class="sl-head"><b>Radar</b><span class="apptag">APP</span>' + ic('chevd') + '<span class="desc">Agents that notice for Kindroot</span><span class="members"><i></i><i></i><i></i>3</span></div>' +
       '<div class="sl-tabs"><span class="on">' + ic('thread') + ' Messages</span><span>' + ic('help') + ' About</span><span>' + ic('plus') + '</span></div>' +
       '<div class="sl-msgs">' +
       '<div class="sl-day"><span>Monday, September 21</span></div>' +
       '<div class="sl-msg dim"><div class="av">R</div><div><div class="who"><b>Radar</b><span class="apptag">APP</span><span class="ts">8:30</span></div><div class="txt">Weekly, for Monday\'s status: your share at Target, CVS and Amazon held at 12.4%. Nothing urgent. 2 items for the management update.</div></div></div>' +
       '<div class="sl-day"><span>Today</span></div>' +
       '<div class="sl-msg"><div class="av">R</div><div><div class="who"><b>Radar</b><span class="apptag">APP</span><span class="ts">8:41</span></div>' +
-      '<div class="txt">Good morning, Maya. One update in your daily, and it comes with a date.</div>' + blockKit(true) + '</div></div>' +
+      '<div class="txt">Good morning, Maya. Three updates in your daily. The first one comes with a date.</div>' + blockKit() + '</div></div>' +
       '</div>' +
       '<div class="sl-comp"><div class="in">Message Radar</div><div class="bar">' + ic('zap') + '<span class="fmt"><span>B</span><span><i>I</i></span><span><s>S</s></span></span>' + ic('link') + ic('more') + '<span class="grow"></span>' + ic('at') + ic('smile') + ic('clip') + '<span class="send">' + ic('send') + '</span></div></div>' +
       '</div></div></div>';
@@ -209,8 +285,8 @@
       '<div class="gm-subj">Competitor launches: Bloomwell gummies gaining fast at Target. Window closes Oct 1. <span class="gm-tag">Inbox</span></div>' +
       '<div class="gm-from"><span class="av">R</span><div><b>Radar</b> <span class="addr">&lt;radar@platform&gt;</span><div class="to">to me ' + ic('chevd') + '</div></div>' +
       '<div class="right"><span class="ts">8:41 AM (2 minutes ago)</span>' + ic('star') + ic('reply') + ic('more') + '</div></div>' +
-      '<div class="gm-msg"><p>Good morning, Maya. One update in your daily, and it comes with a date.</p>' + blockKit(false) +
-      '<p class="gm-foot">You get this because Competitor launches reports to email. <a>Adjust this agent</a> &middot; <a>Open Radar</a></p></div>' +
+      '<div class="gm-msg"><p>Good morning, Maya. Three updates in your daily. The first one comes with a date.</p>' + blockKit() +
+      '<p class="gm-foot">You get this because Competitor launches reports to email. <a data-go="4">Tune this agent</a> &middot; <a data-go="5">Open Radar</a></p></div>' +
       '<div class="gm-reply"><span>' + ic('reply') + 'Reply</span><span>' + ic('arrowr') + 'Forward</span></div>' +
       '</div>' +
       '<div class="gm-side"><i style="background:#1A73E8"></i><i style="background:#F9AB00"></i><i style="background:#188038"></i><span>+</span></div>' +
@@ -235,37 +311,41 @@
   }
   var sep = ' ' + ic('chevr') + ' ';
 
-  var AGENTS = [
-    { name: 'Competitor launches', rh: 'daily', watch: 'Magnesium, sleep claims. Target, CVS, Amazon.', where: 'Slack', out: 'Insight + talking points', last: '<b>Today, 1 new</b>' },
-    { name: 'My share at key retailers', rh: 'weekly', watch: 'Kindroot\'s 5 SKUs at Target, CVS, Amazon. For Monday\'s numbers.', where: 'Slack', out: 'Insight + chart', last: 'Monday' },
-    { name: 'Claims and ingredients gaining traction', rh: 'weekly', watch: 'Claims and ingredients on the rise in natural supplements. For the management update.', where: 'Email', out: 'Insight + slide', last: 'Monday' },
-    { name: 'Consumer trends: sleep, stress, gut', rh: 'periodic', watch: 'Consumer conversation and search in your three need states. Feeds the Q4 plan and the innovation pipeline.', where: 'Email', out: 'Insight + talking points', last: 'Sep 8' },
-    { name: 'Retailer review prep', rh: 'periodic', watch: 'Everything for Target, Oct 1. Builds the deck as things change.', where: 'Email', out: 'Insight + slides', last: '<b>Draft deck: 4 slides</b>' }
-  ];
-  var RHYTHMS = [
-    ['daily', 'Daily, 8:30', 'What needs a reaction today'],
-    ['weekly', 'Weekly, Monday', 'What goes into Monday\'s status and the management update'],
-    ['periodic', 'Periodic', 'What builds toward the review, the plan, the launch']
-  ];
-  var PRESETS = [['Format shifts', 'weekly', 'Monday, by email'], ['Price and promo moves', 'daily', 'tomorrow 8:30, in Slack'], ['GLP-1 companion', 'periodic', 'before the Q4 plan'], ['Regulatory and claims watch', 'weekly', 'Monday, by email'], ['Retailer assortment changes', 'daily', 'tomorrow 8:30, in Slack']];
-
-  function agentCard(a, on, idx, extra) {
-    return '<div class="agent' + (on ? '' : ' off') + '"><div class="top">' + ic(RH_ICON[a.rh] || 'radar') + '<span class="name">' + a.name + '</span>' + (extra || '') +
-      (idx !== null ? '<button class="toggle" role="switch" aria-checked="' + on + '" data-agent="' + idx + '" aria-label="' + a.name + ' on or off"></button>' : '') + '</div>' +
-      '<div class="watch">' + a.watch + '</div>' +
-      '<div class="metar"><span>' + ic(a.where === 'Slack' ? 'hash' : 'mail') + a.where + '</span><span>' + ic('slide') + a.out + '</span></div>' +
-      '<div class="last">' + (on ? (a.lastLabel || 'Last update: ') + a.last : 'Paused') + '</div></div>';
+  /* Radar home: one list, grouped by rhythm */
+  function row(a, on, idx, isNew) {
+    var chans = (a.slack ? '<span>' + ic('hash') + 'Slack</span>' : '') + (a.email ? '<span>' + ic('mail') + 'Email</span>' : '');
+    return '<div class="arow' + (on ? '' : ' off') + '">' +
+      '<span class="ai" title="' + RH_LABEL[a.rh] + '">' + ic(RH_ICON[a.rh]) + '</span>' +
+      '<div class="an"><div class="anl"><b>' + a.name + '</b><span class="pill neutral">' + (isNew ? 'Yours' : 'Preset') + '</span>' + (isNew ? '<span class="pill">New</span>' : '') + '</div><div class="aw">' + a.watch + '</div></div>' +
+      '<div class="ach">' + chans + '</div>' +
+      '<div class="al">' + (on ? (a.lastLabel || 'Last: ') + a.last : 'Paused') + '</div>' +
+      (idx !== null ? '<button class="toggle" role="switch" aria-checked="' + on + '" data-agent="' + idx + '" aria-label="' + a.name + ' on or off"></button>' : '<span></span>') +
+      (idx !== null ? '<button class="more" data-menu="' + idx + '" aria-haspopup="menu" aria-expanded="' + (ui.menu === idx) + '" aria-label="More for ' + a.name + '">' + ic('more') + '</button>' : '<span></span>') +
+      (idx !== null && ui.menu === idx ? menu(idx, on) : '') +
+      '</div>';
+  }
+  function menu(i, on) {
+    return '<div class="menu" role="menu">' +
+      '<button role="menuitem" data-editagent="' + i + '">' + ic('tune') + 'Adjust</button>' +
+      '<button role="menuitem" data-agent="' + i + '">' + ic(on ? 'pause' : 'play') + (on ? 'Pause' : 'Resume') + '</button>' +
+      '<button role="menuitem" data-toast="Duplicated as \'' + AGENTS[i].name + ' (copy)\'. Edit it from the list.">' + ic('copy') + 'Duplicate</button>' +
+      '<button role="menuitem" class="danger" data-toast="Deleted ' + AGENTS[i].name + '. Undo stays in this toast for ten seconds (prototype).">' + ic('trash') + 'Delete</button></div>';
   }
 
   var STATES = [
     {
-      title: 'Scene', desc: 'Her three rhythms', cap: 'Tuesday, 8:40. Her week runs in three rhythms.',
-      where: 'Maya\'s week, not the product', when: 'Tuesday, September 22, 8:40',
-      notes: ['Maya isn\'t in the product. The story starts in her day, not ours.', 'She works in three rhythms: daily, weekly, periodic. Radar reports in them, not on a schedule of its own (principle 3).'],
+      title: 'Scene', desc: 'Her three rhythms', cap: 'Tuesday, 8:40. This is Maya.',
+      where: 'Maya\'s desk, between meetings', when: 'Tuesday, September 22, 8:40',
+      notes: ['Maya isn\'t in the product. The story starts with her, not with us.', 'Her week already has three rhythms. Radar fits into them instead of adding a fourth.'],
       render: function () {
-        return '<div class="scene"><div class="scene-top"><div class="who"><span class="avatar-lg">' + AVA + '</span><div><h4>Maya is between meetings.</h4><p class="role">Brand Manager, Kindroot. Five SKUs. Measured on sales and launches.</p></div></div>' +
-          '<div class="clock">8:40<small>Tue, Sep 22 &middot; last in the platform 3 weeks ago</small></div></div>' +
-          '<div class="scene-body"><p>Her work runs in three rhythms. Radar will report in them.</p>' +
+        return '<div class="scene"><div class="scene-top"><div class="who"><span class="avatar-lg">' + AVA + '</span><div><h4>Maya K.</h4><p class="role">Brand Manager at Kindroot, a mid-size natural supplements brand. Five SKUs.</p></div></div>' +
+          '<div class="clock">8:40<small>Tue, Sep 22 &middot; between meetings</small></div></div>' +
+          '<div class="scene-body"><div class="persona-mini">' +
+          '<div><div class="k">Measured on</div><p>Sales of her range, and new products that win.</p></div>' +
+          '<div><div class="k">Her day</div><p>Meetings, email, spreadsheets, decks. Not an analyst, not a power user.</p></div>' +
+          '<div><div class="k">The platform today</div><p>Twice a month, when something forces her in. Last time: three weeks ago.</p></div>' +
+          '<div><div class="k">What she needs</div><p>Defend her shelf at Target. Pick the next launch. Never get caught off guard.</p></div>' +
+          '</div><p class="scene-lead">Her week runs in three rhythms. Radar fits into them.</p>' +
           '<div class="rhythms">' +
           '<div class="rh"><div class="k">' + ic('sun') + 'Daily</div><ul><li><span class="t">9:00</span>Brand team sync</li><li><span class="t">11:00</span>Agency review</li><li><span class="t">14:00</span>1:1 with Dana</li><li>Approvals, emails, questions from the team</li></ul></div>' +
           '<div class="rh"><div class="k">' + ic('week') + 'Weekly</div><ul><li><span class="t">Mon</span>Performance and sales</li><li>Project status</li><li>Management update</li></ul></div>' +
@@ -274,36 +354,34 @@
       }
     },
     {
-      title: 'The moment', desc: 'Slack or email', cap: 'A daily update, made urgent by a closing window',
+      title: 'The moment', desc: 'Slack or email', cap: 'Three updates in her daily. She picks the one with a date on it.',
       where: 'Her phone, then Slack on her laptop', when: 'Tuesday, 8:41',
       notes: [
-        'Every update opens with why it matters to her brand (principle 5).',
-        'A closing window makes this urgent: it carries a date and it breaks through to today, whatever the rhythm (principle 4).',
-        'Control lives in the message: Adjust, Not relevant (principle 6). Same structure in Slack and email (principle 9).'
+        'Three updates in her daily. The one with a closing window comes first, and she picks it.',
+        'Each update opens with why it matters to her, before any numbers.',
+        'She can tune the agent or say "not relevant" right here, without leaving Slack.'
       ],
       render: function () {
-        return '<div class="moment">' +
-          phone() +
-          '<div><div class="moment-top"><div class="channel-toggle" role="group" aria-label="View as">' +
+        return '<div class="moment"><div class="moment-top"><div class="channel-toggle" role="group" aria-label="View as">' +
           '<button data-channel="slack" aria-pressed="' + (ui.channel === 'slack') + '">Slack</button>' +
           '<button data-channel="email" aria-pressed="' + (ui.channel === 'email') + '">Email</button></div>' +
-          '<span class="hint">Maya picked Slack for this agent. Same update either way.</span></div>' +
-          (ui.channel === 'slack' ? slackWin() : emailWin()) + '</div></div>';
+          '<span class="hint">Maya picked Slack for this agent. The email says the same.</span></div>' +
+          '<div class="moment-row"><div class="phone-wrap">' + phone() + '</div><div class="moment-screen">' + (ui.channel === 'slack' ? slackWin() : emailWin()) + '</div></div></div>';
       }
     },
     {
-      title: 'The insight', desc: 'Window, signal, why, moves', cap: 'The window first. Then signal, why it matters, evidence, three moves.',
+      title: 'The insight', desc: 'Window, signal, why, moves', cap: 'The window first. Then what changed, why it matters, and what to do.',
       where: 'The platform, Radar', when: 'Tuesday, 8:43',
       notes: [
-        'The window is the first thing on the page: what closes, when, and what it costs to miss it (principle 4).',
-        'Every number carries a source and a timeframe. She can show this in a room (principle 8).',
-        'The three moves map to Maya\'s three outcomes: the retailer meeting, the campaign, the next launch.'
+        'The window comes first: what closes, when, and what it costs to miss it.',
+        'Every number says where it came from. She can put this in front of a buyer.',
+        'Three moves, one for each thing she\'s measured on: the retailer, the campaign, the next launch.'
       ],
       render: function () {
         var body = ph(ic('radar') + '<span>Competitor launches</span><span>&middot;</span>' + ic('sun') + '<span>Daily</span><span>&middot;</span><span class="pill warn">' + ic('clock') + 'Breaks through</span>',
           'Bloomwell Magnesium Sleep Gummies is gaining fast at Target',
           'Launched 6 weeks ago. Magnesium glycinate + L-theanine. Positioned "sleep + stress". <span class="pill">' + ic('check') + 'Confidence: high</span>',
-          '<button class="btn btn-primary btn-sm" data-go="3" data-tab="slide">' + ic('slide') + 'Create slide</button><button class="btn btn-ghost btn-sm" data-go="3" data-tab="share">' + ic('share') + 'Share</button>') +
+          '<button class="btn btn-primary btn-sm" data-go="3" data-tab="slide">' + ic('slide') + 'Create slide</button><button class="btn btn-ghost btn-sm" data-go="3" data-tab="share">' + ic('share') + 'Share</button><button class="btn btn-ghost btn-sm" data-go="4">' + ic('tune') + 'Tune this agent</button>') +
           urgencyBanner('Target locks Q4 planograms on <b>Oct 6</b>. Endcap requests close <b>Oct 1</b>, the day of your review. After that, the next shot at placement is January.', 'Target vendor calendar, Q4') +
           '<div class="tiles"><div class="tile"><div class="n">2.1x</div><div class="l">Category velocity at Target, last 6 weeks</div><div class="s">Retail sales data, weeks 32-37</div></div>' +
           '<div class="tile"><div class="n">+38%</div><div class="l">"Magnesium for sleep" searches, quarter over quarter</div><div class="s">Search data, US, Q3 vs Q2</div></div>' +
@@ -313,7 +391,7 @@
           '<li>' + ic('search') + '<div>"Magnesium for sleep" searches +38% quarter over quarter.<span class="src">Search data, US, Q3 vs Q2</span></div></li>' +
           '<li>' + ic('ask') + '<div>"Gummy" appears in 54% more magnesium conversations than 90 days ago.<span class="src">Social listening, US, 90 days</span></div></li>' +
           '<li>' + ic('star') + '<div>Reviews praise taste and "no pill fatigue". 4.6 stars.<span class="src">Review analysis, n=1,214</span></div></li>' +
-          '</ul><div class="chart">' + chart() + '<div class="cap">Weekly velocity index at Target, weeks 28-37. Index 100 = category average. Illustrative.</div></div></div>' +
+          '</ul><div class="chart">' + chart('i') + '<div class="cap">Weekly velocity index at Target, weeks 28-37. Index 100 = category average. Illustrative.</div></div></div>' +
           '<div class="c"><div class="c-head">' + ic('brand') + 'Why it matters to Kindroot</div><ul class="why-list">' +
           '<li>Your Magnesium Glycinate capsules are your <b>#2 SKU</b>, 31% of range revenue.</li>' +
           '<li>Your share of magnesium at Target is <b>down 1.4 pts in 8 weeks</b>. The drop starts the week Bloomwell landed on shelf.</li>' +
@@ -327,14 +405,14 @@
           '<div class="also"><div class="c-head" style="margin-bottom:4px">' + ic('radar') + 'Also on your radar</div>' +
           '<div class="row">' + ic('flag') + '<div><span class="ag">Consumer trends &middot; periodic</span>"GLP-1 companion" searches (fiber, electrolytes) +61% in 6 months. For the Q4 plan.</div><span class="when">no window</span></div>' +
           '<div class="row">' + ic('week') + '<div><span class="ag">Claims and ingredients &middot; weekly</span>Ashwagandha conversation cooling, -12% in 90 days. Your Ashwagandha SKU.</div><span class="when">Monday</span></div></div>' +
-          '<div class="ins-foot"><span>Why you\'re seeing this: you asked Competitor launches to watch magnesium at Target. The window made it urgent.</span><span class="grow"></span><a data-go="4">Adjust</a><a data-go="4">Not relevant</a><a data-go="4">More like this</a></div>';
+          '<div class="ins-foot"><span>Why you\'re seeing this: you asked Competitor launches to watch magnesium at Target. The window made it urgent.</span><span class="grow"></span><a data-go="4">Tune this agent</a><a data-go="4" data-fb="no">Not relevant</a><a data-go="4" data-fb="more">More like this</a></div>';
         return app('<a data-go="5">Radar</a>' + sep + '<a data-go="5">Competitor launches</a>' + sep + '<b>September 22</b>', body, { url: 'radar/competitor-launches/sep-22' });
       }
     },
     {
-      title: 'Act', desc: 'Slide, email, meeting', cap: 'Her artifacts, drafted. Nothing sent without her.',
+      title: 'Act', desc: 'Slide, email, meeting', cap: 'Radar drafts. Maya sends.',
       where: 'The platform, Radar, acting on the insight', when: 'Tuesday, 8:45',
-      notes: ['Outputs are her artifacts: a slide, an email, a meeting. Editable, never auto-sent (principle 7).', 'The window travels with the output: the slide asks for a date, the invite lands before it.'],
+      notes: ['Radar drafts. Maya sends. Nothing goes out without her.', 'The date travels with the work: the slide asks for it, the meeting lands before it.'],
       render: function () {
         var tabs = [['slide', 'slide', 'Create slide'], ['email', 'mail', 'Draft email'], ['meeting', 'calendar', 'Schedule meeting'], ['ask', 'ask', 'Ask a follow-up'], ['share', 'share', 'Share']];
         var t = '<div class="tabs" role="tablist">';
@@ -346,7 +424,7 @@
           for (var n = 1; n <= 8; n++) thumbs += '<i data-n="' + n + '"' + (n === 7 ? ' class="on"' : '') + '></i>';
           body = '<div class="act-head"><h5>Slide, ready for the Target deck</h5><span class="hint">Q4 Target review.pptx, slide 7. Built from the insight. Edit anything before it goes in.</span></div>' +
             '<div class="deck"><div class="thumbs">' + thumbs + '</div>' +
-            '<div class="slide"><h5>Sleep is reshaping magnesium at Target</h5><div class="chart">' + chart() + '</div>' +
+            '<div class="slide"><h5>Sleep is reshaping magnesium at Target</h5><div class="chart">' + chart('s') + '</div>' +
             '<div><ul><li>Magnesium at Target is up 22% YoY. Sleep is the growth driver: +38% searches, quarter over quarter.</li>' +
             '<li>Bloomwell Sleep Gummies run at 2.1x category velocity since launch, winning on format.</li>' +
             '<li>Kindroot is the #1-reviewed clean-label magnesium at Target. 27% of reviews cite "no fillers".</li></ul>' +
@@ -388,15 +466,16 @@
             '<div class="act-btns"><button class="btn btn-primary btn-sm" data-toast="Posted to #brand-kindroot.">' + ic('hash') + 'Post to #brand-kindroot</button>' +
             '<button class="btn btn-ghost btn-sm" data-toast="Link copied.">' + ic('link') + 'Copy link</button></div>';
         }
-        var head = ph(ic('radar') + '<span>Competitor launches</span><span>&middot;</span><span>Bloomwell gummies at Target</span>', 'Act on it', 'Every output is a draft until Maya says so.');
+        var head = ph(ic('radar') + '<span>Competitor launches</span><span>&middot;</span><span>Bloomwell gummies at Target</span>', 'Act on it', 'Everything here is a draft until Maya sends it.');
         return app('<a data-go="5">Radar</a>' + sep + '<a data-go="2">Bloomwell gummies at Target</a>' + sep + '<b>Act</b>', head + t + body, { url: 'radar/competitor-launches/sep-22/act' });
       }
     },
     {
-      title: 'Tune', desc: 'Feedback, adjust', cap: 'One tap teaches the agent, and it says what changed',
+      title: 'Tune', desc: 'Feedback, adjust', cap: 'Tell the agent what was off. It tells you what it\'ll do differently.',
       where: 'The platform, Radar, the same insight', when: 'Tuesday, 8:47',
-      notes: ['Feedback changes the next update and says so (principle 10).', '"Not urgent" teaches the agent to keep the rhythm unless the window is under a week (principle 4).', 'Adjusting happens right here, not in a settings page (principle 6).'],
+      notes: ['The same card she saw when she created an agent. One place to change things, and she can get here from Slack, from email, or from the insight.', 'When she says what was off, the agent answers with what it will do differently.', '"Not urgent" teaches it to wait for the rhythm, unless a window is under a week.'],
       render: function () {
+        var a = AGENTS[ui.editAgent];
         var reasons = [['retailer', 'Wrong retailer'], ['product', 'Wrong product'], ['small', 'Too small'], ['urgent', 'Not urgent'], ['knew', 'Already knew']];
         var msg = {
           retailer: 'Competitor launches will focus on Target and CVS, where your magnesium sells.',
@@ -405,52 +484,50 @@
           urgent: 'Competitor launches will keep items like this in your daily rhythm, and only break through when a window is under a week.',
           knew: 'Competitor launches will report right away when it\'s big, instead of waiting for the digest.'
         };
-        var fb = '<div class="c fb"><div class="c-head">' + ic('eye') + 'Was this worth your time?</div><div class="btns">' +
-          '<button class="btn btn-ghost btn-sm" data-fb="no" aria-pressed="' + (ui.fb === 'no') + '">' + ic('x') + 'Not relevant</button>' +
-          '<button class="btn btn-ghost btn-sm" data-fb="more" aria-pressed="' + (ui.fb === 'more') + '">' + ic('check') + 'More like this</button></div>';
-        if (ui.fb === 'no') {
-          fb += '<div><div class="hint" style="margin-bottom:6px">What was off?</div><div class="chips">';
-          for (var r = 0; r < reasons.length; r++) fb += '<button class="chip" data-reason="' + reasons[r][0] + '" aria-pressed="' + (ui.reason === reasons[r][0]) + '">' + reasons[r][1] + '</button>';
-          fb += '</div></div>';
-          if (ui.reason) fb += '<div class="confirm"><b>Got it.</b> ' + msg[ui.reason] + ' Next update tomorrow, 8:30.</div>';
+        var fb;
+        if (ui.editAgent === 0) {
+          fb = '<div class="c fb"><div class="c-head">' + ic('eye') + 'This update: Bloomwell gummies at Target</div><p class="fbq">Was it worth your time?</p><div class="btns">' +
+            '<button class="btn btn-ghost btn-sm" data-fb="no" aria-pressed="' + (ui.fb === 'no') + '">' + ic('x') + 'Not relevant</button>' +
+            '<button class="btn btn-ghost btn-sm" data-fb="more" aria-pressed="' + (ui.fb === 'more') + '">' + ic('check') + 'More like this</button></div>';
+          if (ui.fb === 'no') {
+            fb += '<div><div class="hint" style="margin-bottom:6px">What was off?</div><div class="chips">';
+            for (var r = 0; r < reasons.length; r++) fb += '<button class="chip" data-reason="' + reasons[r][0] + '" aria-pressed="' + (ui.reason === reasons[r][0]) + '">' + reasons[r][1] + '</button>';
+            fb += '</div></div>';
+            if (ui.reason) fb += '<div class="confirm"><b>Got it.</b> ' + msg[ui.reason] + ' Next update tomorrow, 8:30.</div>';
+          }
+          if (ui.fb === 'more') fb += '<div class="confirm"><b>Got it.</b> I\'ll also watch Bloomwell at CVS and Amazon, and flag format launches across the rest of your range.</div>';
+          fb += '</div>';
+        } else {
+          fb = '<div class="c fb"><div class="c-head">' + ic('eye') + 'Feedback</div><p class="fbq">Feedback lives on each update. Open one from Slack or email and tap Not relevant or More like this.</p><p class="hint" style="margin:0">Last update from ' + a.name + ': ' + a.last + '.</p></div>';
         }
-        if (ui.fb === 'more') fb += '<div class="confirm"><b>Got it.</b> I\'ll also watch Bloomwell at CVS and Amazon, and flag format launches across the rest of your range.</div>';
-        fb += '</div>';
-
-        var learned = (ui.fb === 'no' && ui.reason === 'small') ? '<span class="tag">Skips launches under 1x</span>' :
-          (ui.fb === 'no' && ui.reason === 'urgent') ? '<span class="tag">Breaks through only under a week</span>' :
-          (ui.fb === 'more') ? '<span class="tag">Bloomwell at CVS, Amazon</span>' : '';
-        var card = ui.adjust ?
-          '<div class="c agent-card"><div class="top">' + ic('sun') + '<span class="name">Competitor launches</span>' + (learned ? '<span class="pill">Changed just now</span>' : '') + '<button class="toggle" role="switch" aria-checked="true" data-toast="Paused. Turn it back on any time from Radar home."></button></div>' +
-          '<div class="field"><span>Watches</span><div class="tags"><span class="tag">Magnesium</span><span class="tag">Sleep claims</span><span class="tag">Target, CVS, Amazon</span><span class="tag">Bloomwell, Sunveil, Nature\'s Path</span>' + learned + '</div></div>' +
-          '<div class="field"><span>Rhythm</span>' + seg('seg', 'rh', RHY) + '</div>' +
-          urgencyToggle() +
-          '<div class="field"><span>Where</span>' + seg('seg', 'where', WHERE) + '</div>' +
-          '<div class="field"><span>You get</span>' + seg('seg', 'out', OUT) + '</div>' +
-          '<div class="btns"><button class="btn btn-primary btn-sm" data-toast="Saved. Applies from the next update.">' + ic('check') + 'Save</button><button class="btn btn-ghost btn-sm" data-go="5">See all agents</button></div></div>' :
-          '<div class="c agent-card"><div class="top">' + ic('sun') + '<span class="name">Competitor launches</span><span class="pill">On &middot; daily</span></div>' +
-          '<p class="hint" style="margin:0">This update came from your Competitor launches agent, in your daily rhythm. The Oct 1 window is why it came with a date.</p>' +
-          '<div class="btns"><button class="btn btn-ghost btn-sm" data-adjust>' + ic('edit') + 'Adjust this agent</button><button class="btn btn-quiet btn-sm" data-go="5">See all agents</button></div></div>';
-        var head = ph(ic('radar') + '<span>Competitor launches</span><span>&middot;</span><span>Bloomwell gummies at Target</span>', 'Tune it', 'Tell the agent what was off. It says what it will do differently.');
-        return app('<a data-go="5">Radar</a>' + sep + '<a data-go="2">Bloomwell gummies at Target</a>' + sep + '<b>Tune</b>', head + '<div class="g55">' + fb + card + '</div>', { url: 'radar/competitor-launches/sep-22/tune' });
+        var learned = (ui.fb === 'no' && ui.reason === 'small') ? '<span class="tag learned">Skips launches under 1x</span>' :
+          (ui.fb === 'no' && ui.reason === 'urgent') ? '<span class="tag learned">Breaks through only under a week</span>' :
+          (ui.fb === 'more') ? '<span class="tag learned">Bloomwell at CVS, Amazon</span>' : '';
+        var card = editor({
+          pill: learned ? '<span class="pill">Changed just now</span>' : '<span class="pill">On &middot; ' + RH_LABEL[ui.ed.rh].toLowerCase() + '</span>',
+          learned: learned,
+          cta: '<button class="btn btn-primary btn-sm" data-toast="Saved. Applies from the next update.">' + ic('check') + 'Save</button>',
+          secondary: '<button class="btn btn-ghost btn-sm" data-go="5">See all agents</button>'
+        });
+        var head = ph(ic('radar') + '<span>Radar</span><span>&middot;</span>' + ic(RH_ICON[a.rh]) + '<span>' + RH_LABEL[a.rh] + '</span>', 'Here\'s what I understood', 'What ' + a.name + ' is watching, and how it reaches you. Change anything you like.',
+          '<button class="btn btn-ghost btn-sm" data-go="5">' + ic('radar') + 'All agents</button>');
+        return app('<a data-go="5">Radar</a>' + sep + '<a data-go="2">' + a.name + '</a>' + sep + '<b>Tune</b>', head + '<div class="g57">' + fb + card + '</div>', { url: 'radar/' + a.name.toLowerCase().replace(/[^a-z]+/g, '-') + '/tune' });
       }
     },
     {
-      title: 'Radar home', desc: 'Agents by rhythm', cap: 'Five agents, in her three rhythms. She turns off, not on.',
+      title: 'Radar home', desc: 'Agents by rhythm', cap: 'Five agents, three rhythms. She switches things off, not on.',
       where: 'The platform, Radar home', when: 'Tuesday, 8:48',
-      notes: ['She starts full, not empty. The presets come from her brand profile, named by the job (principle 1).', 'Agents live in her three rhythms, so she reads this the way she reads her week (principle 3).', 'One rule for urgency, at the top: a closing window breaks through to today (principle 4).', 'The library is one tap away, and creating by prompt is behind it (principle 2).'],
+      notes: ['She doesn\'t start from zero. Five agents came with her brand profile, named the way she\'d say them.', 'One list, in her three rhythms, so it reads like her week.', 'One rule at the top: a closing window is allowed to interrupt. Nothing else is.', 'Three dots on every agent: adjust, pause, duplicate, delete.'],
       render: function () {
         var count = ui.agents.filter(Boolean).length + (ui.created ? 1 : 0);
-        var h = ph(ic('radar') + '<span>Radar</span>', 'Your radar', count + ' agents watching Kindroot, in your three rhythms. Set up from your brand profile. Turn off anything you don\'t need.',
+        var h = ph(ic('radar') + '<span>Radar</span>', 'Your radar', count + ' agents are watching Kindroot for you, in your three rhythms. We set them up from your brand profile. Switch off anything you don\'t need.',
           '<button class="btn btn-primary btn-sm" data-go="6">' + ic('plus') + 'New agent</button>') +
-          '<div class="rule">' + ic('clock') + '<span><b>Urgency breaks the rhythm.</b> When a window is closing, the update comes today, in Slack, with the date on it.' + (ui.urgent ? '' : ' <span class="pill warn">Off: windows wait for their rhythm</span>') + '</span><span class="grow"></span><button class="toggle" role="switch" aria-checked="' + ui.urgent + '" data-urgent aria-label="Urgent updates break through"></button></div>';
+          '<div class="rule">' + ic('clock') + '<span><b>A closing window is allowed to interrupt.</b> When one is closing, you hear today, in Slack, with the date. Everything else waits for its rhythm.' + (ui.urgent ? '' : ' <span class="pill warn">Off: windows wait for their rhythm</span>') + '</span><span class="grow"></span><button class="toggle" role="switch" aria-checked="' + ui.urgent + '" data-urgent aria-label="Urgent updates break through"></button></div>';
         for (var g = 0; g < RHYTHMS.length; g++) {
           var rh = RHYTHMS[g];
-          h += '<div class="rgroup"><div class="rhead"><span class="k">' + ic(RH_ICON[rh[0]]) + rh[1] + '</span><span class="hint">' + rh[2] + '</span></div><div class="agents">';
-          for (var i = 0; i < AGENTS.length; i++) if (AGENTS[i].rh === rh[0]) h += agentCard(AGENTS[i], ui.agents[i], i);
-          if (ui.created && ui.nseg.rh === rh[0]) {
-            h += agentCard({ name: 'Threats to magnesium at Target', rh: rh[0], watch: ui.chips.join('. ') + '.', where: ui.nseg.where === 'slack' ? 'Slack' : 'Email', out: 'Insight + talking points', last: '<b>' + firstUpdate() + '</b>', lastLabel: 'First update: ' }, true, null, '<span class="pill">New</span>');
-          }
+          h += '<div class="rgroup"><div class="rhead"><span class="k">' + ic(RH_ICON[rh[0]]) + rh[1] + '</span><span class="hint">' + rh[2] + '</span></div><div class="alist">';
+          for (var i = 0; i < AGENTS.length; i++) if (AGENTS[i].rh === rh[0]) h += row(AGENTS[i], ui.agents[i], i, false);
+          if (ui.created && ui.createdAgent && ui.createdAgent.rh === rh[0]) h += row(ui.createdAgent, true, null, true);
           h += '</div></div>';
         }
         h += '<div class="presets"><div class="c-head">' + ic('plus') + 'More to switch on</div><div class="row">';
@@ -462,48 +539,45 @@
       }
     },
     {
-      title: 'New agent', desc: 'Prompt to card', cap: 'A prompt becomes a card, with a sample before it starts',
+      title: 'New agent', desc: 'Prompt to card', cap: 'Say it in your words. Get a card you can edit, and a sample first.',
       where: 'The platform, new agent', when: 'Tuesday, 8:50',
-      notes: ['A prompt becomes a card she can edit: what, which rhythm, where, what she gets (principle 2).', 'Rhythm and urgency are choices on the card, in her words (principles 3 and 4).', 'A sample of the first update appears before she commits. No surprises, no noise (principle 2).'],
+      notes: ['She writes what she wants in her own words. Radar turns it into a card she can edit.', 'Slack, email, or both.', 'She sees a sample of the first update before anything starts. No surprises.'],
       render: function () {
         if (ui.phase === 2) {
           return '<div class="done"><div class="mark">' + ic('check') + '</div><div class="kicker">Running</div><h4>First update ' + firstUpdate() + '.</h4>' +
-            '<p>That\'s the loop. Maya told Radar what matters, in her words and in her rhythm. From here on, it does the noticing, and she does the deciding.</p>' +
+            '<p>That\'s it. Maya said what matters, in her words. From here on, Radar notices and she decides.</p>' +
             '<div class="btns" style="justify-content:center"><button class="btn btn-ghost btn-sm" data-go="5">See all agents</button><button class="btn btn-primary btn-sm" data-restart>Restart</button></div></div>';
         }
         var body;
         if (ui.phase === 0) {
-          body = ph(ic('radar') + '<span>Radar</span><span>&middot;</span><span>New agent</span>', 'Tell Radar what to watch', 'In your words. Radar turns it into an agent you can edit, and shows you a sample before it starts.') +
-            '<div class="prompt"><div class="in">' + ic('sparkle') + '<input id="np" value="anything that could hurt my magnesium line at Target" aria-label="What should Radar watch?"><button class="btn btn-primary btn-sm" data-phase="1">Ask Radar</button></div>' +
-            '<div class="chips"><span class="hint" style="align-self:center">Try:</span>' +
-            '<button class="chip" data-fill="who\'s launching in gut health">Who\'s launching in gut health</button>' +
-            '<button class="chip" data-fill="price moves on my SKUs at Amazon">Price moves on my SKUs at Amazon</button>' +
-            '<button class="chip" data-fill="claims growing in women\'s health">Claims growing in women\'s health</button></div></div>';
+          var ex = '';
+          for (var x = 0; x < EXAMPLES.length; x++) ex += '<button class="excard" data-fill="' + EXAMPLES[x][0] + '">' + ic(EXAMPLES[x][3]) + '<b>' + EXAMPLES[x][1] + '</b><span>' + EXAMPLES[x][2] + '</span></button>';
+          body = ph(ic('radar') + '<span>Radar</span><span>&middot;</span><span>New agent</span>', 'Tell Radar what to watch', 'Say it the way you\'d say it to a colleague. Radar turns it into an agent you can edit, and shows you a sample first.') +
+            '<div class="composer"><div class="c-in">' + ic('sparkle') + '<input id="np" value="' + ui.prompt.replace(/"/g, '&quot;') + '" aria-label="What should Radar watch?" placeholder="e.g. anything that could hurt my magnesium line at Target"></div>' +
+            '<div class="c-foot"><span class="hint">You\'ll get a card to check before anything starts.</span><button class="btn btn-primary btn-sm" data-phase="1">Ask Radar ' + ic('arrowr') + '</button></div></div>' +
+            '<div class="c-head" style="margin-top:22px">' + ic('users') + 'Or start from what other brand managers watch</div><div class="examples">' + ex + '</div>';
         } else {
-          var chips = '';
-          for (var c = 0; c < ui.chips.length; c++) chips += '<span class="tag">' + ui.chips[c] + '<button data-rmchip="' + c + '" aria-label="Remove">&times;</button></span>';
-          chips += '<span class="tag add" data-toast="Type another thing to watch. Radar adds it to the list.">+ add</span>';
-          body = ph(ic('radar') + '<span>Radar</span><span>&middot;</span><span>New agent</span>', 'Here\'s what I understood', 'Maya asked: <b>"anything that could hurt my magnesium line at Target"</b>. Edit anything, then start it.') +
-            '<div class="c agent-card"><div class="top">' + ic(RH_ICON[ui.nseg.rh]) + '<span class="name">Threats to magnesium at Target</span><span class="pill neutral">Draft</span></div>' +
-            '<div class="field"><span>I\'ll watch</span><div class="tags">' + chips + '</div></div>' +
-            '<div class="field"><span>Rhythm</span>' + seg('nseg', 'rh', [['daily', 'Daily, 8:30'], ['weekly', 'Weekly, Monday'], ['periodic', 'Periodic, before the Target review']]) + '</div>' +
-            urgencyToggle() +
-            '<div class="field"><span>Where</span>' + seg('nseg', 'where', [['slack', 'Slack'], ['email', 'Email']]) + '</div>' +
-            '<div class="field"><span>You get</span>' + seg('nseg', 'out', OUT) + '</div>' +
-            '<div class="sample"><div class="k">' + ic('eye') + 'Sample of your first update, from last week\'s data</div>Sunveil cut its magnesium price 15% at Target this week. The promo runs to Oct 5. Your price gap is now 22%. Suggested move: hold price, add a value pack before the promo ends. <span class="pill warn">' + ic('clock') + 'Window: Oct 5</span><span class="src">Retail pricing data, Target, week 37. Illustrative.</span></div>' +
-            '<div class="btns"><button class="btn btn-primary btn-sm" data-phase="2">' + ic('check') + 'Start watching</button><button class="btn btn-ghost btn-sm" data-phase="0">Edit the request</button></div></div>';
+          var e = ui.ed;
+          body = ph(ic('radar') + '<span>Radar</span><span>&middot;</span><span>New agent</span>', 'Here\'s what I understood', 'Check it, change what you like, then start. On the right: what your first update would look like.') +
+            '<div class="g57">' + editor({
+              isNew: true, pill: '<span class="pill neutral">Draft</span>',
+              cta: '<button class="btn btn-primary btn-sm" data-phase="2"' + (!e.slack && !e.email ? ' disabled' : '') + '>' + ic('check') + 'Start watching</button>',
+              secondary: '<button class="btn btn-ghost btn-sm" data-phase="0">Edit the request</button>'
+            }) +
+            '<div class="c preview"><div class="c-head">' + ic('eye') + 'Sample of your first update<span class="r">from last week\'s data</span></div>' +
+            '<div class="mini"><div class="sl-msg"><div class="av">R</div><div><div class="who"><b>Radar</b><span class="apptag">APP</span><span class="ts">' + (e.rh === 'weekly' ? 'Mon 8:30' : e.rh === 'periodic' ? 'Sep 29, 8:30' : 'Thu 8:30') + '</span></div>' +
+            '<div class="txt">' + e.name + ', ' + RH_LABEL[e.rh].toLowerCase() + ', ' + whereText(e) + '.</div>' +
+            '<div class="bk"><div class="bk-h">Sunveil cut its magnesium price 15% at Target</div>' +
+            '<div class="bk-s"><b>Why it matters to Kindroot:</b> your price gap is now 22%, and the promo runs to Oct 5.</div>' +
+            '<div class="bk-win">' + ic('clock') + '<span>Promo ends before your next weekly.</span><span class="date">Oct 5 &middot; 12 days</span></div>' +
+            '<div class="bk-s">Suggested move: hold price, add a value pack before the promo ends.</div>' +
+            '<div class="bk-actions"><span class="bk-btn primary">Open insight</span><span class="bk-btn">Draft email</span></div></div></div></div></div>' +
+            '<span class="src">Retail pricing data, Target, week 37. Illustrative.</span></div></div>';
         }
         return app('<a data-go="5">Radar</a>' + sep + '<b>New agent</b>', body, { url: 'radar/new' });
       }
     }
   ];
-
-  function firstUpdate() {
-    var w = ui.nseg.where === 'slack' ? 'in Slack' : 'by email';
-    if (ui.nseg.rh === 'weekly') return 'Monday, ' + w + ', in your weekly';
-    if (ui.nseg.rh === 'periodic') return 'before the Target review, Oct 1, ' + w;
-    return 'tomorrow, 8:30, ' + w + ', in your daily';
-  }
 
   /* Shell */
   mount.className = 'proto' + (FULL ? ' full' : '');
@@ -512,7 +586,7 @@
     '<div class="proto-head"><span class="proto-brand"><i></i>Radar prototype</span><span class="proto-step" id="p-step"></span><span class="grow"></span>' +
     '<label class="switch"><input type="checkbox" id="p-notes" checked> Design notes</label>' +
     '<button class="btn btn-ghost btn-sm" data-restart>Restart</button>' +
-    (FULL ? '<a class="btn btn-ghost btn-sm" href="index.html#prototype">Back to the write-up</a>' : '<a class="btn btn-ghost btn-sm" href="prototype.html" target="_blank" rel="noopener">Full screen</a>') +
+    (FULL ? '<a class="btn btn-ghost btn-sm" href="index.html">Back to the write-up</a>' : '<a class="btn btn-ghost btn-sm" href="prototype.html" target="_blank" rel="noopener">Full screen</a>') +
     '</div>' +
     '<div class="prog" id="p-prog" aria-hidden="true"></div>' +
     '<div class="ctx" id="p-ctx"></div>' +
@@ -537,7 +611,7 @@
     }
     mount.querySelector('#p-prog').innerHTML = prog;
     stepsEl.innerHTML = html;
-    var n = '<h4>Why it\'s built this way</h4>';
+    var n = '<h4>Design note</h4>';
     for (var j = 0; j < s.notes.length; j++) n += '<p>' + s.notes[j] + '</p>';
     notesBox.innerHTML = n;
     notesBox.hidden = !ui.notes;
@@ -546,10 +620,11 @@
     stage.scrollTop = 0;
   }
 
-  function go(i) {
+  function go(i, keepFb) {
     if (i < 0 || i >= STATES.length) return;
-    ui.i = i; ui.edit = false; ui.ask = -1;
-    ui.fb = null; ui.reason = null; ui.adjust = false; ui.phase = 0;
+    ui.i = i; ui.edit = false; ui.ask = -1; ui.menu = -1; ui.phase = 0;
+    if (!keepFb) { ui.fb = null; ui.reason = null; }
+    if (i === 4) ui.ed = fromAgent(ui.editAgent);
     if (FULL) { try { history.replaceState(null, '', '#step-' + (i + 1)); } catch (e) {} }
     render();
   }
@@ -567,27 +642,36 @@
   }
 
   mount.addEventListener('click', function (e) {
-    var t = e.target.closest('[data-go],[data-channel],[data-tab],[data-toast],[data-edit],[data-copy],[data-ask],[data-prev],[data-next],[data-restart],[data-fb],[data-reason],[data-adjust],[data-agent],[data-preset],[data-phase],[data-fill],[data-rmchip],[data-seg],[data-urgent]');
-    if (!t || !mount.contains(t)) return;
+    var t = e.target.closest('[data-go],[data-channel],[data-tab],[data-toast],[data-edit],[data-copy],[data-ask],[data-prev],[data-next],[data-restart],[data-fb],[data-reason],[data-agent],[data-preset],[data-phase],[data-fill],[data-rmchip],[data-seg],[data-urgent],[data-menu],[data-editagent],[data-where]');
+    var menuWasOpen = ui.menu !== -1;
+    if (!t || !mount.contains(t)) { if (menuWasOpen) { ui.menu = -1; render(); } return; }
     if (t.hasAttribute('data-tab')) ui.tab = t.getAttribute('data-tab');
-    if (t.hasAttribute('data-go')) { go(+t.getAttribute('data-go')); return; }
+    if (t.hasAttribute('data-fb') && t.hasAttribute('data-go')) { ui.fb = t.getAttribute('data-fb'); ui.reason = null; ui.editAgent = 0; go(+t.getAttribute('data-go'), true); return; }
+    if (t.hasAttribute('data-go')) { var gi = +t.getAttribute('data-go'); if (gi === 4) ui.editAgent = 0; go(gi); return; }
+    if (t.hasAttribute('data-editagent')) { ui.editAgent = +t.getAttribute('data-editagent'); go(4); return; }
     if (t.hasAttribute('data-prev')) { go(ui.i - 1); return; }
     if (t.hasAttribute('data-next')) { go(ui.i === STATES.length - 1 ? 0 : ui.i + 1); return; }
-    if (t.hasAttribute('data-restart')) { ui.channel = 'slack'; ui.tab = 'slide'; ui.created = false; ui.urgent = true; ui.agents = [true, true, true, true, true]; ui.presets = [false, false, false, false, false]; ui.nseg = { rh: 'daily', where: 'slack', out: 'talk' }; go(0); return; }
+    if (t.hasAttribute('data-restart')) { ui.channel = 'slack'; ui.tab = 'slide'; ui.created = false; ui.createdAgent = null; ui.urgent = true; ui.agents = [true, true, true, true, true]; ui.presets = [false, false, false, false, false]; ui.ed = null; ui.editAgent = 0; ui.prompt = 'anything that could hurt my magnesium line at Target'; go(0); return; }
     if (t.hasAttribute('data-channel')) { ui.channel = t.getAttribute('data-channel'); render(); return; }
     if (t.hasAttribute('data-tab')) { ui.edit = false; ui.ask = -1; render(); return; }
     if (t.hasAttribute('data-ask')) { ui.ask = +t.getAttribute('data-ask'); render(); return; }
     if (t.hasAttribute('data-edit')) { ui.edit = !ui.edit; render(); if (ui.edit) { var b = stage.querySelector('#draft-body'); if (b) b.focus(); } return; }
     if (t.hasAttribute('data-fb')) { ui.fb = t.getAttribute('data-fb'); ui.reason = null; render(); return; }
     if (t.hasAttribute('data-reason')) { ui.reason = t.getAttribute('data-reason'); render(); return; }
-    if (t.hasAttribute('data-adjust')) { ui.adjust = true; render(); return; }
     if (t.hasAttribute('data-urgent')) { ui.urgent = !ui.urgent; render(); toast(ui.urgent ? 'Urgent updates break through to today again.' : 'Urgent updates will wait for their rhythm. Windows can close.'); return; }
-    if (t.hasAttribute('data-agent')) { var ai = +t.getAttribute('data-agent'); ui.agents[ai] = !ui.agents[ai]; render(); toast(ui.agents[ai] ? AGENTS[ai].name + ' is back on.' : AGENTS[ai].name + ' paused. Nothing from it until you turn it on.'); return; }
+    if (t.hasAttribute('data-menu')) { var mi = +t.getAttribute('data-menu'); ui.menu = ui.menu === mi ? -1 : mi; render(); return; }
+    if (t.hasAttribute('data-agent')) { var ai = +t.getAttribute('data-agent'); ui.agents[ai] = !ui.agents[ai]; ui.menu = -1; render(); toast(ui.agents[ai] ? AGENTS[ai].name + ' is back on.' : AGENTS[ai].name + ' paused. Nothing from it until you turn it on.'); return; }
     if (t.hasAttribute('data-preset')) { var pi = +t.getAttribute('data-preset'); ui.presets[pi] = !ui.presets[pi]; render(); toast(ui.presets[pi] ? PRESETS[pi][0] + ' is on, in your ' + PRESETS[pi][1] + '. First update ' + PRESETS[pi][2] + '.' : PRESETS[pi][0] + ' is off.'); return; }
-    if (t.hasAttribute('data-phase')) { ui.phase = +t.getAttribute('data-phase'); if (ui.phase === 2) ui.created = true; render(); return; }
-    if (t.hasAttribute('data-fill')) { var inp = stage.querySelector('#np'); if (inp) { inp.value = t.getAttribute('data-fill'); inp.focus(); } return; }
-    if (t.hasAttribute('data-rmchip')) { ui.chips.splice(+t.getAttribute('data-rmchip'), 1); render(); return; }
+    if (t.hasAttribute('data-phase')) {
+      var np = +t.getAttribute('data-phase');
+      if (np === 1) { var inp = stage.querySelector('#np'); if (inp) ui.prompt = inp.value.trim() || ui.prompt; ui.ed = fromPrompt(ui.prompt); }
+      if (np === 2) { var ed = ui.ed; ui.created = true; ui.createdAgent = { name: ed.name, rh: ed.rh, slack: ed.slack, email: ed.email, watch: ed.chips.join('. ') + '.', last: '<b>' + firstUpdate() + '</b>', lastLabel: 'First update: ' }; }
+      ui.phase = np; render(); return;
+    }
+    if (t.hasAttribute('data-fill')) { var inp2 = stage.querySelector('#np'); if (inp2) { inp2.value = t.getAttribute('data-fill'); ui.prompt = inp2.value; inp2.focus(); } return; }
+    if (t.hasAttribute('data-rmchip')) { ui.ed.chips.splice(+t.getAttribute('data-rmchip'), 1); render(); return; }
     if (t.hasAttribute('data-seg')) { var p = t.getAttribute('data-seg').split('|'); ui[p[0]][p[1]] = p[2]; render(); return; }
+    if (t.hasAttribute('data-where')) { var w = t.getAttribute('data-where'); ui.ed[w] = !ui.ed[w]; render(); return; }
     if (t.hasAttribute('data-copy')) {
       var src = stage.querySelector('#' + t.getAttribute('data-copy'));
       var text = src ? src.innerText : '';
@@ -596,14 +680,15 @@
       } else { toast('Select the text to copy it.'); }
       return;
     }
-    if (t.hasAttribute('data-toast')) { toast(t.getAttribute('data-toast')); }
+    if (t.hasAttribute('data-toast')) { if (menuWasOpen) { ui.menu = -1; render(); } toast(t.getAttribute('data-toast')); }
   });
 
   mount.querySelector('#p-notes').addEventListener('change', function (e) { ui.notes = e.target.checked; notesBox.hidden = !ui.notes; });
 
   var keyTarget = FULL ? document : mount;
   keyTarget.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' && e.target.id === 'np') { ui.phase = 1; render(); e.preventDefault(); return; }
+    if (e.key === 'Enter' && e.target.id === 'np') { ui.prompt = e.target.value.trim() || ui.prompt; ui.ed = fromPrompt(ui.prompt); ui.phase = 1; render(); e.preventDefault(); return; }
+    if (e.key === 'Escape' && ui.menu !== -1) { ui.menu = -1; render(); return; }
     var tag = (e.target.tagName || '').toLowerCase();
     if (tag === 'input' || tag === 'textarea' || e.target.isContentEditable) return;
     if (e.key === 'ArrowRight') { go(ui.i === STATES.length - 1 ? ui.i : ui.i + 1); e.preventDefault(); }
@@ -613,5 +698,6 @@
   window.radarProto = { go: go, count: STATES.length };
   var hm = (location.hash || '').match(/step-(\d)/);
   if (hm && +hm[1] >= 1 && +hm[1] <= STATES.length) ui.i = +hm[1] - 1;
+  if (ui.i === 4) ui.ed = fromAgent(0);
   render();
 })();

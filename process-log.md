@@ -160,3 +160,34 @@ the app name in bold, then the message. Maya's portrait is a free-to-use
 mockup photo (randomuser.me) saved in the repo as assets/maya.jpg, with an
 illustrated SVG fallback; it appears in the scene, the Slack window, the
 Gmail window, the platform nav and the persona card on the page.
+
+## Round 6: Roni's review of the finished look
+
+**Roni asked for:** agents as one list, one under the other, with a clear
+sign of what each one is and a three-dot menu; a better screen for creating
+an agent, with Slack and email both selectable; no "You get" selector; the
+entry to Tune from Slack and from the insight header, landing on the same
+"Here's what I understood" card; nicer charts; no "Read the thinking" on the
+cover; the whole prototype section gone from the page (the prototype is
+reached from the nav and the cover); in the moment, the Slack/email toggle
+as a heading with the phone and the screen aligned under it, a smaller phone
+and cleaner arrows in the Slack bar; a white stage instead of the greenish
+one; the design note in yellow, shorter and more human, and all copy more
+human; the scene should introduce the persona; and in Slack, several
+insights to choose from, with Maya picking the magnesium one.
+
+**Claude changed:** Radar home is a list grouped by rhythm, each row with a
+rhythm icon, Preset or Yours, channels, last update, on/off and a three-dot
+menu (Adjust, Pause, Duplicate, Delete). One editor card, "Here's what I
+understood", for both tuning an existing agent and creating a new one, with
+Slack DM and Email as toggles that can both be on. Tune opens on that card,
+reached from the Slack update, the email, the insight header and the list
+menu. New agent got a composer with example cards and a Slack-style sample
+of the first update next to the card. The chart was redrawn: smooth lines,
+soft area fills, a legend above, a chip for the launch marker, end dots, no
+overlapping labels. The daily in Slack and email now carries three updates;
+the Bloomwell one comes first with the date. The scene introduces Maya:
+what she's measured on, her day, the platform today, what she needs, then
+her three rhythms. Stage and app chrome are white; the design note is
+yellow; every note and caption was rewritten in plain words without the
+principle numbers.

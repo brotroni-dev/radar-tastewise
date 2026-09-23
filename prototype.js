@@ -316,7 +316,7 @@
       '<div class="sl-top"><div class="lights"><i></i><i></i><i></i></div><div class="sl-nav">' + ic('back') + ic('fwd') + ic('history') + '</div>' +
       '<div class="search">' + ic('search') + ' Search Kindroot</div>' + ic('help') + '<div class="me">' + AVA + '</div></div>' +
       '<div class="sl-body">' +
-      '<div class="sl-rail"><div class="ws">K</div><div class="ws2">A</div><div class="plus">+</div></div>' +
+      '<div class="sl-rail"><div class="ws kr"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 21V11"/><path d="M12 12C12 8 9 6 5 6c0 4 3 6 7 6z" fill="#fff"/><path d="M12 10c0-3.5 2.5-6 7-6 0 4-2.5 6-7 6z" fill="#fff"/></svg></div><div class="ws2">A</div><div class="plus">+</div></div>' +
       '<div class="sl-side"><div class="hd">Kindroot ' + ic('chevd') + '<span class="grow"></span><span class="ed">' + ic('edit') + '</span></div>' +
       side('thread', 'Threads') + side('inbox', 'All DMs') + side('draft', 'Drafts') + side('at', 'Mentions &amp; reactions') + side('bookmark', 'Saved items') + side('more', 'More') +
       '<div class="sec">' + ic('star') + ' Starred</div>' + side('hash', 'brand-kindroot', 'sub bold') + side('hash', 'retail-target', 'sub') +
@@ -386,7 +386,7 @@
     var nav = function (icon, label, on, badge) { return '<a' + (on ? ' class="on"' : '') + '>' + ic(icon) + label + (badge ? '<span class="badge">' + badge + '</span>' : '') + '</a>'; };
     return '<div class="app" aria-label="The platform">' +
       '<div class="app-chrome"><div class="lights"><i></i><i></i><i></i></div><div class="url">app.platform/' + (opts.url || 'radar') + '</div></div>' +
-      '<nav class="app-nav"><div class="ws"><span class="kr-logo">K</span>Kindroot' + ic('chevd') + '</div>' +
+      '<nav class="app-nav"><div class="ws"><span class="kr-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 21V11"/><path d="M12 12C12 8 9 6 5 6c0 4 3 6 7 6z" fill="#fff"/><path d="M12 10c0-3.5 2.5-6 7-6 0 4-2.5 6-7 6z" fill="#fff"/></svg></span>Kindroot' + ic('chevd') + '</div>' +
       nav('home', 'Home') + nav('ask', 'Ask') + nav('radar', 'Radar', true, '1') + nav('reports', 'Reports') + nav('brand', 'Brand profile') +
       '<div class="sec">Radar</div>' + '<a data-go="5">' + ic('sun') + 'Daily</a><a data-go="5">' + ic('week') + 'Weekly</a><a data-go="5">' + ic('flag') + 'Periodic</a>' +
       '<div class="me"><span class="av">' + AVA + '</span><div>Maya K.<span>Brand Manager</span></div></div></nav>' +

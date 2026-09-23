@@ -206,27 +206,33 @@
   /* The Block Kit card, shared by Slack and email */
   function blockKit() {
     var btn = function (cls, attrs, label) { return '<button class="bk-btn' + (cls ? ' ' + cls : '') + '" ' + attrs + '>' + label + '</button>'; };
+    var item = function (title, why, urg, cls, actions) {
+      return '<div class="bk-item"><div class="bk-h">' + title + '</div><div class="bk-s"><b>Why it matters:</b> ' + why + '</div>' +
+        '<div class="bk-urg ' + cls + '">' + ic('clock') + '<span>' + urg + '</span></div><div class="bk-actions">' + actions + '</div></div>';
+    };
+    var other = 'data-toast="Opens that insight. This walkthrough follows the Bloomwell one."';
     return '<div class="bk">' +
-      '<div class="bk-ctx">' + ic('radar') + '<span>Competitor launches</span><span>&middot;</span>' + ic('sun') + '<span>Daily</span><span>&middot;</span><span class="urgt">Breaks through: window closing</span></div>' +
-      '<div class="bk-h">Bloomwell Magnesium Sleep Gummies is gaining fast at Target</div>' +
-      '<div class="bk-s"><b>Why it matters to Kindroot:</b> it competes with your Magnesium Glycinate capsules on the same "sleep" claim and is winning on format. Your magnesium share at Target is down 1.4 pts in 8 weeks.</div>' +
-      '<div class="bk-win">' + ic('clock') + '<span>Endcap requests for Target\'s Q4 reset close the day of your review.</span><span class="date">Oct 1 &middot; 9 days</span></div>' +
-      '<div class="bk-fields">' +
-      '<div class="bk-f"><div class="n">2.1x</div><div class="l">category velocity, Target, last 6 weeks</div></div>' +
-      '<div class="bk-f"><div class="n">+38%</div><div class="l">"magnesium for sleep" searches, quarter over quarter</div></div>' +
-      '<div class="bk-f"><div class="n risk">-1.4 pts</div><div class="l">your share of magnesium at Target, 8 weeks</div></div></div>' +
-      '<div class="bk-actions">' + btn('primary', 'data-go="2"', 'Open insight') + btn('', 'data-go="3" data-tab="slide"', 'Create slide') + btn('', 'data-go="4"', 'Tune this agent') + '</div>' +
-      '<div class="bk-links"><a data-toast="You asked Competitor launches to watch magnesium at Target, in your daily. The window made it urgent.">Why you\'re seeing this</a><a data-go="4" data-fb="no">Not relevant</a></div>' +
-      '<div class="bk-more"><div class="bk-ctx">Also in today\'s daily</div>' +
-      '<div class="bk-row"><div><b>Nature\'s Path launched Ashwagandha Calm Gummies at CVS.</b> 0.9x category velocity in week one. Your Ashwagandha SKU is at CVS too. No window.</div><button class="bk-btn sm" data-toast="Opens that insight. This walkthrough follows the Bloomwell one.">Open</button></div>' +
-      '<div class="bk-row"><div><b>Sunveil cut its magnesium price 15% at Target.</b> Promo runs to Oct 5. Your price gap is now 22%.</div><button class="bk-btn sm" data-toast="Opens that insight. This walkthrough follows the Bloomwell one.">Open</button></div></div>' +
+      '<div class="bk-ctx">' + ic('radar') + '<span>Competitor launches</span><span>&middot;</span>' + ic('sun') + '<span>Daily</span><span>&middot;</span><span>3 updates</span></div>' +
+      item('Bloomwell Magnesium Sleep Gummies is gaining fast at Target',
+        'it competes with your Magnesium Glycinate capsules on the same "sleep" claim and is winning on format. Your magnesium share at Target is down 1.4 pts in 8 weeks.',
+        '<b>Window closing: Oct 1, 9 days.</b> Endcap requests for Target\'s Q4 reset close the day of your review.', 'hot',
+        btn('primary', 'data-go="2"', 'Open insight') + btn('', 'data-go="3" data-tab="slide"', 'Create slide') + btn('', 'data-go="4"', 'Tune this agent')) +
+      item('Sunveil cut its magnesium price 15% at Target',
+        'your price gap is now 22%, on the shelf where you\'re already losing share.',
+        '<b>Promo ends Oct 5, 12 days.</b> Worth a decision before then.', 'warm',
+        btn('', other, 'Open insight') + btn('', 'data-go="4"', 'Tune this agent')) +
+      item('Nature\'s Path launched Ashwagandha Calm Gummies at CVS',
+        'your Ashwagandha SKU sits on the same shelf. 0.9x category velocity in week one.',
+        'No window. Worth watching, not acting.', 'none',
+        btn('', other, 'Open insight') + btn('', 'data-go="4"', 'Tune this agent')) +
+      '<div class="bk-links"><a data-toast="You asked Competitor launches to watch magnesium at Target, in your daily. The window made the first one urgent.">Why you\'re seeing this</a><a data-go="4" data-fb="no">Not relevant</a></div>' +
       '</div>';
   }
 
   function slackWin() {
     var side = function (icon, label, cls) { return '<div class="it' + (cls ? ' ' + cls : '') + '">' + (icon ? ic(icon) : '') + label + '</div>'; };
     return '<div class="sl" aria-label="Slack, desktop">' +
-      '<div class="sl-top"><div class="lights"><i></i><i></i><i></i></div><div class="nav">' + ic('back') + ic('fwd') + ic('history') + '</div>' +
+      '<div class="sl-top"><div class="lights"><i></i><i></i><i></i></div><div class="sl-nav">' + ic('back') + ic('fwd') + ic('history') + '</div>' +
       '<div class="search">' + ic('search') + ' Search Kindroot</div>' + ic('help') + '<div class="me">' + AVA + '</div></div>' +
       '<div class="sl-body">' +
       '<div class="sl-rail"><div class="ws">K</div><div class="ws2">A</div><div class="plus">+</div></div>' +
@@ -245,7 +251,7 @@
       '<div class="sl-msg dim"><div class="av">R</div><div><div class="who"><b>Radar</b><span class="apptag">APP</span><span class="ts">8:30</span></div><div class="txt">Weekly: your share held at 12.4% across Target, CVS and Amazon. Nothing urgent. Two items for the management update.</div></div></div>' +
       '<div class="sl-day"><span>Today</span></div>' +
       '<div class="sl-msg"><div class="av">R</div><div><div class="who"><b>Radar</b><span class="apptag">APP</span><span class="ts">8:41</span></div>' +
-      '<div class="txt">Good morning, Maya. Three updates in your daily. The first one comes with a date.</div>' + blockKit() + '</div></div>' +
+      '<div class="txt">Good morning, Maya. Three updates in your daily.</div>' + blockKit() + '</div></div>' +
       '</div>' +
       '<div class="sl-comp"><div class="in">Message Radar</div><div class="bar">' + ic('zap') + '<span class="fmt"><span>B</span><span><i>I</i></span><span><s>S</s></span></span>' + ic('link') + ic('more') + '<span class="grow"></span>' + ic('at') + ic('smile') + ic('clip') + '<span class="send">' + ic('send') + '</span></div></div>' +
       '</div></div></div>';
@@ -285,7 +291,7 @@
       '<div class="gm-subj">Competitor launches: Bloomwell gummies gaining fast at Target. Window closes Oct 1. <span class="gm-tag">Inbox</span></div>' +
       '<div class="gm-from"><span class="av">R</span><div><b>Radar</b> <span class="addr">&lt;radar@platform&gt;</span><div class="to">to me ' + ic('chevd') + '</div></div>' +
       '<div class="right"><span class="ts">8:41 AM (2 minutes ago)</span>' + ic('star') + ic('reply') + ic('more') + '</div></div>' +
-      '<div class="gm-msg"><p>Good morning, Maya. Three updates in your daily. The first one comes with a date.</p>' + blockKit() +
+      '<div class="gm-msg"><p>Good morning, Maya. Three updates in your daily.</p>' + blockKit() +
       '<p class="gm-foot">You get this because Competitor launches reports to email. <a data-go="4">Tune this agent</a> &middot; <a data-go="5">Open Radar</a></p></div>' +
       '<div class="gm-reply"><span>' + ic('reply') + 'Reply</span><span>' + ic('arrowr') + 'Forward</span></div>' +
       '</div>' +
@@ -307,7 +313,7 @@
       '<div class="app-body">' + body + '</div></div></div>';
   }
   function ph(eyebrow, title, meta, actions) {
-    return '<div class="ph"><div><div class="eyebrow">' + eyebrow + '</div><h4>' + title + '</h4>' + (meta ? '<p class="meta">' + meta + '</p>' : '') + '</div>' + (actions ? '<div class="actions">' + actions + '</div>' : '') + '</div>';
+    return '<div class="ph"><div><div class="eyebrow">' + eyebrow + '</div><h4>' + title + '</h4>' + (meta ? '<p class="pm">' + meta + '</p>' : '') + '</div>' + (actions ? '<div class="actions">' + actions + '</div>' : '') + '</div>';
   }
   var sep = ' ' + ic('chevr') + ' ';
 

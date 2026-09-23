@@ -917,3 +917,17 @@ p { margin: 0 0 1em; }
 .value .root { font: 12px var(--font-mono); color: var(--muted); margin-bottom: 12px; }
 .value .see { display: inline-flex; align-items: center; gap: 6px; font: 500 12.5px var(--font-body); color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 5px 12px; text-decoration: none; }
 .value .see:hover { filter: brightness(.95); }
+
+/* Slack bar without the page-nav collision; three equal updates */
+.sl-top .sl-nav { display: flex; align-items: center; gap: 16px; color: rgba(255, 255, 255, .75); margin-left: 4px; }
+.sl-top .sl-nav .ic { width: 15px; height: 15px; stroke-width: 1.5; }
+.ph .pm { font-size: 13.5px; color: var(--muted); margin: 0; }
+.bk-item { padding: 10px 0 12px; border-top: 1px solid var(--sl-line, var(--line)); display: grid; gap: 6px; }
+.bk-item:first-of-type { border-top: 0; padding-top: 4px; }
+.bk-urg { display: flex; gap: 6px; align-items: flex-start; font-size: 12.5px; line-height: 1.4; }
+.bk-urg .ic { width: 14px; height: 14px; flex: none; margin-top: 2px; }
+.bk-urg.hot, .bk-urg.warm { color: #B8651F; }
+.bk-urg.hot b, .bk-urg.warm b { font-weight: 700; }
+.bk-urg.none { color: var(--sl-muted, var(--muted)); }
+.sl { aspect-ratio: 16 / 11; }
+.gm { aspect-ratio: 16 / 11; }

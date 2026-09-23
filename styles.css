@@ -1136,6 +1136,6 @@ body.page { font-size: 15px; }
 .bk-thumb .ic{width:14px;height:14px}
 .bk-thumb[aria-pressed="true"]{background:#E8F5EE;border-color:#007A5A;color:#007A5A}
 .bk-why{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px;color:#616061;margin-top:2px}
-.bk-why.done{color:#007A5A}
+.bk-why.ok{color:#007A5A}
 .bk-why .ic{width:13px;height:13px}
 .bk-chip{border:1px solid #BBBABB;background:#fff;border-radius:999px;padding:2px 9px;font:12px var(--font-body);cursor:pointer;color:#1D1C1D}

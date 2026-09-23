@@ -284,9 +284,9 @@
         for (var r = 0; r < REASONS.length; r++) after += '<button class="bk-chip" data-sfb="' + k + '|r:' + REASONS[r][0] + '">' + REASONS[r][1] + '</button>';
         after += '</div>';
       } else if (st && st.indexOf('r:') === 0) {
-        after = '<div class="bk-why done">' + ic('check') + 'Got it. Competitor launches will adjust. Next update tomorrow, 8:30.</div>';
+        after = '<div class="bk-why ok">' + ic('check') + 'Got it. Competitor launches will adjust. Next update tomorrow, 8:30.</div>';
       } else if (st === 'up') {
-        after = '<div class="bk-why done">' + ic('check') + 'Thanks. More like this in your daily.</div>';
+        after = '<div class="bk-why ok">' + ic('check') + 'Thanks. More like this in your daily.</div>';
       }
       return '<div class="bk-item"><div class="bk-h">' + title + '</div><div class="bk-s"><b>Why it matters:</b> ' + why + '</div>' +
         '<div class="bk-urg ' + cls + '">' + ic('clock') + '<span>' + urg + '</span></div><div class="bk-actions">' + actions + '<span class="grow"></span>' + thumbs + '</div>' + after + '</div>';

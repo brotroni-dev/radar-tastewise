@@ -506,7 +506,7 @@
     {
       title: 'Act', desc: 'Slide, email, meeting', cap: 'Radar drafts. Maya sends.',
       where: 'The platform, Radar, acting on the insight', when: 'Tuesday, 8:45',
-      notes: ['Radar drafts. Maya sends. Nothing goes out without her.', 'The date travels with the work: the slide asks for it, the meeting lands before it.'],
+      notes: ['The insight turns into something Maya can use right away: a slide, an email or a meeting.', 'Radar prepares the draft, but Maya reviews and sends it.', 'The deadline stays visible so the next step happens in time.'],
       render: function () {
         var tabs = [['slide', 'slide', 'Create slide'], ['email', 'mail', 'Draft email'], ['meeting', 'calendar', 'Schedule meeting'], ['ask', 'ask', 'Ask a follow-up'], ['share', 'share', 'Share']];
         var t = '<div class="tabs" role="tablist">';

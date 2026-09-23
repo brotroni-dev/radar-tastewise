@@ -214,9 +214,9 @@
     chips += '<span class="tag add" data-toast="Type another thing to watch. Radar adds it to the list.">+ add</span>';
     var bothOff = !e.slack && !e.email;
     return '<div class="c agent-card">' +
-      '<div class="ed-sec"><div class="ed-title">' + ic('sparkle') + 'Your request' + (o.pill ? '<span class="r">' + o.pill + '</span>' : '') + '</div>' +
-      '<div class="ed-prompt"><input id="edq" value="' + e.ask.replace(/"/g, '&quot;') + '" aria-label="Your request"><button class="btn btn-ghost btn-sm" data-reread>Re-read</button></div>' +
-      '<span class="hint">Change the words and Radar reads it again. The card below follows.</span></div>' +
+      '<div class="ed-sec"><div class="ed-title">' + ic('sparkle') + 'Your prompt' + (o.pill ? '<span class="r">' + o.pill + '</span>' : '') + '</div>' +
+      '<div class="ed-prompt">' + ic('edit') + '<input id="edq" value="' + e.ask.replace(/"/g, '&quot;') + '" aria-label="Your prompt" spellcheck="false"></div>' +
+      '<span class="hint">Edit the words here. When you leave the field, Radar reads it again and the card below follows.</span></div>' +
       '<div class="ed-sec"><div class="ed-title">' + ic('radar') + 'The agent</div>' +
       '<div class="field"><span>Name</span><div><span class="name" contenteditable="true" spellcheck="false">' + e.name + '</span></div></div>' +
       '<div class="field"><span>Watches</span><div class="tags">' + chips + '</div></div></div>' +
@@ -701,6 +701,7 @@
   });
 
   mount.querySelector('#p-notes').addEventListener('change', function (e) { ui.notes = e.target.checked; notesBox.hidden = !ui.notes; });
+  mount.addEventListener('change', function (e) { if (e.target && e.target.id === 'edq') reread(); });
 
   function reread() {
     var q = stage.querySelector('#edq');

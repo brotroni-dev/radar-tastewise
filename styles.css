@@ -969,3 +969,7 @@ p { margin: 0 0 1em; }
 .ed-sec .hint { margin-top: -6px; }
 .ed-foot { padding: 14px 20px; border-top: 1px solid var(--line); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .one .mini { margin: 0; }
+.ed-sec .hint { margin-top: 0; }
+.ed-sec .seg-hint { margin-top: 6px; }
+.ed-prompt > .ic { width: 16px; height: 16px; color: var(--muted); flex: none; }
+.ed-prompt { padding: 10px 14px; }

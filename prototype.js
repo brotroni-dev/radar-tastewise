@@ -516,7 +516,7 @@
         if (ui.tab === 'slide') {
           var thumbs = '';
           for (var n = 1; n <= 7; n++) thumbs += '<i data-n="' + n + '"' + (n === 3 ? ' class="on"' : '') + '></i>';
-          body = '<div class="act-head"><h5>Slide, ready for the Target deck</h5><span class="hint">Q4 Target review.pptx, slide 3. Built from the insight. Edit anything before it goes in.</span></div>' +
+          body = '<div class="act-head"><h5>Slide ready for the Target deck</h5><span class="hint">Q4 Target review.pptx, slide 3. Built from the insight. Edit anything before it goes in.</span></div>' +
             '<div class="deck"><div class="thumbs">' + thumbs + '</div>' +
             '<div class="slide"><h5>Sleep is reshaping magnesium at Target</h5><div class="chart">' + chart('s') + '</div>' +
             '<div><ul><li>Magnesium at Target is up 22% YoY. Sleep is the growth driver: +38% searches, quarter over quarter.</li>' +
@@ -560,7 +560,7 @@
             '<div class="act-btns"><button class="btn btn-primary btn-sm" data-toast="Posted to #brand-kindroot.">' + ic('hash') + 'Post to #brand-kindroot</button>' +
             '<button class="btn btn-ghost btn-sm" data-toast="Link copied.">' + ic('link') + 'Copy link</button></div>';
         }
-        var head = ph(ic('radar') + '<span>Competitor launches</span><span>&middot;</span><span>Bloomwell gummies at Target</span>', 'Use this insight', 'Everything here is a draft until Maya sends it.');
+        var head = ph(ic('radar') + '<span>Competitor launches</span><span>&middot;</span><span>Bloomwell gummies at Target</span>', 'Use this insight', 'Everything stays a draft until you choose to use it.');
         return app('<a data-go="5">Radar</a>' + sep + '<a data-go="2">Bloomwell gummies at Target</a>' + sep + '<b>Act</b>', head + t + body, { url: 'radar/competitor-launches/sep-22/act' });
       }
     },

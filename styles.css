@@ -1118,3 +1118,4 @@ body.page { font-size: 15px; }
 .kept span{background:var(--surface);border:1px solid var(--note-line);border-radius:999px;padding:5px 12px;font-size:13px}
 .kept b{font-weight:600}
 .assume{margin-top:28px;max-width:720px}
+.cover-note{font-size:13.5px;color:var(--muted);margin:-10px 0 22px}

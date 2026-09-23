@@ -1020,3 +1020,14 @@ p { margin: 0 0 1em; }
   .fnode::after { display: none !important; }
   .fsetup-k { writing-mode: horizontal-tb; transform: none; text-align: left; }
 }
+
+/* Smaller body copy inside the product screens */
+.ph .pm { font-size: 12.5px; }
+.ev li { font-size: 13px; padding: 9px 11px; }
+.why-list { font-size: 13px; gap: 7px; }
+.move p { font-size: 13px; }
+.tile .l { font-size: 12px; }
+.also .row { font-size: 13px; }
+.ins-foot { font-size: 12px; }
+.agent-card .field { font-size: 13px; }
+.arow .aw { font-size: 12.5px; }

@@ -948,3 +948,8 @@ p { margin: 0 0 1em; }
 .seg { flex-wrap: nowrap; }
 .seg button { white-space: nowrap; }
 .seg-hint { display: block; margin-top: 6px; }
+.one { max-width: 760px; display: grid; gap: 14px; }
+.one .agent-card { --sl-green: #007A5A; --sl-muted: #616061; --sl-line: #DDDDDD; }
+.one .mini { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; background: var(--surface-2); margin-bottom: 6px; }
+.one .mini .bk { max-width: none; }
+.one .mini .bk-btn { cursor: default; }

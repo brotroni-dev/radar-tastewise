@@ -203,6 +203,7 @@
       '<div class="field"><span>Rhythm</span><div>' + seg('ed', 'rh', RHY) + '<span class="hint seg-hint">' + RH_HINT[e.rh] + '</span></div></div>' +
       '<div class="field"><span>Where</span><div><div class="wsel"><button class="wopt" data-where="slack" aria-pressed="' + e.slack + '">' + ic('hash') + 'Slack DM</button><button class="wopt" data-where="email" aria-pressed="' + e.email + '">' + ic('mail') + 'Email</button></div><span class="hint">' + (bothOff ? 'Pick at least one.' : 'One or both.') + '</span></div></div>' +
       urgencyToggle() +
+      (o.sample ? '<div class="field"><span>Sample</span><div>' + o.sample + '</div></div>' : '') +
       '<div class="btns">' + o.cta + (o.secondary || '') + '</div></div>';
   }
 
@@ -500,22 +501,13 @@
           urgent: 'Competitor launches will keep items like this in your daily rhythm, and only break through when a window is under a week.',
           knew: 'Competitor launches will report right away when it\'s big, instead of waiting for the digest.'
         };
-        var fb;
-        if (ui.editAgent === 0) {
-          fb = '<div class="c fb"><div class="c-head">' + ic('eye') + 'This update: Bloomwell gummies at Target</div><p class="fbq">Was it worth your time?</p><div class="btns">' +
-            '<button class="btn btn-ghost btn-sm" data-fb="no" aria-pressed="' + (ui.fb === 'no') + '">' + ic('x') + 'Not relevant</button>' +
-            '<button class="btn btn-ghost btn-sm" data-fb="more" aria-pressed="' + (ui.fb === 'more') + '">' + ic('check') + 'More like this</button></div>';
-          if (ui.fb === 'no') {
-            fb += '<div><div class="hint" style="margin-bottom:6px">What was off?</div><div class="chips">';
-            for (var r = 0; r < reasons.length; r++) fb += '<button class="chip" data-reason="' + reasons[r][0] + '" aria-pressed="' + (ui.reason === reasons[r][0]) + '">' + reasons[r][1] + '</button>';
-            fb += '</div></div>';
-            if (ui.reason) fb += '<div class="confirm"><b>Got it.</b> ' + msg[ui.reason] + ' Next update tomorrow, 8:30.</div>';
-          }
-          if (ui.fb === 'more') fb += '<div class="confirm"><b>Got it.</b> I\'ll also watch Bloomwell at CVS and Amazon, and flag format launches across the rest of your range.</div>';
-          fb += '</div>';
-        } else {
-          fb = '<div class="c fb"><div class="c-head">' + ic('eye') + 'Feedback</div><p class="fbq">Feedback lives on each update. Open one from Slack or email and tap Not relevant or More like this.</p><p class="hint" style="margin:0">Last update from ' + a.name + ': ' + a.last + '.</p></div>';
+        var fb = '';
+        if (ui.editAgent === 0 && ui.fb === 'no') {
+          fb = '<div class="c fb"><div class="c-head">' + ic('down') + 'You said the Bloomwell update wasn\'t relevant. What was off?</div><div class="chips">';
+          for (var r = 0; r < reasons.length; r++) fb += '<button class="chip" data-reason="' + reasons[r][0] + '" aria-pressed="' + (ui.reason === reasons[r][0]) + '">' + reasons[r][1] + '</button>';
+          fb += '</div>' + (ui.reason ? '<div class="confirm"><b>Got it.</b> ' + msg[ui.reason] + ' Next update tomorrow, 8:30.</div>' : '') + '</div>';
         }
+        if (ui.editAgent === 0 && ui.fb === 'more') fb = '<div class="confirm"><b>Got it.</b> I\'ll also watch Bloomwell at CVS and Amazon, and flag format launches across the rest of your range.</div>';
         var learned = (ui.fb === 'no' && ui.reason === 'small') ? '<span class="tag learned">Skips launches under 1x</span>' :
           (ui.fb === 'no' && ui.reason === 'urgent') ? '<span class="tag learned">Breaks through only under a week</span>' :
           (ui.fb === 'more') ? '<span class="tag learned">Bloomwell at CVS, Amazon</span>' : '';
@@ -527,7 +519,7 @@
         });
         var head = ph(ic('radar') + '<span>Radar</span><span>&middot;</span>' + ic(RH_ICON[a.rh]) + '<span>' + RH_LABEL[a.rh] + '</span>', 'Here\'s what I understood', 'What ' + a.name + ' is watching, and how it reaches you. Change anything you like.',
           '<button class="btn btn-ghost btn-sm" data-go="5">' + ic('radar') + 'All agents</button>');
-        return app('<a data-go="5">Radar</a>' + sep + '<a data-go="2">' + a.name + '</a>' + sep + '<b>Tune</b>', head + '<div class="g57">' + fb + card + '</div>', { url: 'radar/' + a.name.toLowerCase().replace(/[^a-z]+/g, '-') + '/tune' });
+        return app('<a data-go="5">Radar</a>' + sep + '<a data-go="2">' + a.name + '</a>' + sep + '<b>Tune</b>', head + '<div class="one">' + fb + card + '</div>', { url: 'radar/' + a.name.toLowerCase().replace(/[^a-z]+/g, '-') + '/tune' });
       }
     },
     {
@@ -574,21 +566,19 @@
             '<div class="c-head" style="margin-top:22px">' + ic('users') + 'Or start from what other brand managers watch</div><div class="examples">' + ex + '</div>';
         } else {
           var e = ui.ed;
-          body = ph(ic('radar') + '<span>Radar</span><span>&middot;</span><span>New agent</span>', 'Here\'s what I understood', 'Check it, change what you like, then start. On the right: what your first update would look like.') +
-            '<div class="g57">' + editor({
-              isNew: true, pill: '<span class="pill neutral">Draft</span>',
-              cta: '<button class="btn btn-primary btn-sm" data-phase="2"' + (!e.slack && !e.email ? ' disabled' : '') + '>' + ic('check') + 'Start watching</button>',
-              secondary: '<button class="btn btn-ghost btn-sm" data-phase="0">Edit the request</button>'
-            }) +
-            '<div class="c preview"><div class="c-head">' + ic('eye') + 'Sample of your first update<span class="r">from last week\'s data</span></div>' +
-            '<div class="mini"><div class="sl-msg"><div class="av">R</div><div><div class="who"><b>Radar</b><span class="apptag">APP</span><span class="ts">' + (e.rh === 'weekly' ? 'Mon 8:30' : e.rh === 'periodic' ? 'Sep 29, 8:30' : 'Thu 8:30') + '</span></div>' +
+          var sample = '<div class="mini"><div class="sl-msg"><div class="av">R</div><div><div class="who"><b>Radar</b><span class="apptag">APP</span><span class="ts">' + (e.rh === 'weekly' ? 'Mon 8:30' : e.rh === 'periodic' ? 'Sep 29, 8:30' : 'Thu 8:30') + '</span></div>' +
             '<div class="txt">' + e.name + ', ' + RH_LABEL[e.rh].toLowerCase() + ', ' + whereText(e) + '.</div>' +
             '<div class="bk"><div class="bk-h">Sunveil cut its magnesium price 15% at Target</div>' +
-            '<div class="bk-s"><b>Why it matters to Kindroot:</b> your price gap is now 22%, and the promo runs to Oct 5.</div>' +
-            '<div class="bk-win">' + ic('clock') + '<span>Promo ends before your next weekly.</span><span class="date">Oct 5 &middot; 12 days</span></div>' +
-            '<div class="bk-s">Suggested move: hold price, add a value pack before the promo ends.</div>' +
+            '<div class="bk-s"><b>Why it matters:</b> your price gap is now 22%, and the promo runs to Oct 5.</div>' +
+            '<div class="bk-urg warm">' + ic('clock') + '<span><b>Promo ends Oct 5, 12 days.</b> Worth a decision before then.</span></div>' +
             '<div class="bk-actions"><span class="bk-btn primary">Open insight</span><span class="bk-btn">Draft email</span></div></div></div></div></div>' +
-            '<span class="src">Retail pricing data, Target, week 37. Illustrative.</span></div></div>';
+            '<span class="hint">What your first update would look like, from last week\'s data. Illustrative.</span>';
+          body = ph(ic('radar') + '<span>Radar</span><span>&middot;</span><span>New agent</span>', 'Here\'s what I understood', 'Check it, change what you like, then start.') +
+            '<div class="one">' + editor({
+              isNew: true, pill: '<span class="pill neutral">Draft</span>', sample: sample,
+              cta: '<button class="btn btn-primary btn-sm" data-phase="2"' + (!e.slack && !e.email ? ' disabled' : '') + '>' + ic('check') + 'Start watching</button>',
+              secondary: '<button class="btn btn-ghost btn-sm" data-phase="0">Edit the request</button>'
+            }) + '</div>';
         }
         return app('<a data-go="5">Radar</a>' + sep + '<b>New agent</b>', body, { url: 'radar/new' });
       }

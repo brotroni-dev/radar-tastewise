@@ -133,7 +133,8 @@
     }
     return h + '</div>';
   }
-  var RHY = [['daily', 'Daily, 8:30', 'sun'], ['weekly', 'Weekly, Monday', 'week'], ['periodic', 'Periodic, before the moment', 'flag']];
+  var RHY = [['daily', 'Daily', 'sun'], ['weekly', 'Weekly', 'week'], ['periodic', 'Periodic', 'flag']];
+  var RH_HINT = { daily: 'Every morning at 8:30, before her first meeting.', weekly: 'Monday morning, before the status and the management update.', periodic: 'Builds toward the moment: the Target review on Oct 1, the Q4 plan, the launch brief.' };
   var RH_ICON = { daily: 'sun', weekly: 'week', periodic: 'flag' };
   var RH_LABEL = { daily: 'Daily', weekly: 'Weekly', periodic: 'Periodic' };
 
@@ -199,7 +200,7 @@
       '<div class="top">' + ic(RH_ICON[e.rh]) + '<span class="name" contenteditable="true" spellcheck="false">' + e.name + '</span>' + (o.pill || '') + '</div>' +
       '<p class="askline">' + (o.isNew ? 'You asked' : 'You asked for') + ': <b>"' + e.ask + '"</b></p>' +
       '<div class="field"><span>I\'ll watch</span><div class="tags">' + chips + '</div></div>' +
-      '<div class="field"><span>Rhythm</span>' + seg('ed', 'rh', RHY) + '</div>' +
+      '<div class="field"><span>Rhythm</span><div>' + seg('ed', 'rh', RHY) + '<span class="hint seg-hint">' + RH_HINT[e.rh] + '</span></div></div>' +
       '<div class="field"><span>Where</span><div><div class="wsel"><button class="wopt" data-where="slack" aria-pressed="' + e.slack + '">' + ic('hash') + 'Slack DM</button><button class="wopt" data-where="email" aria-pressed="' + e.email + '">' + ic('mail') + 'Email</button></div><span class="hint">' + (bothOff ? 'Pick at least one.' : 'One or both.') + '</span></div></div>' +
       urgencyToggle() +
       '<div class="btns">' + o.cta + (o.secondary || '') + '</div></div>';

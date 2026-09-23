@@ -945,3 +945,6 @@ p { margin: 0 0 1em; }
 .ph .ph-sub { grid-column: 1 / -1; }
 .thumbs { display: flex; gap: 6px; margin-top: 2px; }
 .thumbs .btn[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+.seg { flex-wrap: nowrap; }
+.seg button { white-space: nowrap; }
+.seg-hint { display: block; margin-top: 6px; }

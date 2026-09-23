@@ -80,9 +80,10 @@ dashes everywhere; a Slack sidebar that squeezed the message at medium
 widths; cadence as a system setting, with no notion of a closing window.
 
 **Changed by hand:** the concept, twice; the trigger (not the meeting); the
-three rhythms and the urgency window, after the first full build; the
-metric, the hosting, the writing rule. Copy and design edits after review:
-see `process-log.md`.
+three rhythms and the urgency window; then, over a dozen review rounds from
+screenshots and notes: the Slack and Gmail kits, the agent list and its menu,
+one "Here's what I understood" card, real schedule controls, feedback on the
+insight, the flow on the page. Round by round in `process-log.md`.
 
 ## The "why"s I expect
 

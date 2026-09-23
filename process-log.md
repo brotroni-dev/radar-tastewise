@@ -196,3 +196,27 @@ principle numbers.
 **Claude added:** a dashed arrow from the notification on the phone to
 today's Slack message, with "taps it" on the curve and "opens on her
 laptop" under it.
+
+## Rounds 7 to 12: review by screenshot
+
+Roni reviewed the finished prototype screen by screen and sent notes with
+screenshots. Each note became a small commit, in this order: an arrow from
+the phone to the laptop; the Slack window as a landscape desktop window with
+compact text; the slide preview tall enough for its source line; the design
+values as cards; three equal updates in the daily with their own urgency;
+the phone notification as a "your daily is ready" notice; Tune reached from
+the eyebrow row with an icon only, thumbs under the title with the reasons
+inline, and no feedback at all in Tune; one single-column "Here's what I
+understood" card for tuning and creating, in sections, with the prompt
+editable in place and re-read on leaving the field; realistic schedule
+controls per rhythm (time and days, weekday and time, lead days before an
+event from her calendar); agent rows that open on click with a clear hover
+and a heavier three-dot icon; the flow section on the page.
+
+**Got wrong along the way:** three class-name collisions between the page
+styles and the prototype (done, app, nav, meta), each producing a visible
+glitch until renamed; a rhythm control that wrapped to two lines; hover
+tooltips on conventional icons, which Roni questioned and which came off.
+
+**Changed by hand:** none in code. Every change above was Roni's direction
+from screenshots; Claude typed.

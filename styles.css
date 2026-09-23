@@ -1109,3 +1109,12 @@ body.page { font-size: 15px; }
 .bet{background:var(--note-bg);border:1px solid var(--note-line);border-radius:14px;padding:22px 24px}
 .bet h3{color:var(--note-ink);font-size:20px}
 .bet p:last-child{margin:0}
+.bridge{font:600 18px var(--font-display);margin:28px 0 14px}
+.betband{background:var(--note-bg);border:1px solid var(--note-line);border-radius:16px;padding:26px 28px}
+.betband .kicker{color:var(--note-ink)}
+.betname{font:700 clamp(36px,5vw,52px)/1 var(--font-display);margin:6px 0 12px}
+.betline{font-size:16px;max-width:46em;margin:0 0 16px}
+.kept{display:flex;flex-wrap:wrap;gap:8px}
+.kept span{background:var(--surface);border:1px solid var(--note-line);border-radius:999px;padding:5px 12px;font-size:13px}
+.kept b{font-weight:600}
+.assume{margin-top:28px;max-width:720px}

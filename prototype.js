@@ -309,16 +309,16 @@
       '<div class="sec">' + ic('star') + ' Starred</div>' + side('hash', 'brand-kindroot', 'sub bold') + side('hash', 'retail-target', 'sub') +
       '<div class="sec">' + ic('chevd') + ' Channels</div>' + side('hash', 'launches', 'sub') + side('hash', 'announcements', 'sub') + side('plus', 'Add channel', 'sub') +
       '<div class="sec">' + ic('chevd') + ' Direct messages</div>' + '<div class="it sub"><span class="dm"></span>Dana</div><div class="it sub"><span class="dm b"></span>Omri</div>' +
-      '<div class="sec">' + ic('chevd') + ' Apps</div>' + '<div class="it sub on"><span class="appic">R</span>Radar</div>' +
+      '<div class="sec">' + ic('chevd') + ' Apps</div>' + '<div class="it sub on"><span class="appic rmark"><i></i></span>Radar</div>' +
       '</div>' +
       '<div class="sl-main">' +
       '<div class="sl-head"><b>Radar</b><span class="apptag">APP</span>' + ic('chevd') + '<span class="desc">Agents that notice for Kindroot</span><span class="members"><i></i><i></i><i></i>3</span></div>' +
       '<div class="sl-tabs"><span class="on">' + ic('thread') + ' Messages</span><span>' + ic('help') + ' About</span><span>' + ic('plus') + '</span></div>' +
       '<div class="sl-msgs">' +
       '<div class="sl-day"><span>Monday, September 21</span></div>' +
-      '<div class="sl-msg dim"><div class="av">R</div><div><div class="who"><b>Radar</b><span class="apptag">APP</span><span class="ts">8:30</span></div><div class="txt">Weekly: your share held at 12.4% across Target, CVS and Amazon. Nothing urgent. Two items for the management update.</div></div></div>' +
+      '<div class="sl-msg dim"><div class="av rmark"><i></i></div><div><div class="who"><b>Radar</b><span class="apptag">APP</span><span class="ts">8:30</span></div><div class="txt">Weekly: your share held at 12.4% across Target, CVS and Amazon. Nothing urgent. Two items for the management update.</div></div></div>' +
       '<div class="sl-day"><span>Today</span></div>' +
-      '<div class="sl-msg"><div class="av">R</div><div><div class="who"><b>Radar</b><span class="apptag">APP</span><span class="ts">8:41</span></div>' +
+      '<div class="sl-msg"><div class="av rmark"><i></i></div><div><div class="who"><b>Radar</b><span class="apptag">APP</span><span class="ts">8:41</span></div>' +
       '<div class="txt">Good morning, Maya. Three updates in your daily.</div>' + blockKit() + '</div></div>' +
       '</div>' +
       '<div class="sl-comp"><div class="in">Message Radar</div><div class="bar">' + ic('zap') + '<span class="fmt"><span>B</span><span><i>I</i></span><span><s>S</s></span></span>' + ic('link') + ic('more') + '<span class="grow"></span>' + ic('at') + ic('smile') + ic('clip') + '<span class="send">' + ic('send') + '</span></div></div>' +
@@ -357,7 +357,7 @@
       '<div class="gm-panel">' +
       '<div class="gm-tools">' + ic('arrowl') + '<span class="sep"></span>' + ic('archive') + ic('label') + ic('trash') + '<span class="sep"></span>' + ic('mail') + ic('snooze') + ic('task') + ic('more') + '<span class="grow"></span><span class="pager">2 of 16</span>' + ic('chevd') + '</div>' +
       '<div class="gm-subj">Competitor launches: Bloomwell gummies gaining fast at Target. Window closes Oct 1. <span class="gm-tag">Inbox</span></div>' +
-      '<div class="gm-from"><span class="av">R</span><div><b>Radar</b> <span class="addr">&lt;radar@platform&gt;</span><div class="to">to me ' + ic('chevd') + '</div></div>' +
+      '<div class="gm-from"><span class="av rmark"><i></i></span><div><b>Radar</b> <span class="addr">&lt;radar@platform&gt;</span><div class="to">to me ' + ic('chevd') + '</div></div>' +
       '<div class="right"><span class="ts">8:41 AM (2 minutes ago)</span>' + ic('star') + ic('reply') + ic('more') + '</div></div>' +
       '<div class="gm-msg"><p>Good morning, Maya. Three updates in your daily.</p>' + blockKit() +
       '<p class="gm-foot">You get this because Competitor launches reports to email. <a data-go="4">Tune this agent</a> &middot; <a data-go="5">Open Radar</a></p></div>' +
@@ -616,7 +616,7 @@
             '<div class="c-head" style="margin-top:22px">' + ic('users') + 'Or start from what other brand managers watch</div><div class="examples">' + ex + '</div>';
         } else {
           var e = ui.ed;
-          var sample = '<div class="mini"><div class="sl-msg"><div class="av">R</div><div><div class="who"><b>Radar</b><span class="apptag">APP</span><span class="ts">' + (e.rh === 'weekly' ? 'Mon 8:30' : e.rh === 'periodic' ? 'Sep 29, 8:30' : 'Thu 8:30') + '</span></div>' +
+          var sample = '<div class="mini"><div class="sl-msg"><div class="av rmark"><i></i></div><div><div class="who"><b>Radar</b><span class="apptag">APP</span><span class="ts">' + (e.rh === 'weekly' ? 'Mon 8:30' : e.rh === 'periodic' ? 'Sep 29, 8:30' : 'Thu 8:30') + '</span></div>' +
             '<div class="txt">' + e.name + ', ' + RH_LABEL[e.rh].toLowerCase() + ', ' + whereText(e) + '.</div>' +
             '<div class="bk"><div class="bk-h">Sunveil cut its magnesium price 15% at Target</div>' +
             '<div class="bk-s"><b>Why it matters:</b> your price gap is now 22%, and the promo runs to Oct 5.</div>' +

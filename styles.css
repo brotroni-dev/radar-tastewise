@@ -1121,3 +1121,5 @@ body.page { font-size: 15px; }
 .cover-note{font-size:13.5px;color:var(--muted);margin:-10px 0 22px}
 .sl{aspect-ratio:auto;height:auto;max-height:none}
 .sl-msgs{overflow:visible}
+.rmark{background:#171F1C !important;display:grid;place-items:center}
+.rmark i{width:40%;height:40%;border-radius:50%;background:#1F9A70;box-shadow:0 0 0 3px rgba(31,154,112,.3);display:block}

@@ -284,7 +284,7 @@
       item('Bloomwell Magnesium Sleep Gummies is gaining fast at Target',
         'it competes with your Magnesium Glycinate capsules on the same "sleep" claim and is winning on format. Your magnesium share at Target is down 1.4 pts in 8 weeks.',
         '<b>Window closing: Oct 1, 9 days.</b> Endcap requests for Target\'s Q4 reset close the day of your review.', 'hot',
-        (ui.hinted ? '' : '<span class="hintwrap">') + btn('primary pulse', 'data-go="2"', 'Open insight') + (ui.hinted ? '' : '<span class="starthere">Start here</span></span>') + btn('', 'data-go="3" data-tab="slide"', 'Create slide') + btn('', 'data-go="4"', 'Tune this agent')) +
+        (ui.hinted ? '' : '<span class="hintwrap">') + btn('primary pulse', 'data-go="2"', 'Open insight') + (ui.hinted ? '' : '</span>') + btn('', 'data-go="3" data-tab="slide"', 'Create slide') + btn('', 'data-go="4"', 'Tune this agent')) +
       item('Sunveil cut its magnesium price 15% at Target',
         'your price gap is now 22%, on the shelf where you\'re already losing share.',
         '<b>Promo ends Oct 5, 12 days.</b> Worth a decision before then.', 'warm',

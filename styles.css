@@ -990,3 +990,33 @@ p { margin: 0 0 1em; }
 .days { display: inline-flex; gap: 4px; }
 .day { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--line-strong); background: var(--surface); font: 500 12px var(--font-body); color: var(--muted); cursor: pointer; padding: 0; }
 .day[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+/* The flow */
+.flow { display: grid; gap: 10px; }
+.floop { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; position: relative; }
+.fnode { position: relative; display: grid; gap: 6px; align-content: start; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 16px 16px; text-decoration: none; color: var(--ink); transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
+.fnode:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: var(--accent); }
+.fnode .fi { width: 36px; height: 36px; border-radius: 10px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; }
+.fnode .fi svg { width: 18px; height: 18px; }
+.fnode .fn { position: absolute; top: 14px; right: 14px; font: 500 11.5px var(--font-mono); color: var(--muted); }
+.fnode b { font: 600 15px/1.25 var(--font-display); margin-top: 4px; }
+.fnode > span:last-child { font-size: 13px; line-height: 1.45; color: var(--muted); }
+.floop .fnode:not(:last-child)::after { content: ""; position: absolute; right: -9px; top: 50%; width: 8px; height: 8px; border-top: 2px solid var(--line-strong); border-right: 2px solid var(--line-strong); transform: translateY(-50%) rotate(45deg); }
+.fback { position: relative; height: 40px; }
+.fback svg { position: absolute; inset: 0; width: 100%; height: 40px; }
+.fback path { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-dasharray: 5 5; }
+.fback span { position: absolute; left: 50%; top: 10px; transform: translateX(-50%); background: var(--bg); padding: 2px 10px; font: 500 12px var(--font-mono); color: var(--accent); white-space: nowrap; }
+.fsetup { display: grid; grid-template-columns: auto repeat(3, 1fr); gap: 10px; align-items: stretch; margin-top: 6px; }
+.fsetup-k { writing-mode: vertical-rl; transform: rotate(180deg); font: 500 11.5px var(--font-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); text-align: center; padding: 6px 0; }
+.fnode.small { padding: 14px 16px; }
+.fsetup .fnode:not(:last-child)::after { content: ""; position: absolute; right: -9px; top: 50%; width: 8px; height: 8px; border-top: 2px solid var(--line-strong); border-right: 2px solid var(--line-strong); transform: translateY(-50%) rotate(45deg); }
+@media (max-width: 960px) {
+  .floop { grid-template-columns: repeat(3, 1fr); }
+  .floop .fnode:nth-child(3)::after { display: none; }
+  .fback { display: none; }
+}
+@media (max-width: 640px) {
+  .floop, .fsetup { grid-template-columns: 1fr; }
+  .fnode::after { display: none !important; }
+  .fsetup-k { writing-mode: horizontal-tb; transform: none; text-align: left; }
+}

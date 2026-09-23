@@ -850,3 +850,14 @@ p { margin: 0 0 1em; }
 .bk-row { display: flex; gap: 10px; align-items: flex-start; font-size: 13.5px; line-height: 1.4; }
 .bk-row b { font-weight: 700; }
 .bk-row .bk-btn.sm { padding: 3px 10px; font-size: 12px; flex: none; margin-top: 1px; }
+
+/* The hop from the phone to the laptop */
+.moment-row { grid-template-columns: 150px 64px 1fr; gap: 12px 10px; }
+@media (max-width: 760px) { .moment-row { grid-template-columns: 1fr; } .hop { display: none; } }
+.hop { position: relative; width: 64px; height: 309px; color: var(--accent); }
+.hop svg { width: 64px; height: 300px; display: block; overflow: visible; }
+.hop path { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-dasharray: 5 5; stroke-linecap: round; }
+.hop circle { fill: currentColor; }
+.hop marker path { fill: currentColor; stroke: none; }
+.hop span { position: absolute; left: 50%; top: 150px; transform: translateX(-50%); font: 500 11px var(--font-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--accent); background: var(--surface); padding: 2px 6px; border-radius: 999px; white-space: nowrap; }
+.hop small { position: absolute; left: 50%; top: 268px; transform: translateX(-50%); font: 11px var(--font-body); color: var(--muted); white-space: nowrap; }

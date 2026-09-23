@@ -191,3 +191,8 @@ what she's measured on, her day, the platform today, what she needs, then
 her three rhythms. Stage and app chrome are white; the design note is
 yellow; every note and caption was rewritten in plain words without the
 principle numbers.
+
+**Roni added:** something to explain the hop from the phone to the desktop.
+**Claude added:** a dashed arrow from the notification on the phone to
+today's Slack message, with "taps it" on the curve and "opens on her
+laptop" under it.

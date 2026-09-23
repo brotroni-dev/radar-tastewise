@@ -396,7 +396,7 @@
           'Launched 6 weeks ago. Magnesium glycinate + L-theanine. Positioned "sleep + stress".',
           '<button class="btn btn-primary btn-sm" data-go="3" data-tab="slide">' + ic('slide') + 'Create slide</button><button class="btn btn-ghost btn-sm" data-go="3" data-tab="share">' + ic('share') + 'Share</button>',
           '<button class="btn btn-ghost btn-ic" data-go="4" aria-label="Tune this agent" title="Tune this agent">' + ic('tune') + '</button>',
-          '<div class="thumbs"><button class="btn btn-ghost btn-ic" data-like aria-pressed="' + !!ui.liked + '" aria-label="Relevant" title="Relevant">' + ic('up') + '</button><button class="btn btn-ghost btn-ic" data-go="4" data-fb="no" aria-label="Not relevant" title="Not relevant">' + ic('down') + '</button></div>') +
+          '<div class="thumbs"><button class="btn btn-ghost btn-ic" data-like aria-pressed="' + !!ui.liked + '" aria-label="Relevant">' + ic('up') + '</button><button class="btn btn-ghost btn-ic" data-go="4" data-fb="no" aria-label="Not relevant">' + ic('down') + '</button></div>') +
           urgencyBanner('Target locks Q4 planograms on <b>Oct 6</b>. Endcap requests close <b>Oct 1</b>, the day of your review. After that, the next shot at placement is January.', 'Target vendor calendar, Q4') +
           '<div class="tiles"><div class="tile"><div class="n">2.1x</div><div class="l">Category velocity at Target, last 6 weeks</div><div class="s">Retail sales data, weeks 32-37</div></div>' +
           '<div class="tile"><div class="n">+38%</div><div class="l">"Magnesium for sleep" searches, quarter over quarter</div><div class="s">Search data, US, Q3 vs Q2</div></div>' +

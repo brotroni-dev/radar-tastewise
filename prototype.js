@@ -189,7 +189,7 @@
   function fromPrompt(text) {
     var t = (text || '').toLowerCase();
     if (t.indexOf('gut') >= 0) return { name: 'Launches in gut health', ask: text, chips: ['Competitor launches (gut health)', 'Probiotics, fiber, prebiotics', 'Target, CVS, Amazon'], rh: 'weekly', slack: true, email: false, src: 'new' };
-    if (t.indexOf('price') >= 0) return { name: 'Price moves on my SKUs at Amazon', ask: text, chips: ['Price and promo moves (Kindroot, Amazon)', 'Competitor prices (magnesium, probiotic)', 'Buy box changes'], rh: 'daily', slack: true, email: false, src: 'new' };
+    if (t.indexOf('price') >= 0) return { name: 'Price moves on my SKUs at Amazon', ask: text, chips: ['Price and promo moves (your SKUs)', 'Competitor prices (magnesium, probiotic)', 'Promo calendars at your retailers'], rh: 'daily', slack: true, email: false, src: 'new' };
     if (t.indexOf('claim') >= 0) return { name: 'Claims growing in women\'s health', ask: text, chips: ['Claims (women\'s health)', 'Ingredients on the rise', 'Search and conversation'], rh: 'weekly', slack: false, email: true, src: 'new' };
     return { name: 'Threats to magnesium at Target', ask: text || ui.prompt, chips: ['Competitor launches (magnesium, Target)', 'Price and promo moves (magnesium, Target)', 'Share drops (Kindroot Magnesium Glycinate, Target)', 'Negative review spikes (Kindroot Magnesium)'], rh: 'daily', slack: true, email: false, src: 'new' };
   }

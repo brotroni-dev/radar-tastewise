@@ -5,7 +5,16 @@
   if (!mount) return;
   var FULL = mount.getAttribute('data-mode') === 'full';
 
-  var ui = { i: 0, channel: 'slack', tab: 'slide', notes: true, edit: false, ask: -1, toastTimer: null };
+  var ui = {
+    i: 0, channel: 'slack', tab: 'slide', notes: true, edit: false, ask: -1, toastTimer: null,
+    fb: null, reason: null, adjust: false,
+    seg: { cad: 'daily', where: 'slack', out: 'talk' },
+    agents: [true, true, true, true],
+    presets: [false, false, false, false, false],
+    phase: 0, created: false,
+    chips: ['Competitor launches (magnesium, Target)', 'Price and promo moves (magnesium, Target)', 'Share drops (Kindroot Magnesium Glycinate, Target)', 'Negative review spikes (Kindroot Magnesium)'],
+    nseg: { cad: 'daily', where: 'slack', out: 'talk' }
+  };
 
   /* Weekly velocity index at Target, weeks 28 to 37. Index 100 = category average. */
   function chart() {
@@ -30,7 +39,7 @@
       '<polyline class="l-cat" fill="none" stroke-width="1.5" points="48,' + y(100) + ' 540,' + y(100) + '"/>' +
       '<polyline class="l-kr" fill="none" stroke-width="2.5" stroke-linejoin="round" points="' + pts(kr) + '"/>' +
       '<polyline class="l-bw" fill="none" stroke-width="2.5" stroke-linejoin="round" points="' + pts(bw) + '"/>' +
-      '<circle cx="540" cy="' + y(210) + '" r="3.5" class="l-bw" fill="currentColor" stroke="none" style="fill: var(--risk)"/>' +
+      '<circle cx="540" cy="' + y(210) + '" r="3.5" style="fill: var(--risk)"/>' +
       '<circle cx="540" cy="' + y(95) + '" r="3.5" style="fill: var(--accent)"/>' +
       '<text class="lab-bw" x="536" y="' + (+y(210) - 8) + '" text-anchor="end">Bloomwell gummies, 2.1x</text>' +
       '<text class="lab-kr" x="536" y="' + (+y(95) + 16) + '" text-anchor="end">Kindroot capsules</text>' +
@@ -39,6 +48,17 @@
       '<text x="376" y="226" text-anchor="middle">W34</text><text x="540" y="226" text-anchor="end">W37</text>' +
       '</svg>';
   }
+
+  function seg(obj, key, opts) {
+    var h = '<div class="seg">';
+    for (var i = 0; i < opts.length; i++) {
+      h += '<button data-seg="' + obj + '|' + key + '|' + opts[i][0] + '" aria-pressed="' + (ui[obj][key] === opts[i][0]) + '">' + opts[i][1] + '</button>';
+    }
+    return h + '</div>';
+  }
+  var CAD = [['now', 'Right away when it\'s big'], ['daily', 'Daily digest 8:30'], ['weekly', 'Weekly on Monday']];
+  var WHERE = [['slack', 'Slack DM'], ['email', 'Email'], ['both', 'Both']];
+  var OUT = [['talk', 'Insight + talking points'], ['slide', '+ slide'], ['email', '+ email draft']];
 
   function update(withButtons) {
     return '<div class="update">' +
@@ -76,6 +96,18 @@
       '<div class="meta-row"><span><b>From</b> Radar</span><span><b>To</b> Maya</span><span>Tue 8:41</span></div></div>' +
       '<div class="email-body"><p class="pre">Why it matters for Kindroot, and three moves.</p>' + update(false) + '</div></div>';
   }
+
+  function winBar(crumb) {
+    return '<div class="win-bar"><div class="dots"><i></i><i></i><i></i></div><span class="crumb">' + crumb + '</span></div>';
+  }
+
+  var AGENTS = [
+    { name: 'Competitor launches', watch: 'Magnesium, sleep claims. Target, CVS, Amazon.', cad: 'Daily digest 8:30', where: 'Slack', out: 'Insight + talking points', last: '<b>Today, 1 new</b>' },
+    { name: 'Claims and ingredients gaining traction', watch: 'Natural supplements: claims and ingredients on the rise.', cad: 'Weekly, Monday', where: 'Email', out: 'Insight + slide', last: 'Monday' },
+    { name: 'My share at key retailers', watch: 'Kindroot\'s 5 SKUs at Target, CVS, Amazon.', cad: 'Weekly, Monday', where: 'Slack', out: 'Insight + chart', last: 'Monday' },
+    { name: 'Consumer trends: sleep, stress, gut', watch: 'Consumer conversation and search in your three need states.', cad: 'Weekly, Monday', where: 'Email', out: 'Insight + talking points', last: 'Monday' }
+  ];
+  var PRESETS = [['Format shifts', 'Monday, by email'], ['Price and promo moves', 'daily, in Slack'], ['GLP-1 companion', 'Monday, by email'], ['Regulatory and claims watch', 'Monday, by email'], ['Retailer assortment changes', 'daily, in Slack']];
 
   var STATES = [
     {
@@ -120,8 +152,7 @@
         'The three moves map to Maya\'s three outcomes: the retailer meeting, the campaign, the next launch.'
       ],
       render: function () {
-        return '<div class="win"><div class="win-bar"><div class="dots"><i></i><i></i><i></i></div>' +
-          '<span class="crumb"><a data-go="5">Radar</a> &rsaquo; <a data-go="5">Competitor launches</a> &rsaquo; <b>September 22</b></span></div>' +
+        return '<div class="win">' + winBar('<a data-go="5">Radar</a> &rsaquo; <a data-go="5">Competitor launches</a> &rsaquo; <b>September 22</b>') +
           '<div class="win-body">' +
           '<h4 class="ins-title">Bloomwell Magnesium Sleep Gummies is gaining fast at Target</h4>' +
           '<p class="ins-sub">Launched 6 weeks ago. Magnesium glycinate + L-theanine. Positioned "sleep + stress".</p>' +
@@ -201,31 +232,114 @@
             '<div class="act-btns"><button class="btn btn-primary btn-sm" data-toast="Posted to #brand-kindroot.">Post to #brand-kindroot</button>' +
             '<button class="btn btn-ghost btn-sm" data-toast="Link copied.">Copy link</button></div>';
         }
-        return '<div class="win"><div class="win-bar"><div class="dots"><i></i><i></i><i></i></div>' +
-          '<span class="crumb"><a data-go="5">Radar</a> &rsaquo; <a data-go="2">Bloomwell gummies at Target</a> &rsaquo; <b>Act</b></span></div>' +
+        return '<div class="win">' + winBar('<a data-go="5">Radar</a> &rsaquo; <a data-go="2">Bloomwell gummies at Target</a> &rsaquo; <b>Act</b>') +
           '<div class="win-body">' + t + body + '</div></div>';
       }
     },
     {
-      title: 'Tune', cap: 'One tap teaches the agent', soon: true,
-      notes: ['Feedback changes the next update and says so (principle 9).'],
-      render: function () { return soon('Tune', 'Not relevant and More like this, with the reason chips, the confirmation that shows what changed, and the agent card opening inline. Round 2.'); }
+      title: 'Tune', cap: 'One tap teaches the agent, and it says what changed',
+      notes: ['Feedback changes the next update and says so (principle 9).', 'Adjusting happens right here, not in a settings page (principle 5).'],
+      render: function () {
+        var reasons = [['retailer', 'Wrong retailer'], ['product', 'Wrong product'], ['small', 'Too small'], ['knew', 'Already knew']];
+        var msg = {
+          retailer: 'Competitor launches will focus on Target and CVS, where your magnesium sells.',
+          product: 'Competitor launches will stay on your magnesium and probiotic lines.',
+          small: 'Competitor launches will skip launches under 1x category velocity and stay on magnesium at Target.',
+          knew: 'Competitor launches will report right away when it\'s big, instead of waiting for the digest.'
+        };
+        var fb = '<div class="fb"><h6>Was this worth your time?</h6><div class="btns">' +
+          '<button class="btn btn-ghost btn-sm" data-fb="no" aria-pressed="' + (ui.fb === 'no') + '">Not relevant</button>' +
+          '<button class="btn btn-ghost btn-sm" data-fb="more" aria-pressed="' + (ui.fb === 'more') + '">More like this</button></div>';
+        if (ui.fb === 'no') {
+          fb += '<div><div class="hint" style="margin-bottom:6px">What was off?</div><div class="chips">';
+          for (var r = 0; r < reasons.length; r++) fb += '<button class="chip" data-reason="' + reasons[r][0] + '" aria-pressed="' + (ui.reason === reasons[r][0]) + '">' + reasons[r][1] + '</button>';
+          fb += '</div></div>';
+          if (ui.reason) fb += '<div class="confirm"><b>Got it.</b> ' + msg[ui.reason] + ' Next update tomorrow, 8:30.</div>';
+        }
+        if (ui.fb === 'more') fb += '<div class="confirm"><b>Got it.</b> I\'ll also watch Bloomwell at CVS and Amazon, and flag format launches across the rest of your range.</div>';
+        fb += '</div>';
+
+        var learned = (ui.fb === 'no' && ui.reason === 'small') ? '<span class="tag">Skips launches under 1x</span>' :
+          (ui.fb === 'more') ? '<span class="tag">Bloomwell at CVS, Amazon</span>' : '';
+        var card = ui.adjust ?
+          '<div class="agent-card"><div class="top"><span class="name">Competitor launches</span>' + (learned ? '<span class="pill">Changed just now</span>' : '') + '<button class="toggle" role="switch" aria-checked="true" data-toast="Paused. Turn it back on any time from Radar home."></button></div>' +
+          '<div class="field"><span>Watches</span><div class="tags"><span class="tag">Magnesium</span><span class="tag">Sleep claims</span><span class="tag">Target, CVS, Amazon</span><span class="tag">Bloomwell, Sunveil, Nature\'s Path</span>' + learned + '</div></div>' +
+          '<div class="field"><span>How often</span>' + seg('seg', 'cad', CAD) + '</div>' +
+          '<div class="field"><span>Where</span>' + seg('seg', 'where', WHERE) + '</div>' +
+          '<div class="field"><span>You get</span>' + seg('seg', 'out', OUT) + '</div>' +
+          '<div class="btns"><button class="btn btn-primary btn-sm" data-toast="Saved. Applies from the next update.">Save</button><button class="btn btn-ghost btn-sm" data-go="5">See all agents</button></div></div>' :
+          '<div class="agent-card"><div class="top"><span class="name">Competitor launches</span><span class="pill">On</span></div>' +
+          '<p class="hint" style="margin:0">This update came from your Competitor launches agent. Daily digest at 8:30, in Slack.</p>' +
+          '<div class="btns"><button class="btn btn-ghost btn-sm" data-adjust>Adjust this agent</button><button class="btn btn-quiet btn-sm" data-go="5">See all agents</button></div></div>';
+
+        return '<div class="win">' + winBar('<a data-go="5">Radar</a> &rsaquo; <a data-go="2">Bloomwell gummies at Target</a> &rsaquo; <b>Tune</b>') +
+          '<div class="win-body"><div class="tune-head"><h4 class="ins-title" style="margin:0">Bloomwell Magnesium Sleep Gummies is gaining fast at Target</h4></div>' +
+          '<div class="tune">' + fb + card + '</div></div></div>';
+      }
     },
     {
-      title: 'Radar home', cap: 'Four agents, on by default', soon: true,
-      notes: ['She starts full, not empty (principle 1).', 'Agents are named by the job, in her words (principle 10).'],
-      render: function () { return soon('Radar home', 'The four preset agents watching Kindroot, each with what it watches, how often, where and what it produces. The preset library. New agent. Round 2.'); }
+      title: 'Radar home', cap: 'Four agents watching Kindroot. She turns off, not on.',
+      notes: ['She starts full, not empty. The presets come from her brand profile (principle 1).', 'Agents are named by the job, in her words (principle 10).', 'The library is one tap away, and creating by prompt is behind it (principle 2).'],
+      render: function () {
+        var h = '<div class="win">' + winBar('<b>Radar</b> &rsaquo; Your radar') + '<div class="win-body">' +
+          '<div class="home-head"><div><h4 class="ins-title" style="margin-bottom:2px">Your radar</h4><p class="ins-sub" style="margin:0">' + (ui.agents.filter(Boolean).length + (ui.created ? 1 : 0)) + ' agents watching Kindroot. Set up from your brand profile. Turn off anything you don\'t need.</p></div><span class="grow"></span><button class="btn btn-primary btn-sm" data-go="6">New agent</button></div>' +
+          '<div class="agents">';
+        for (var i = 0; i < AGENTS.length; i++) {
+          var a = AGENTS[i], on = ui.agents[i];
+          h += '<div class="agent' + (on ? '' : ' off') + '"><div class="top"><span class="name">' + a.name + '</span><button class="toggle" role="switch" aria-checked="' + on + '" data-agent="' + i + '" aria-label="' + a.name + ' on or off"></button></div>' +
+            '<div class="watch">' + a.watch + '</div>' +
+            '<div class="metar"><span>' + a.cad + '</span><span>' + a.where + '</span><span>' + a.out + '</span></div>' +
+            '<div class="last">' + (on ? 'Last update: ' + a.last : 'Paused') + '</div></div>';
+        }
+        if (ui.created) {
+          h += '<div class="agent"><div class="top"><span class="name">Threats to magnesium at Target</span><span class="pill">New</span></div>' +
+            '<div class="watch">' + ui.chips.join('. ') + '.</div>' +
+            '<div class="metar"><span>Daily 8:30</span><span>Slack</span><span>Insight + talking points</span></div>' +
+            '<div class="last">First update: <b>Thursday, 8:30</b></div></div>';
+        }
+        h += '</div><div class="presets"><div class="kicker">More to switch on</div><div class="row">';
+        for (var p = 0; p < PRESETS.length; p++) {
+          h += '<span class="preset' + (ui.presets[p] ? ' on' : '') + '">' + PRESETS[p][0] + '<button data-preset="' + p + '">' + (ui.presets[p] ? 'On' : 'Turn on') + '</button></span>';
+        }
+        h += '</div></div></div></div>';
+        return h;
+      }
     },
     {
-      title: 'New agent', cap: 'A prompt becomes a card, with a sample first', soon: true,
-      notes: ['A prompt becomes a card she can edit, with a sample of the first update before she commits (principles 2 and 3).'],
-      render: function () { return soon('New agent by prompt', 'Maya types what she wants watched. Radar answers with an editable card and a sample of the first update. Start watching closes the loop. Round 2.'); }
+      title: 'New agent', cap: 'A prompt becomes a card, with a sample before it starts',
+      notes: ['A prompt becomes a card she can edit: what, how often, where, what she gets (principle 2).', 'A sample of the first update appears before she commits. No surprises, no noise (principle 3).'],
+      render: function () {
+        if (ui.phase === 2) {
+          return '<div class="done"><div class="kicker">Running</div><h4>First update Thursday, 8:30, in Slack.</h4>' +
+            '<p>That\'s the loop. Maya told Radar what matters, in her words. From here on, it does the noticing, and she does the deciding.</p>' +
+            '<div class="btns" style="justify-content:center"><button class="btn btn-ghost btn-sm" data-go="5">See all agents</button><button class="btn btn-primary btn-sm" data-restart>Restart</button></div></div>';
+        }
+        var body;
+        if (ui.phase === 0) {
+          body = '<h4 class="ins-title">Tell Radar what to watch</h4>' +
+            '<p class="ins-sub">In your words. Radar turns it into an agent you can edit, and shows you a sample before it starts.</p>' +
+            '<div class="prompt"><div class="in"><input id="np" value="anything that could hurt my magnesium line at Target" aria-label="What should Radar watch?"><button class="btn btn-primary btn-sm" data-phase="1">Ask Radar</button></div>' +
+            '<div class="chips"><span class="hint" style="align-self:center">Try:</span>' +
+            '<button class="chip" data-fill="who\'s launching in gut health">Who\'s launching in gut health</button>' +
+            '<button class="chip" data-fill="price moves on my SKUs at Amazon">Price moves on my SKUs at Amazon</button>' +
+            '<button class="chip" data-fill="claims growing in women\'s health">Claims growing in women\'s health</button></div></div>';
+        } else {
+          var chips = '';
+          for (var c = 0; c < ui.chips.length; c++) chips += '<span class="tag">' + ui.chips[c] + '<button data-rmchip="' + c + '" aria-label="Remove">&times;</button></span>';
+          chips += '<span class="tag add" data-toast="Type another thing to watch. Radar adds it to the list.">+ add</span>';
+          body = '<p class="ins-sub" style="margin-bottom:12px">Maya asked: <b>"anything that could hurt my magnesium line at Target"</b></p>' +
+            '<div class="agent-card"><div class="top"><span class="name">Threats to magnesium at Target</span><span class="pill">Draft</span></div>' +
+            '<div class="field"><span>I\'ll watch</span><div class="tags">' + chips + '</div></div>' +
+            '<div class="field"><span>How often</span>' + seg('nseg', 'cad', [['now', 'Right away when it\'s big'], ['daily', 'Daily 8:30'], ['weekly', 'Weekly']]) + '</div>' +
+            '<div class="field"><span>Where</span>' + seg('nseg', 'where', [['slack', 'Slack'], ['email', 'Email']]) + '</div>' +
+            '<div class="field"><span>You get</span>' + seg('nseg', 'out', OUT) + '</div>' +
+            '<div class="sample"><div class="k">Sample of your first update, from last week\'s data</div>Sunveil cut its magnesium price 15% at Target this week. Your price gap is now 22%. Suggested move: hold price, add a value pack.<span class="src">Retail pricing data, Target, week 37. Illustrative.</span></div>' +
+            '<div class="btns"><button class="btn btn-primary btn-sm" data-phase="2">Start watching</button><button class="btn btn-ghost btn-sm" data-phase="0">Edit the request</button></div></div>';
+        }
+        return '<div class="win">' + winBar('<a data-go="5">Radar</a> &rsaquo; <b>New agent</b>') + '<div class="win-body">' + body + '</div></div>';
+      }
     }
   ];
-
-  function soon(title, text) {
-    return '<div class="soon"><div class="kicker">Round 2</div><h4>' + title + '</h4><p>' + text + '</p></div>';
-  }
 
   /* Shell */
   mount.className = 'proto' + (FULL ? ' full' : '');
@@ -251,7 +365,7 @@
     mount.querySelector('#p-cap').textContent = s.cap;
     var html = '';
     for (var i = 0; i < STATES.length; i++) {
-      html += '<li><button data-go="' + i + '"' + (i === ui.i ? ' aria-current="step"' : '') + (STATES[i].soon ? ' class="soon"' : '') + '><span class="k">' + (i + 1) + '</span>' + STATES[i].title + '</button></li>';
+      html += '<li><button data-go="' + i + '"' + (i === ui.i ? ' aria-current="step"' : '') + '><span class="k">' + (i + 1) + '</span>' + STATES[i].title + '</button></li>';
     }
     stepsEl.innerHTML = html;
     var n = '<h4>Why it\'s built this way</h4>';
@@ -266,6 +380,7 @@
   function go(i) {
     if (i < 0 || i >= STATES.length) return;
     ui.i = i; ui.edit = false; ui.ask = -1;
+    ui.fb = null; ui.reason = null; ui.adjust = false; ui.phase = 0;
     render();
   }
 
@@ -282,17 +397,26 @@
   }
 
   mount.addEventListener('click', function (e) {
-    var t = e.target.closest('[data-go],[data-channel],[data-tab],[data-toast],[data-edit],[data-copy],[data-ask],[data-prev],[data-next],[data-restart]');
+    var t = e.target.closest('[data-go],[data-channel],[data-tab],[data-toast],[data-edit],[data-copy],[data-ask],[data-prev],[data-next],[data-restart],[data-fb],[data-reason],[data-adjust],[data-agent],[data-preset],[data-phase],[data-fill],[data-rmchip],[data-seg]');
     if (!t || !mount.contains(t)) return;
     if (t.hasAttribute('data-tab')) ui.tab = t.getAttribute('data-tab');
     if (t.hasAttribute('data-go')) { go(+t.getAttribute('data-go')); return; }
     if (t.hasAttribute('data-prev')) { go(ui.i - 1); return; }
     if (t.hasAttribute('data-next')) { go(ui.i === STATES.length - 1 ? 0 : ui.i + 1); return; }
-    if (t.hasAttribute('data-restart')) { ui.channel = 'slack'; ui.tab = 'slide'; go(0); return; }
+    if (t.hasAttribute('data-restart')) { ui.channel = 'slack'; ui.tab = 'slide'; ui.created = false; ui.agents = [true, true, true, true]; ui.presets = [false, false, false, false, false]; go(0); return; }
     if (t.hasAttribute('data-channel')) { ui.channel = t.getAttribute('data-channel'); render(); return; }
     if (t.hasAttribute('data-tab')) { ui.edit = false; ui.ask = -1; render(); return; }
     if (t.hasAttribute('data-ask')) { ui.ask = +t.getAttribute('data-ask'); render(); return; }
     if (t.hasAttribute('data-edit')) { ui.edit = !ui.edit; render(); if (ui.edit) { var b = stage.querySelector('#draft-body'); if (b) b.focus(); } return; }
+    if (t.hasAttribute('data-fb')) { ui.fb = t.getAttribute('data-fb'); ui.reason = null; render(); return; }
+    if (t.hasAttribute('data-reason')) { ui.reason = t.getAttribute('data-reason'); render(); return; }
+    if (t.hasAttribute('data-adjust')) { ui.adjust = true; render(); return; }
+    if (t.hasAttribute('data-agent')) { var ai = +t.getAttribute('data-agent'); ui.agents[ai] = !ui.agents[ai]; render(); toast(ui.agents[ai] ? AGENTS[ai].name + ' is back on.' : AGENTS[ai].name + ' paused. Nothing from it until you turn it on.'); return; }
+    if (t.hasAttribute('data-preset')) { var pi = +t.getAttribute('data-preset'); ui.presets[pi] = !ui.presets[pi]; render(); toast(ui.presets[pi] ? PRESETS[pi][0] + ' is on. First update ' + PRESETS[pi][1] + '.' : PRESETS[pi][0] + ' is off.'); return; }
+    if (t.hasAttribute('data-phase')) { ui.phase = +t.getAttribute('data-phase'); if (ui.phase === 2) ui.created = true; render(); return; }
+    if (t.hasAttribute('data-fill')) { var inp = stage.querySelector('#np'); if (inp) { inp.value = t.getAttribute('data-fill'); inp.focus(); } return; }
+    if (t.hasAttribute('data-rmchip')) { ui.chips.splice(+t.getAttribute('data-rmchip'), 1); render(); return; }
+    if (t.hasAttribute('data-seg')) { var p = t.getAttribute('data-seg').split('|'); ui[p[0]][p[1]] = p[2]; render(); return; }
     if (t.hasAttribute('data-copy')) {
       var src = stage.querySelector('#' + t.getAttribute('data-copy'));
       var text = src ? src.innerText : '';
@@ -308,6 +432,7 @@
 
   var keyTarget = FULL ? document : mount;
   keyTarget.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && e.target.id === 'np') { ui.phase = 1; render(); e.preventDefault(); return; }
     var tag = (e.target.tagName || '').toLowerCase();
     if (tag === 'input' || tag === 'textarea' || e.target.isContentEditable) return;
     if (e.key === 'ArrowRight') { go(ui.i === STATES.length - 1 ? ui.i : ui.i + 1); e.preventDefault(); }

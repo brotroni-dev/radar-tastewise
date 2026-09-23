@@ -71,3 +71,24 @@ at medium widths. It now hides below 1000px.
 **Roni's review:** (to fill)
 
 **Changed by hand:** (to fill)
+
+## Round 2: states 5-7
+
+**Asked:** Tune (Not relevant with reason chips, More like this, confirmations
+that say what changed, the agent card opening inline with cadence / where /
+output controls), Radar home (four preset agents with on-off, the preset
+library, New agent) and New agent by prompt (the request, the parsed card
+with removable chips and a sample of the first update, Start watching, the
+closing card). The created agent appears on Radar home afterwards.
+
+**Claude produced:** the three states in prototype.js plus their styles.
+Checked every click path in the browser, including the sub-states. No
+console errors.
+
+**Got wrong:** nothing visible this round. One process note: the browser
+pane reloaded mid-check, so the remaining sub-states were verified by
+driving the prototype's own state machine rather than clicking.
+
+**Roni's review:** (to fill)
+
+**Changed by hand:** (to fill)

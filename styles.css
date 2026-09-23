@@ -1127,3 +1127,6 @@ body.page { font-size: 15px; }
 .starthere{background:var(--note-bg);border:1px solid var(--note-line);color:var(--note-ink);font:500 11px var(--font-mono);text-transform:uppercase;letter-spacing:.06em;padding:3px 8px;border-radius:999px;white-space:nowrap}
 .hintwrap .bk-btn.pulse{animation:pulse 1.8s ease-out infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(232,163,61,.7)}70%{box-shadow:0 0 0 9px rgba(232,163,61,0)}100%{box-shadow:0 0 0 0 rgba(232,163,61,0)}}
+.sl-rail{padding:12px 0;gap:12px}
+.sl-rail .ws,.sl-rail .ws2{width:28px;height:28px;border-radius:7px;font-size:13px}
+.sl-rail .ws{outline-offset:2px;outline-width:2px}

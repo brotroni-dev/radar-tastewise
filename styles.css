@@ -1151,3 +1151,4 @@ body.page { font-size: 15px; }
 .deck .thumbs i{aspect-ratio:auto;height:auto;min-height:0}
 .deck .thumbs i.on{outline:none;border:2px solid var(--accent)}
 .fchart .fsep{stroke:var(--line);stroke-width:1;stroke-dasharray:3 5;fill:none}
+.page .betname{font-size:clamp(36px,5vw,52px)}

@@ -1163,3 +1163,7 @@ body.page { font-size: 15px; }
 .value p{margin:0}
 .values{margin-top:18px}
 .nexttest{margin-top:28px;max-width:720px}
+.backlink{display:inline-flex;align-items:center;gap:6px;font:500 13.5px var(--font-body);color:var(--muted);text-decoration:none}
+.backlink:hover{color:var(--ink)}
+.backlink .ic{width:15px;height:15px}
+.hsep{width:1px;height:18px;background:var(--line)}

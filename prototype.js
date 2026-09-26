@@ -651,10 +651,11 @@
   mount.className = 'proto' + (FULL ? ' full' : '');
   mount.setAttribute('tabindex', '0');
   mount.innerHTML =
-    '<div class="proto-head"><span class="proto-brand"><i></i>Radar prototype</span><span class="proto-step" id="p-step"></span><span class="grow"></span>' +
+    '<div class="proto-head">' + (FULL ? '<a class="backlink" href="index.html">' + ic('arrowl') + 'Back to case study</a><span class="hsep"></span>' : '') +
+    '<span class="proto-brand"><i></i>Radar prototype</span><span class="proto-step" id="p-step"></span><span class="grow"></span>' +
     '<label class="switch"><input type="checkbox" id="p-notes" checked> Design notes</label>' +
     '<button class="btn btn-ghost btn-sm" data-restart id="p-restart">Start over</button>' +
-    (FULL ? '<a class="btn btn-ghost btn-sm" href="index.html">' + ic('arrowl') + 'Back to case study</a>' : '<a class="btn btn-ghost btn-sm" href="prototype.html" target="_blank" rel="noopener">Full screen</a>') +
+    (FULL ? '' : '<a class="btn btn-ghost btn-sm" href="prototype.html" target="_blank" rel="noopener">Full screen</a>') +
     '</div>' +
     '<div class="prog" id="p-prog" aria-hidden="true"></div>' +
     '<div class="ctx" id="p-ctx"></div>' +

@@ -653,8 +653,8 @@
   mount.innerHTML =
     '<div class="proto-head"><span class="proto-brand"><i></i>Radar prototype</span><span class="proto-step" id="p-step"></span><span class="grow"></span>' +
     '<label class="switch"><input type="checkbox" id="p-notes" checked> Design notes</label>' +
-    '<button class="btn btn-ghost btn-sm" data-restart>Restart</button>' +
-    (FULL ? '<a class="btn btn-ghost btn-sm" href="index.html">Back to the write-up</a>' : '<a class="btn btn-ghost btn-sm" href="prototype.html" target="_blank" rel="noopener">Full screen</a>') +
+    '<button class="btn btn-ghost btn-sm" data-restart id="p-restart">Start over</button>' +
+    (FULL ? '<a class="btn btn-ghost btn-sm" href="index.html">' + ic('arrowl') + 'Back to case study</a>' : '<a class="btn btn-ghost btn-sm" href="prototype.html" target="_blank" rel="noopener">Full screen</a>') +
     '</div>' +
     '<div class="prog" id="p-prog" aria-hidden="true"></div>' +
     '<div class="ctx" id="p-ctx"></div>' +
@@ -684,6 +684,7 @@
     notesBox.innerHTML = n;
     notesBox.hidden = !ui.notes;
     mount.querySelector('[data-prev]').disabled = ui.i === 0;
+    mount.querySelector('#p-restart').hidden = ui.i === 0;
     mount.querySelector('[data-next]').innerHTML = ui.i === STATES.length - 1 ? 'Restart' : 'Next ' + ic('arrowr');
     stage.scrollTop = 0;
     var m = stage.querySelector('.sl-msgs');

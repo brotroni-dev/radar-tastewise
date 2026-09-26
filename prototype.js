@@ -635,7 +635,7 @@
             '<div class="bk-urg warm">' + ic('clock') + '<span><b>Promo ends Oct 5, 13 days.</b> Worth a decision before then.</span></div>' +
             '<div class="bk-actions"><span class="bk-btn primary">Open insight</span><span class="bk-btn">Draft email</span></div></div></div></div></div>' +
             '<span class="hint">What your first update would look like, from last week\'s data.</span>';
-          body = ph(ic('radar') + '<span>Radar</span><span>&middot;</span><span>New agent</span>', 'Here\'s what I understood', 'Check it, change what you like, then start.') +
+          body = ph(ic('radar') + '<span>Radar</span><span>&middot;</span><span>New agent</span>', 'Review your new agent', 'Check it, change what you like, then start.') +
             '<div class="one">' + editor({
               isNew: true, pill: '<span class="pill neutral">Draft</span>', sample: sample,
               cta: '<button class="btn btn-primary btn-sm" data-phase="2"' + (!e.slack && !e.email ? ' disabled' : '') + '>' + ic('check') + 'Start watching</button>',

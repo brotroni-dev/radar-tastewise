@@ -428,7 +428,7 @@
       notes: ['This screen establishes the context Radar needs: what Maya is responsible for, how her week is structured, and which moments are worth interrupting.', 'Her three rhythms become the system\u2019s delivery logic.'],
       render: function () {
         return '<div class="scene"><div class="scene-top"><div class="who"><span class="avatar-lg">' + AVA + '</span><div><h4>Maya K.</h4><p class="role">Brand Manager at Kindroot, a mid-sized CPG company, responsible for five natural supplement SKUs.</p></div></div>' +
-          '<div class="clock">8:40<small>Tue, Sep 22 &middot; between meetings</small></div></div>' +
+          '</div>' +
           '<div class="scene-body"><div class="persona-mini">' +
           '<div><div class="k">Measured on</div><p>Sales across her existing range, and whether new products succeed.</p></div>' +
           '<div><div class="k">Her day</div><p>Meetings, email, spreadsheets and decks. She isn\u2019t an analyst and doesn\u2019t spend her day in the product.</p></div>' +

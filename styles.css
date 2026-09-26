@@ -1167,3 +1167,5 @@ body.page { font-size: 15px; }
 .backlink:hover{color:var(--ink)}
 .backlink .ic{width:15px;height:15px}
 .hsep{width:1px;height:18px;background:var(--line)}
+.mobnote{display:none}
+@media (max-width:760px){.mobnote{display:grid;gap:12px;position:fixed;inset:0;z-index:50;background:var(--bg);padding:32px 20px;align-content:center;text-align:center}.mobnote p{font-size:16px;max-width:22em;margin:0 auto}.mobnote .btns{justify-content:center}}

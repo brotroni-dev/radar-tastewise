@@ -297,15 +297,15 @@
       item('Bloomwell Magnesium Sleep Gummies is gaining fast at Target',
         'it competes with your Magnesium Glycinate capsules on the same "sleep" claim and is winning on format. Your magnesium share at Target is down 1.4 pts in 8 weeks.',
         '<b>Window closing: Oct 1, 9 days.</b> Endcap requests for Target\'s Q4 reset close the day of your review.', 'hot',
-        (ui.hinted ? '' : '<span class="hintwrap">') + btn('primary pulse', 'data-go="2"', 'Open insight') + (ui.hinted ? '' : '</span>') + btn('', 'data-go="3" data-tab="slide"', 'Create slide') + btn('', 'data-go="4"', 'Tune this agent')) +
+        (ui.hinted ? '' : '<span class="hintwrap">') + btn('primary pulse', 'data-go="2"', 'Open insight') + (ui.hinted ? '' : '</span>') + btn('', 'data-go="3" data-tab="slide"', 'Create slide') + btn('', 'data-go="4"', 'Adjust this agent')) +
       item('Sunveil cut its magnesium price 15% at Target',
         'your price gap is now 22%, on the shelf where you\'re already losing share.',
-        '<b>Promo ends Oct 5, 12 days.</b> Worth a decision before then.', 'warm',
-        btn('primary', other, 'Open insight') + btn('', 'data-go="4"', 'Tune this agent')) +
+        '<b>Promo ends Oct 5, 13 days.</b> Worth a decision before then.', 'warm',
+        btn('primary', other, 'Open insight') + btn('', 'data-go="4"', 'Adjust this agent')) +
       item('Nature\'s Path launched Ashwagandha Calm Gummies at CVS',
         'your Ashwagandha SKU sits on the same shelf. 0.9x category velocity in week one.',
         'No window. Worth watching, not acting.', 'none',
-        btn('primary', other, 'Open insight') + btn('', 'data-go="4"', 'Tune this agent')) +
+        btn('primary', other, 'Open insight') + btn('', 'data-go="4"', 'Adjust this agent')) +
       '<div class="bk-links"><a data-toast="You asked Competitor launches to watch magnesium at Target, in your daily. The window made the first one urgent.">Why you\'re seeing this</a><a data-go="2" data-fb="no">Not relevant</a></div>' +
       '</div>';
   }
@@ -373,7 +373,7 @@
       '<div class="gm-from"><span class="av rmark"><i></i></span><div><b>Radar</b> <span class="addr">&lt;radar@platform&gt;</span><div class="to">to me ' + ic('chevd') + '</div></div>' +
       '<div class="right"><span class="ts">8:41 AM (2 minutes ago)</span>' + ic('star') + ic('reply') + ic('more') + '</div></div>' +
       '<div class="gm-msg"><p>Good morning, Maya. Three updates in your daily.</p>' + blockKit() +
-      '<p class="gm-foot">You get this because Competitor launches reports to email. <a data-go="4">Tune this agent</a> &middot; <a data-go="5">Open Radar</a></p></div>' +
+      '<p class="gm-foot">You get this because Competitor launches reports to email. <a data-go="4">Adjust this agent</a> &middot; <a data-go="5">Open Radar</a></p></div>' +
       '<div class="gm-reply"><span>' + ic('reply') + 'Reply</span><span>' + ic('arrowr') + 'Forward</span></div>' +
       '</div>' +
       '<div class="gm-side"><i style="background:#1A73E8"></i><i style="background:#F9AB00"></i><i style="background:#188038"></i><span>+</span></div>' +
@@ -462,7 +462,7 @@
       }
     },
     {
-      title: 'The insight', desc: 'Window, signal, why, moves', cap: 'The window first. Then what changed, why it matters, and what to do.',
+      title: 'The insight', desc: 'Deadline, evidence, next steps', cap: 'The window first. Then what changed, why it matters, and what to do.',
       where: 'The platform, Radar', when: 'Tuesday, 8:43',
       notes: [
         'The deadline comes first, so Maya immediately knows whether this needs action now.',
@@ -474,7 +474,7 @@
           'Bloomwell Magnesium Sleep Gummies is gaining fast at Target',
           'Launched 6 weeks ago. Magnesium glycinate + L-theanine. Positioned "sleep + stress".',
           '<button class="btn btn-primary btn-sm" data-go="3" data-tab="slide">' + ic('slide') + 'Create slide</button><button class="btn btn-ghost btn-sm" data-go="3" data-tab="share">' + ic('share') + 'Share</button>',
-          '<button class="btn btn-ghost btn-ic" data-go="4" aria-label="Tune this agent" title="Tune this agent">' + ic('tune') + '</button>',
+          '<button class="btn btn-ghost btn-ic" data-go="4" aria-label="Adjust this agent" title="Adjust this agent">' + ic('tune') + '</button>',
           feedbackRow()) +
           urgencyBanner('Target locks Q4 planograms on <b>Oct 6</b>. Endcap requests close <b>Oct 1</b>, the day of your review. After that, the next shot at placement is January.', 'Target vendor calendar, Q4') +
           '<div class="tiles"><div class="tile"><div class="n">2.1x</div><div class="l">Category velocity at Target, last 6 weeks</div><div class="s">Retail sales data, weeks 32-37</div></div>' +
@@ -525,7 +525,7 @@
             '<p class="ask">Proposal: place Kindroot Magnesium in the sleep endcap for Q4. Request by Oct 1, ahead of the Oct 6 reset.</p></div>' +
             '<div class="src">Retail sales data (Target, weeks 32-37), search data (US, Q3 vs Q2), review analysis (n=1,214), Target vendor calendar. Illustrative.</div></div></div>' +
             '<div class="act-btns"><button class="btn btn-primary btn-sm" data-toast="Added to Q4 Target review.pptx as slide 3.">' + ic('check') + 'Add to deck</button>' +
-            '<button class="btn btn-ghost btn-sm" data-toast="Saved to Downloads (prototype, no file behind this).">' + ic('download') + 'Download .pptx</button>' +
+            '<button class="btn btn-ghost btn-sm" data-toast="Downloaded.">' + ic('download') + 'Download .pptx</button>' +
             '<button class="btn btn-ghost btn-sm" data-toast="Opens the slide editor. Text and chart are editable.">' + ic('edit') + 'Edit</button></div>';
         } else if (ui.tab === 'email') {
           body = '<div class="act-head"><h5>Email to the team, drafted</h5><span class="hint">Her voice, her call. Edit, then send.</span></div>' +
@@ -566,7 +566,7 @@
     },
     {
       title: 'Adjust', desc: 'Review and update', cap: 'One card: what the agent watches, and how it reaches her.',
-      where: 'The platform, Radar, the same insight', when: 'Tuesday, 8:47',
+      where: 'The platform, agent settings', when: 'Tuesday, 8:47',
       notes: ['Maya can return to this setup from the insight, Slack or email.', 'It uses the same structure she saw when creating the agent.', 'Any feedback she gives is reflected here, so she can see what changed.'],
       render: function () {
         var a = AGENTS[ui.editAgent];
@@ -586,11 +586,11 @@
     },
     {
       title: 'Your radar', desc: 'Agents by rhythm', cap: 'Five agents, three rhythms. She switches things off, not on.',
-      where: 'The platform, Radar home', when: 'Tuesday, 8:48',
+      where: 'The platform, Your radar', when: 'Tuesday, 8:48',
       notes: ['This view gives Maya a starting point instead of an empty setup.', 'Radar creates five agents from her brand profile and organizes them around her daily, weekly and periodic work.', 'She can turn off, adjust or add agents as her needs change. Only a closing window interrupts the usual rhythm.'],
       render: function () {
         var count = ui.agents.filter(Boolean).length + (ui.created ? 1 : 0);
-        var h = ph(ic('radar') + '<span>Radar</span>', 'Your radar', 'Five agents are already watching Kindroot for you, based on your brand profile and organized by rhythm. Turn off anything you don\u2019t need.',
+        var h = ph(ic('radar') + '<span>Radar</span>', 'Your radar', (['No agents are','One agent is','Two agents are','Three agents are','Four agents are','Five agents are','Six agents are','Seven agents are'][count] || count + ' agents are') + ' already watching Kindroot for you, based on your brand profile and organized by rhythm. Turn off anything you don\u2019t need.',
           '<button class="btn btn-primary btn-sm" data-go="6">' + ic('plus') + 'New agent</button>') +
           '<div class="rule">' + ic('clock') + '<span><b>Only a closing window interrupts the usual rhythm.</b> When one is approaching, Radar alerts you in Slack with the date.' + (ui.urgent ? '' : ' <span class="pill warn">Off: windows wait for their rhythm</span>') + '</span><span class="grow"></span><button class="toggle" role="switch" aria-checked="' + ui.urgent + '" data-urgent aria-label="Urgent updates break through"></button></div>';
         for (var g = 0; g < RHYTHMS.length; g++) {
@@ -632,7 +632,7 @@
             '<div class="txt">' + e.name + ', ' + RH_LABEL[e.rh].toLowerCase() + ', ' + whereText(e) + '.</div>' +
             '<div class="bk"><div class="bk-h">Sunveil cut its magnesium price 15% at Target</div>' +
             '<div class="bk-s"><b>Why it matters:</b> your price gap is now 22%, and the promo runs to Oct 5.</div>' +
-            '<div class="bk-urg warm">' + ic('clock') + '<span><b>Promo ends Oct 5, 12 days.</b> Worth a decision before then.</span></div>' +
+            '<div class="bk-urg warm">' + ic('clock') + '<span><b>Promo ends Oct 5, 13 days.</b> Worth a decision before then.</span></div>' +
             '<div class="bk-actions"><span class="bk-btn primary">Open insight</span><span class="bk-btn">Draft email</span></div></div></div></div></div>' +
             '<span class="hint">What your first update would look like, from last week\'s data. Illustrative.</span>';
           body = ph(ic('radar') + '<span>Radar</span><span>&middot;</span><span>New agent</span>', 'Here\'s what I understood', 'Check it, change what you like, then start.') +
@@ -661,7 +661,7 @@
     '<div class="ctx" id="p-ctx"></div>' +
     '<div class="proto-body"><div class="stage" id="p-stage"></div>' +
     '<aside class="rail"><ol class="steps" id="p-steps"></ol><div class="notes" id="p-notes-box"></div></aside></div>' +
-    '<div class="proto-foot"><button class="btn btn-ghost btn-sm" data-prev>' + ic('arrowl') + 'Back</button><span class="proto-cap" id="p-cap"></span><button class="btn btn-primary btn-sm" data-next>Next ' + ic('arrowr') + '</button></div>';
+    '<div class="proto-foot"><button class="btn btn-ghost btn-sm" data-prev>' + ic('arrowl') + 'Back</button><span class="proto-cap" id="p-cap" hidden></span><button class="btn btn-primary btn-sm" data-next>Next ' + ic('arrowr') + '</button></div>';
 
   var stage = mount.querySelector('#p-stage');
   var stepsEl = mount.querySelector('#p-steps');

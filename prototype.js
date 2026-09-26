@@ -427,19 +427,19 @@
       where: 'Maya\'s desk, between meetings', when: 'Tuesday, September 22, 8:40',
       notes: ['This screen establishes the context Radar needs: what Maya is responsible for, how her week is structured, and which moments are worth interrupting.', 'Her three rhythms become the system\u2019s delivery logic.'],
       render: function () {
-        return '<div class="scene"><div class="scene-top"><div class="who"><span class="avatar-lg">' + AVA + '</span><div><h4>Maya K.</h4><p class="role">Brand Manager at Kindroot, a mid-size natural supplements brand. Five SKUs.</p></div></div>' +
+        return '<div class="scene"><div class="scene-top"><div class="who"><span class="avatar-lg">' + AVA + '</span><div><h4>Maya K.</h4><p class="role">Brand Manager at Kindroot, a mid-sized CPG company, responsible for five natural supplement SKUs.</p></div></div>' +
           '<div class="clock">8:40<small>Tue, Sep 22 &middot; between meetings</small></div></div>' +
           '<div class="scene-body"><div class="persona-mini">' +
-          '<div><div class="k">Measured on</div><p>Sales of her range, and new products that win.</p></div>' +
-          '<div><div class="k">Her day</div><p>Meetings, email, spreadsheets, decks. Not an analyst, not a power user.</p></div>' +
-          '<div><div class="k">The platform today</div><p>Twice a month, when something forces her in. Last time: three weeks ago.</p></div>' +
-          '<div><div class="k">What she needs</div><p>Defend her shelf at Target. Pick the next launch. Never get caught off guard.</p></div>' +
+          '<div><div class="k">Measured on</div><p>Sales across her existing range, and whether new products succeed.</p></div>' +
+          '<div><div class="k">Her day</div><p>Meetings, email, spreadsheets and decks. She isn\u2019t an analyst and doesn\u2019t spend her day in the product.</p></div>' +
+          '<div><div class="k">How she uses it today</div><p>About twice a month, usually for a quarterly review, retailer meeting or launch brief.</p></div>' +
+          '<div><div class="k">What she needs</div><p>Walk into retailer meetings with data she can defend. Choose the next launch and explain why. Spot important changes before they become surprises.</p></div>' +
           '</div><p class="scene-lead">Her week runs in three rhythms. Radar fits into them.</p>' +
           '<div class="rhythms">' +
           '<div class="rh"><div class="k">' + ic('sun') + 'Daily</div><ul><li><span class="t">9:00</span>Brand team sync</li><li><span class="t">11:00</span>Agency review</li><li><span class="t">14:00</span>1:1 with Dana</li><li>Approvals, emails, questions from the team</li></ul></div>' +
           '<div class="rh"><div class="k">' + ic('week') + 'Weekly</div><ul><li><span class="t">Mon</span>Performance and sales</li><li>Project status</li><li>Management update</li></ul></div>' +
           '<div class="rh"><div class="k">' + ic('flag') + 'Periodic</div><ul><li class="hl"><span class="t">Oct 1</span>Target category review</li><li>Q4 plan</li><li>Innovation pipeline, launch brief</li></ul></div>' +
-          '</div><button class="btn btn-primary" data-go="1">Start ' + ic('arrowr') + '</button></div></div>';
+          '</div></div></div>';
       }
     },
     {

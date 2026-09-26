@@ -652,7 +652,7 @@
   mount.setAttribute('tabindex', '0');
   mount.innerHTML =
     '<div class="proto-head">' + (FULL ? '<a class="backlink" href="index.html">' + ic('arrowl') + 'Back to case study</a><span class="hsep"></span>' : '') +
-    '<span class="proto-brand"><i></i>Radar prototype</span><span class="proto-step" id="p-step"></span><span class="grow"></span>' +
+    '<span class="proto-brand"><i></i>Radar</span><span class="proto-step" id="p-step" hidden></span><span class="grow"></span>' +
     '<label class="switch"><input type="checkbox" id="p-notes" checked> Design notes</label>' +
     '<button class="btn btn-ghost btn-sm" data-restart id="p-restart">Start over</button>' +
     (FULL ? '' : '<a class="btn btn-ghost btn-sm" href="prototype.html" target="_blank" rel="noopener">Full screen</a>') +

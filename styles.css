@@ -1155,3 +1155,6 @@ body.page { font-size: 15px; }
 .value .where{display:block;font:500 11.5px var(--font-mono);letter-spacing:.04em;color:var(--muted)}
 .values-cta{margin-top:20px}
 .value:hover{transform:none;box-shadow:none}
+.page .cover{padding-block:64px 28px}
+.page .cover .meta{margin-bottom:0}
+.page #brief{padding-top:40px}

@@ -616,7 +616,7 @@
         if (ui.phase === 2) {
           return '<div class="done"><div class="mark">' + ic('check') + '</div><div class="kicker">Running</div><h4>First update ' + firstUpdate() + '.</h4>' +
             '<p>That\'s it. Maya said what matters, in her words. From here on, Radar notices and she decides.</p>' +
-            '<div class="btns" style="justify-content:center"><button class="btn btn-ghost btn-sm" data-go="5">See all agents</button><button class="btn btn-primary btn-sm" data-restart>Restart</button></div></div>';
+            '<div class="btns" style="justify-content:center"><button class="btn btn-ghost btn-sm" data-go="5">See all agents</button><button class="btn btn-primary btn-sm" data-restart>Start over</button></div></div>';
         }
         var body;
         if (ui.phase === 0) {

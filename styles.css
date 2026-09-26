@@ -1158,3 +1158,6 @@ body.page { font-size: 15px; }
 .page .cover{padding-block:64px 28px}
 .page .cover .meta{margin-bottom:0}
 .page #brief{padding-top:40px}
+.value{padding:20px;align-items:start}
+.value h4{padding-right:0;margin:0 0 6px}
+.value p{margin:0}

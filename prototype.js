@@ -617,7 +617,7 @@
         if (ui.phase === 2) {
           return '<div class="done"><div class="mark radar"><i class="core"></i><b></b><b></b><b></b><b></b><b></b><b></b></div><div class="kicker">Running</div><h4>First update ' + firstUpdate() + '.</h4>' +
             '<p>Radar is watching now. You can adjust it anytime from Your radar.</p>' +
-            '<div class="btns" style="justify-content:center"><button class="btn btn-ghost btn-sm" data-go="5">See all agents</button><button class="btn btn-primary btn-sm" data-restart>Start over</button></div></div>';
+            '<div class="btns" style="justify-content:center"><button class="btn btn-ghost btn-sm" data-go="5">See all agents</button></div></div>';
         }
         var body;
         if (ui.phase === 0) {
@@ -686,7 +686,7 @@
     notesBox.hidden = !ui.notes;
     mount.querySelector('[data-prev]').disabled = ui.i === 0;
     mount.querySelector('#p-restart').disabled = ui.i === 0;
-    mount.querySelector('[data-next]').innerHTML = ui.i === STATES.length - 1 ? 'Restart' : 'Next ' + ic('arrowr');
+    mount.querySelector('[data-next]').innerHTML = ui.i === STATES.length - 1 ? 'Back to case study ' + ic('arrowr') : 'Next ' + ic('arrowr');
     stage.scrollTop = 0;
     var m = stage.querySelector('.sl-msgs');
     if (m) { var days = m.querySelectorAll('.sl-day'); var t = days[days.length - 1]; if (t) m.scrollTop = t.getBoundingClientRect().top - m.getBoundingClientRect().top - 4; }
@@ -723,7 +723,7 @@
     if (t.hasAttribute('data-go')) { var gi = +t.getAttribute('data-go'); if (gi === 4) ui.editAgent = 0; go(gi); return; }
     if (t.hasAttribute('data-editagent')) { ui.editAgent = +t.getAttribute('data-editagent'); go(4); return; }
     if (t.hasAttribute('data-prev')) { go(ui.i - 1); return; }
-    if (t.hasAttribute('data-next')) { go(ui.i === STATES.length - 1 ? 0 : ui.i + 1); return; }
+    if (t.hasAttribute('data-next')) { if (ui.i === STATES.length - 1) { location.href = BACK; return; } go(ui.i + 1); return; }
     if (t.hasAttribute('data-restart')) { ui.channel = 'slack'; ui.tab = 'slide'; ui.created = false; AGENTS.length = 5; ui.urgent = true; ui.agents = [true, true, true, true, true]; ui.presets = [false, false, false, false, false]; ui.ed = null; ui.editAgent = 0; ui.prompt = 'anything that could hurt my magnesium line at Target'; go(0); return; }
     if (t.hasAttribute('data-channel')) { ui.channel = t.getAttribute('data-channel'); render(); return; }
     if (t.hasAttribute('data-tab')) { ui.edit = false; ui.ask = -1; render(); return; }

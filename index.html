@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="styles.css?v=202609261331">
+<link rel="stylesheet" href="styles.css?v=202609261340">
 </head>
 <body class="page">
 
@@ -20,7 +20,7 @@
   <div class="wrap nav-in">
     <a class="wordmark" href="#top"><i></i>Radar</a>
     <div class="nav-links">
-      <a href="#brief">Brief</a>
+      <a href="#brief">Problem</a>
       <a href="#thinking">Thinking</a>
       <a href="#flow">Flow</a>
       <a href="prototype.html" target="_blank" rel="noopener">Prototype</a>
@@ -50,8 +50,8 @@
   <div class="wrap">
     <div class="reading">
       <div class="kicker">01 &middot; The problem</div>
-      <h2>The platform has the answers. Maya still has to know what to ask.</h2>
-      <p class="lede">Tastewise can answer almost any question, but Maya has to start the conversation. She&rsquo;s a brand manager, not an analyst, and she opens the product only a couple of times a month, usually for a retailer meeting, quarterly review or launch brief. The challenge is to make the product useful before she thinks to open it.</p>
+      <h2>The platform has the answers. Maya doesn&rsquo;t have time to ask.</h2>
+      <p class="lede">The platform can answer almost any question, but Maya has to start the conversation. She&rsquo;s a brand manager, not an analyst, and she rarely opens the product. The challenge is to make the product useful before she thinks to open it.</p>
       <blockquote class="quote">Push should mean more than sending Maya notifications. It should mean the product keeping watch for her, noticing what matters and bringing it to her while there is still time to act.</blockquote>
     </div>
     <div class="persona">
@@ -76,12 +76,12 @@
       <p class="lede">Six directions I looked at before choosing one.</p>
     </div>
     <div class="explored">
-      <div><h4>Weekly digest</h4><span class="kicker">Email</span><span class="why">A newsletter she skims. No control.</span></div>
+      <div><h4>Weekly digest</h4><span class="kicker">Email</span><span class="why">A newsletter she skims. It can&rsquo;t tell her what&rsquo;s urgent.</span></div>
       <div><h4>Alerts with thresholds</h4><span class="kicker">Product</span><span class="why">Needs setup skill she doesn't have.</span></div>
       <div><h4>Briefing before meetings</h4><span class="kicker">Calendar</span><span class="why">The night before is too late. Only fires around meetings.</span></div>
       <div><h4>Team bot</h4><span class="kicker">Slack</span><span class="why">The team becomes the user. Maya watches.</span></div>
       <div><h4>"For you" home</h4><span class="kicker">Product</span><span class="why">She's rarely in the platform.</span></div>
-      <div><h4>Slides plugin</h4><span class="kicker">PowerPoint</span><span class="why">Heavy and narrow.</span></div>
+      <div><h4>Slides plugin</h4><span class="kicker">PowerPoint</span><span class="why">Needs a plugin, and only helps when she&rsquo;s already building a deck.</span></div>
     </div>
 
     <p class="bridge">Each direction solved part of the problem. The final concept brings the strongest pieces together.</p>
@@ -93,13 +93,14 @@
       <p class="hint" style="margin:14px 0 0">The piece I designed: the update reaching her, and what she does with it.</p>
     </div>
     <div class="assume">
-      <h3>Assumptions, written as decisions</h3>
+      <h3>Assumptions</h3>
         <ul class="list">
           <li>The platform can build a brand profile from Maya's company and products.</li>
           <li>Slack and email integrations exist.</li>
           <li>Agents run on the platform's existing data and query capability.</li>
           <li>Retailer-level share data is available for her SKUs.</li>
-          <li>Her team can receive shares without a seat.</li>
+          <li>Retailer calendars (resets, promo windows) are available, so a window can carry a date.</li>
+          <li>Her team can see what she shares without a license.</li>
           <li>Nothing is sent to anyone without Maya.</li>
         </ul>
     </div>
@@ -108,8 +109,7 @@
       <h3>Design principles</h3>
       <p class="hint" style="margin:0">The decisions that shaped the prototype.</p>
       <div class="values">
-        <div class="value"><div class="ib"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9M12 7a5 5 0 1 0 5 5M12 12h.01M21 12a9 9 0 0 0-9-9"/></svg></div><div><h4>Start full, not empty</h4><p>Five agents are on from day one, named the way Maya would say them. She switches off what she doesn't need.</p></div></div>
-        <div class="value"><div class="ib"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg></div><div><h4>Presets first, then a prompt</h4><p>Creating by prompt comes later. A new agent shows a sample before it runs.</p></div></div>
+        <div class="value"><div class="ib"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9M12 7a5 5 0 1 0 5 5M12 12h.01M21 12a9 9 0 0 0-9-9"/></svg></div><div><h4>Start full, not empty</h4><p>Five agents are on from day one, named the way Maya would say them. She switches off what she doesn&rsquo;t need, or adds her own with a prompt.</p></div></div>
         <div class="value"><div class="ib"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM3 10h18M8 3v4M16 3v4M7 14h2M11 14h2M15 14h2"/></svg></div><div><h4>Built around her work</h4><p>Each agent follows one cadence: daily, weekly or periodic.</p></div></div>
         <div class="value"><div class="ib"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 2"/></svg></div><div><h4>Only a closing window interrupts</h4><p>It comes today, with a date. Nothing else breaks the rhythm.</p></div></div>
         <div class="value"><div class="ib"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0v5l2 3H4l2-3zM10 20a2 2 0 0 0 4 0"/></svg></div><div><h4>Why it matters comes first</h4><p>Every update opens with what it means for her brand, before any numbers.</p></div></div>
@@ -171,8 +171,8 @@
         <ul class="list">
           <li>Reframed the concept twice, away from the meeting.</li>
           <li>Added Maya&rsquo;s three rhythms and the closing window.</li>
-          <li>Brought in Slack and Gmail Figma kits for realism.</li>
-          <li>Rewrote the final copy and reviewed every screen.</li>
+          <li>Put feedback inside the update, not in settings.</li>
+          <li>Kept the scope to one piece: the update and what she does next.</li>
         </ul>
       </div>
     </div>
@@ -190,6 +190,14 @@
       <div class="metric"><div class="kicker">Habit</div>Weekly active use, up from roughly two sessions a month, plus update open rate by channel.</div>
       <div class="metric"><div class="kicker">Insight to action</div>Share of updates that lead to a slide, email or meeting.</div>
       <div class="metric"><div class="kicker">Signal quality</div>Percentage of agents still active after 30 days, with the Not relevant rate decreasing over time.</div>
+    </div>
+    <div class="nexttest">
+      <h3>What I&rsquo;d test next</h3>
+      <ul class="list">
+        <li>Whether Maya trusts updates she didn&rsquo;t ask for.</li>
+        <li>How many updates a week feel useful before they feel like noise.</li>
+        <li>Whether closing-window dates are reliable enough to interrupt her.</li>
+      </ul>
     </div>
   </div>
 </section>

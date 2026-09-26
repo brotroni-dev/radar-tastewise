@@ -1179,3 +1179,5 @@ body.page { font-size: 15px; }
 .bridge{margin:40px 0 18px}
 .assume{margin-top:44px}
 .page .section{scroll-margin-top:64px}
+.app-nav a:not([data-go]){cursor:default}
+.chart .chip{cursor:default}

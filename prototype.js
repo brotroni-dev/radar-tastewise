@@ -685,7 +685,7 @@
     notesBox.innerHTML = n;
     notesBox.hidden = !ui.notes;
     mount.querySelector('[data-prev]').disabled = ui.i === 0;
-    mount.querySelector('#p-restart').hidden = ui.i === 0;
+    mount.querySelector('#p-restart').disabled = ui.i === 0;
     mount.querySelector('[data-next]').innerHTML = ui.i === STATES.length - 1 ? 'Restart' : 'Next ' + ic('arrowr');
     stage.scrollTop = 0;
     var m = stage.querySelector('.sl-msgs');

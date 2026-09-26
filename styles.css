@@ -1190,3 +1190,5 @@ body.page { font-size: 15px; }
 .notif .appic{width:30px;height:30px;border-radius:8px;padding:5px}
 .notif b{font-weight:500}
 .notif p{font-size:10px;line-height:1.4;opacity:.85}
+.gm-logo .gm-m{display:inline-block;width:26px;height:20px}
+.gm-logo .gm-m svg{width:100%;height:100%;display:block}

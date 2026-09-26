@@ -362,7 +362,7 @@
     var nav = function (icon, label, on, n) { return '<div class="gm-it' + (on ? ' on' : '') + '">' + ic(icon) + '<span>' + label + '</span>' + (n ? '<b>' + n + '</b>' : '') + '</div>'; };
     var lab = function (color, label) { return '<div class="gm-it"><i class="lab" style="background:' + color + '"></i><span>' + label + '</span></div>'; };
     return '<div class="gm" aria-label="Gmail">' +
-      '<div class="gm-top">' + ic('menu') + '<span class="gm-logo"><b>M</b>Gmail</span>' +
+      '<div class="gm-top">' + ic('menu') + '<span class="gm-logo"><i class="gm-m">' + gmailLogo() + '</i>Gmail</span>' +
       '<div class="gm-search">' + ic('search') + '<span>Search mail</span><span class="grow"></span>' + ic('tune') + '</div>' +
       '<div class="gm-icons">' + ic('help') + ic('gear') + ic('apps') + '<span class="gm-me">' + AVA + '</span></div></div>' +
       '<div class="gm-body">' +

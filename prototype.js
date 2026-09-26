@@ -354,7 +354,7 @@
     var slack = ui.channel === 'slack';
     return '<div class="phone"><div class="notch"></div><div class="clock">8:41</div><div class="date">Tuesday, September 22</div>' +
       '<div class="notif"><div class="appic">' + (slack ? slackLogo() : gmailLogo()) + '</div>' +
-      '<div class="nt"><div class="nm"><span>Time sensitive</span><span>now</span></div><b>' + (slack ? 'Slack' : 'Gmail') + '</b>' +
+      '<div class="nt"><div class="nm"><b>' + (slack ? 'Slack' : 'Gmail') + '</b><span>now</span></div>' +
       '<p>Radar: your daily is ready. 3 updates, one with a window closing Oct 1.</p></div></div></div>';
   }
 

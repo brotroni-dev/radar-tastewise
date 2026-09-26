@@ -1210,3 +1210,4 @@ body.page { font-size: 15px; }
 .done .mark.radar b:nth-of-type(6){left:34.0px;top:28.9px;animation-delay:5s}
 @keyframes blip6{0%{opacity:0;transform:scale(.4)}4%{opacity:1;transform:scale(1.25)}15%{opacity:0;transform:scale(1)}100%{opacity:0}}
 @media (prefers-reduced-motion: reduce){.done .mark.radar b:first-of-type{opacity:1}}
+.done .mark.radar b{width:3px;height:3px;margin:-1.5px 0 0 -1.5px}

@@ -348,7 +348,7 @@
       '<rect x="1.5" y="14" width="11" height="4" rx="2" fill="#ECB22E"/><path d="M9.5 19h3v2a2 2 0 1 1-4 0v-2z" fill="#ECB22E"/></svg>';
   }
   function gmailLogo() {
-    return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 8v10h4V11l6 4.5L18 11v7h4V8l-10 7.5z" fill="#EA4335"/><path d="M2 8V6.5a1.5 1.5 0 0 1 2.4-1.2L12 11 2 8z" fill="#4285F4"/><path d="M22 8V6.5a1.5 1.5 0 0 0-2.4-1.2L12 11l10-3z" fill="#34A853"/><path d="M2 8v10h4v-7z" fill="#4285F4"/><path d="M22 8v10h-4v-7z" fill="#34A853"/></svg>';
+    return '<svg viewBox="52 42 88 66" aria-hidden="true"><path fill="#4285F4" d="M58 108h14V74L52 59v43c0 3.32 2.69 6 6 6"/><path fill="#34A853" d="M120 108h14c3.32 0 6-2.69 6-6V59l-20 15"/><path fill="#FBBC04" d="M120 48v26l20-15v-8c0-7.42-8.47-11.65-14.4-7.2"/><path fill="#EA4335" d="M72 74V48l24 18 24-18v26L96 92"/><path fill="#C5221F" d="M52 51v8l20 15V48l-5.6-4.2c-5.94-4.45-14.4-.22-14.4 7.2"/></svg>';
   }
   function phone() {
     var slack = ui.channel === 'slack';

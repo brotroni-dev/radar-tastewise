@@ -4,6 +4,7 @@
   var mount = document.getElementById('radar-proto');
   if (!mount) return;
   var FULL = mount.getAttribute('data-mode') === 'full';
+  var BACK = /[?&]from=flow/.test(location.search) ? 'index.html#flow' : 'index.html';
 
   var ui = {
     i: 0, channel: 'slack', tab: 'slide', notes: true, edit: false, ask: -1, toastTimer: null,
@@ -651,7 +652,7 @@
   mount.className = 'proto' + (FULL ? ' full' : '');
   mount.setAttribute('tabindex', '0');
   mount.innerHTML =
-    '<div class="proto-head">' + (FULL ? '<a class="backlink" href="index.html">' + ic('arrowl') + 'Back to case study</a><span class="hsep"></span>' : '') +
+    '<div class="proto-head">' + (FULL ? '<a class="backlink" href="' + BACK + '">' + ic('arrowl') + 'Back to case study</a><span class="hsep"></span>' : '') +
     '<span class="proto-brand"><i></i>Radar</span><span class="proto-step" id="p-step" hidden></span><span class="grow"></span>' +
     '<label class="switch"><input type="checkbox" id="p-notes" checked> Design notes</label>' +
     '<button class="btn btn-ghost btn-sm" data-restart id="p-restart">Start over</button>' +

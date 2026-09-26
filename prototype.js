@@ -223,6 +223,7 @@
 
   function fromAgent(i) {
     var a = AGENTS[i];
+    if (a.ed) { var c = JSON.parse(JSON.stringify(a.ed)); c.src = i; return c; }
     return { name: a.name, ask: a.ask, chips: a.chips.slice(), rh: a.rh, slack: a.slack, email: a.email, src: i, time: '8:30', days: [true, true, true, true, true, false, false], wday: 'Monday', event: a.name === 'Retailer review prep' ? 'target' : 'q4', lead: 7 };
   }
   function fromPrompt(text) {
@@ -590,15 +591,14 @@
       where: 'The platform, Your radar', when: 'Tuesday, 8:48',
       notes: ['This view gives Maya a starting point instead of an empty setup.', 'Radar creates five agents from her brand profile and organizes them around her daily, weekly and periodic work.', 'She can turn off, adjust or add agents as her needs change. Only a closing window interrupts the usual rhythm.'],
       render: function () {
-        var count = ui.agents.filter(Boolean).length + (ui.created ? 1 : 0);
+        var count = ui.agents.filter(Boolean).length;
         var h = ph(ic('radar') + '<span>Radar</span>', 'Your radar', (['No agents are','One agent is','Two agents are','Three agents are','Four agents are','Five agents are','Six agents are','Seven agents are'][count] || count + ' agents are') + ' already watching Kindroot for you, based on your brand profile and organized by rhythm. Turn off anything you don\u2019t need.',
           '<button class="btn btn-primary btn-sm" data-go="6">' + ic('plus') + 'New agent</button>') +
           '<div class="rule">' + ic('clock') + '<span><b>Only a closing window interrupts the usual rhythm.</b> When one is approaching, Radar alerts you in Slack with the date.' + (ui.urgent ? '' : ' <span class="pill warn">Off: windows wait for their rhythm</span>') + '</span><span class="grow"></span><button class="toggle" role="switch" aria-checked="' + ui.urgent + '" data-urgent aria-label="Urgent updates break through"></button></div>';
         for (var g = 0; g < RHYTHMS.length; g++) {
           var rh = RHYTHMS[g];
           h += '<div class="rgroup"><div class="rhead"><span class="k">' + ic(RH_ICON[rh[0]]) + rh[1] + '</span><span class="hint">' + rh[2] + '</span></div><div class="alist">';
-          for (var i = 0; i < AGENTS.length; i++) if (AGENTS[i].rh === rh[0]) h += row(AGENTS[i], ui.agents[i], i, false);
-          if (ui.created && ui.createdAgent && ui.createdAgent.rh === rh[0]) h += row(ui.createdAgent, true, null, true);
+          for (var i = 0; i < AGENTS.length; i++) if (AGENTS[i].rh === rh[0]) h += row(AGENTS[i], ui.agents[i], i, !!AGENTS[i].isNew);
           h += '</div></div>';
         }
         h += '<div class="presets"><div class="c-head">' + ic('plus') + 'More to switch on</div><div class="row">';
@@ -724,7 +724,7 @@
     if (t.hasAttribute('data-editagent')) { ui.editAgent = +t.getAttribute('data-editagent'); go(4); return; }
     if (t.hasAttribute('data-prev')) { go(ui.i - 1); return; }
     if (t.hasAttribute('data-next')) { go(ui.i === STATES.length - 1 ? 0 : ui.i + 1); return; }
-    if (t.hasAttribute('data-restart')) { ui.channel = 'slack'; ui.tab = 'slide'; ui.created = false; ui.createdAgent = null; ui.urgent = true; ui.agents = [true, true, true, true, true]; ui.presets = [false, false, false, false, false]; ui.ed = null; ui.editAgent = 0; ui.prompt = 'anything that could hurt my magnesium line at Target'; go(0); return; }
+    if (t.hasAttribute('data-restart')) { ui.channel = 'slack'; ui.tab = 'slide'; ui.created = false; AGENTS.length = 5; ui.urgent = true; ui.agents = [true, true, true, true, true]; ui.presets = [false, false, false, false, false]; ui.ed = null; ui.editAgent = 0; ui.prompt = 'anything that could hurt my magnesium line at Target'; go(0); return; }
     if (t.hasAttribute('data-channel')) { ui.channel = t.getAttribute('data-channel'); render(); return; }
     if (t.hasAttribute('data-tab')) { ui.edit = false; ui.ask = -1; render(); return; }
     if (t.hasAttribute('data-ask')) { ui.ask = +t.getAttribute('data-ask'); render(); return; }
@@ -741,7 +741,7 @@
     if (t.hasAttribute('data-phase')) {
       var np = +t.getAttribute('data-phase');
       if (np === 1) { var inp = stage.querySelector('#np'); if (inp) ui.prompt = inp.value.trim() || ui.prompt; ui.ed = fromPrompt(ui.prompt); }
-      if (np === 2) { var ed = ui.ed; ui.created = true; ui.createdAgent = { name: ed.name, rh: ed.rh, slack: ed.slack, email: ed.email, watch: ed.chips.join('. ') + '.', last: '<b>' + firstUpdate() + '</b>', lastLabel: 'First update: ' }; }
+      if (np === 2) { var ed = ui.ed; ui.created = true; AGENTS.length = 5; ui.agents.length = 5; AGENTS.push({ name: ed.name, rh: ed.rh, slack: ed.slack, email: ed.email, ask: ed.ask, chips: ed.chips.slice(), watch: ed.chips.join('. ') + '.', last: '<b>' + firstUpdate() + '</b>', lastLabel: 'First update: ', isNew: true, ed: JSON.parse(JSON.stringify(ed)) }); ui.agents.push(true); }
       ui.phase = np; render(); return;
     }
     if (t.hasAttribute('data-fill')) { var inp2 = stage.querySelector('#np'); if (inp2) { inp2.value = t.getAttribute('data-fill'); ui.prompt = inp2.value; inp2.focus(); } return; }

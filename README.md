@@ -108,4 +108,3 @@ python3 -m http.server 8765
 
 Then open http://localhost:8765.
 
-Fictional brands, illustrative data. This brief is hypothetical.

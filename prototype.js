@@ -485,7 +485,7 @@
           '<li>' + ic('search') + '<div>"Magnesium for sleep" searches +38% quarter over quarter.<span class="src">Search data, US, Q3 vs Q2</span></div></li>' +
           '<li>' + ic('ask') + '<div>"Gummy" appears in 54% more magnesium conversations than 90 days ago.<span class="src">Social listening, US, 90 days</span></div></li>' +
           '<li>' + ic('star') + '<div>Reviews praise taste and "no pill fatigue". 4.6 stars.<span class="src">Review analysis, n=1,214</span></div></li>' +
-          '</ul><div class="chart">' + chart('i') + '<div class="cap">Weekly velocity index at Target, weeks 28-37. Index 100 = category average. Illustrative.</div></div></div>' +
+          '</ul><div class="chart">' + chart('i') + '<div class="cap">Weekly velocity index at Target, weeks 28-37. Index 100 = category average.</div></div></div>' +
           '<div class="c"><div class="c-head">' + ic('brand') + 'Why it matters to Kindroot</div><ul class="why-list">' +
           '<li>Your Magnesium Glycinate capsules are your <b>#2 SKU</b>, 31% of range revenue.</li>' +
           '<li>Your share of magnesium at Target is <b>down 1.4 pts in 8 weeks</b>. The drop starts the week Bloomwell landed on shelf.</li>' +
@@ -523,7 +523,7 @@
             '<li>Bloomwell Sleep Gummies run at 2.1x category velocity since launch, winning on format.</li>' +
             '<li>Kindroot is the #1-reviewed clean-label magnesium at Target. 27% of reviews cite "no fillers".</li></ul>' +
             '<p class="ask">Proposal: place Kindroot Magnesium in the sleep endcap for Q4. Request by Oct 1, ahead of the Oct 6 reset.</p></div>' +
-            '<div class="src">Retail sales data (Target, weeks 32-37), search data (US, Q3 vs Q2), review analysis (n=1,214), Target vendor calendar. Illustrative.</div></div></div>' +
+            '<div class="src">Retail sales data (Target, weeks 32-37), search data (US, Q3 vs Q2), review analysis (n=1,214), Target vendor calendar.</div></div></div>' +
             '<div class="act-btns"><button class="btn btn-primary btn-sm" data-toast="Added to Q4 Target review.pptx as slide 3.">' + ic('check') + 'Add to deck</button>' +
             '<button class="btn btn-ghost btn-sm" data-toast="Downloaded.">' + ic('download') + 'Download .pptx</button>' +
             '<button class="btn btn-ghost btn-sm" data-toast="Opens the slide editor. Text and chart are editable.">' + ic('edit') + 'Edit</button></div>';
@@ -634,7 +634,7 @@
             '<div class="bk-s"><b>Why it matters:</b> your price gap is now 22%, and the promo runs to Oct 5.</div>' +
             '<div class="bk-urg warm">' + ic('clock') + '<span><b>Promo ends Oct 5, 13 days.</b> Worth a decision before then.</span></div>' +
             '<div class="bk-actions"><span class="bk-btn primary">Open insight</span><span class="bk-btn">Draft email</span></div></div></div></div></div>' +
-            '<span class="hint">What your first update would look like, from last week\'s data. Illustrative.</span>';
+            '<span class="hint">What your first update would look like, from last week\'s data.</span>';
           body = ph(ic('radar') + '<span>Radar</span><span>&middot;</span><span>New agent</span>', 'Here\'s what I understood', 'Check it, change what you like, then start.') +
             '<div class="one">' + editor({
               isNew: true, pill: '<span class="pill neutral">Draft</span>', sample: sample,

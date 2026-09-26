@@ -1175,3 +1175,4 @@ body.page { font-size: 15px; }
 .proto.full .proto-body{padding-bottom:58px}
 .hintwrap .bk-btn.pulse{animation:pulse2 1.6s ease-out infinite}
 @keyframes pulse2{0%{box-shadow:0 0 0 0 rgba(232,163,61,.9),0 0 0 0 rgba(232,163,61,.5)}60%{box-shadow:0 0 0 7px rgba(232,163,61,.35),0 0 0 14px rgba(232,163,61,0)}100%{box-shadow:0 0 0 7px rgba(232,163,61,0),0 0 0 14px rgba(232,163,61,0)}}
+.bk-btn[data-toast]{cursor:default}

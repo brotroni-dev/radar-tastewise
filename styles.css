@@ -1152,3 +1152,6 @@ body.page { font-size: 15px; }
 .deck .thumbs i.on{outline:none;border:2px solid var(--accent)}
 .fchart .fsep{stroke:var(--line);stroke-width:1;stroke-dasharray:3 5;fill:none}
 .page .betname{font-size:clamp(36px,5vw,52px)}
+.value .where{display:block;font:500 11.5px var(--font-mono);letter-spacing:.04em;color:var(--muted)}
+.values-cta{margin-top:20px}
+.value:hover{transform:none;box-shadow:none}

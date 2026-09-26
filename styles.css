@@ -1194,3 +1194,6 @@ body.page { font-size: 15px; }
 .gm-logo .gm-m svg{width:100%;height:100%;display:block}
 .notif .nm{text-transform:none;letter-spacing:0;font-size:10.5px;align-items:baseline;opacity:1;margin-bottom:2px}
 .notif .nm span{opacity:.6;font-size:9.5px}
+.signoff{padding-block:8px 56px}
+.signoff p{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--muted);margin:0;padding-top:28px;border-top:1px solid var(--line)}
+.signoff i{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);flex:none}

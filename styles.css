@@ -1181,3 +1181,12 @@ body.page { font-size: 15px; }
 .page .section{scroll-margin-top:64px}
 .app-nav a:not([data-go]){cursor:default}
 .chart .chip{cursor:default}
+/* Lighter phone */
+.phone{border-width:3px;border-color:#2A3230;background:linear-gradient(170deg,#3A5566,#22343A 55%,#2C4A3F);box-shadow:0 10px 30px rgba(23,31,28,.12)}
+.phone .notch{width:48px;height:13px;background:#2A3230}
+.phone .clock{margin-top:26px;font-weight:500}
+.phone .date{opacity:.7}
+.notif{margin-top:30px;background:rgba(255,255,255,.14);padding:11px 12px 12px 11px;gap:9px;grid-template-columns:30px 1fr}
+.notif .appic{width:30px;height:30px;border-radius:8px;padding:5px}
+.notif b{font-weight:500}
+.notif p{font-size:10px;line-height:1.4;opacity:.85}

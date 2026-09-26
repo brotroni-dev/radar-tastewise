@@ -187,7 +187,7 @@
     if (e.rh === 'daily') {
       var on = []; for (var i = 0; i < 7; i++) if (e.days[i]) on.push(DAY_NAMES[i]);
       var when = (on.length === 5 && !e.days[5] && !e.days[6]) ? 'Every weekday' : on.length === 7 ? 'Every day' : on.length ? on.join(', ') : 'No days picked';
-      return when + ' at ' + e.time + '. Her first meeting is at 9:00.';
+      return when + ' at ' + e.time + '. Your first meeting is at 9:00.';
     }
     if (e.rh === 'weekly') return 'Every ' + e.wday + ' at ' + e.time + ', before the status and the management update.';
     var ev = eventOf(e);
@@ -198,7 +198,7 @@
     return '<div class="urg" role="status">' + ic('clock') + '<div><span class="urg-k">Window closing</span> ' + text + (src ? '<span class="src">' + src + '</span>' : '') + '</div><div class="date"><b>Oct 1</b><span>9 days</span></div></div>';
   }
   function urgencyToggle() {
-    return '<div class="field"><span>Urgency</span><div class="urgrow"><button class="toggle" role="switch" aria-checked="' + ui.urgent + '" data-urgent aria-label="Break through when a window is closing"></button><span class="hint">Break through to today when a window is closing, whatever the rhythm.</span></div></div>';
+    return '<div class="field"><span>Urgency</span><div class="urgrow"><button class="toggle" role="switch" aria-checked="' + ui.urgent + '" data-urgent aria-label="Break through when a window is closing"></button><span class="hint">Tell me right away when a deadline is close.</span></div></div>';
   }
 
   /* Agents: the presets, in Maya's words */
@@ -259,7 +259,7 @@
     return '<div class="c agent-card">' +
       '<div class="ed-sec"><div class="ed-title">' + ic('sparkle') + 'Your prompt' + (o.pill ? '<span class="r">' + o.pill + '</span>' : '') + '</div>' +
       '<div class="ed-prompt">' + ic('edit') + '<input id="edq" value="' + e.ask.replace(/"/g, '&quot;') + '" aria-label="Your prompt" spellcheck="false"></div>' +
-      '<span class="hint">' + (o.isNew ? 'Edit the words here. When you leave the field, Radar reads it again and the card below follows.' : 'Edit the prompt to change what the agent watches.') + '</span></div>' +
+      '<span class="hint">' + 'Edit the prompt to change what the agent watches.' + '</span></div>' +
       '<div class="ed-sec"><div class="ed-title">' + ic('radar') + 'The agent</div>' +
       '<div class="field"><span>Name</span><div><span class="name" contenteditable="true" spellcheck="false">' + e.name + '</span></div></div>' +
       '<div class="field"><span>Watches</span><div class="tags">' + chips + '</div></div></div>' +
@@ -612,7 +612,7 @@
     {
       title: 'New agent', desc: 'Prompt to card', cap: 'Say it in your words. Get a card you can edit, and a sample first.',
       where: 'The platform, new agent', when: 'Tuesday, 8:50',
-      notes: ['She writes what she wants in her own words. Radar turns it into a card she can edit.', 'Slack, email, or both.', 'She sees a sample of the first update before anything starts. No surprises.'],
+      notes: ['She writes what she wants in her own words. Radar turns it into an agent she can edit.', 'She chooses the rhythm, the channel, and whether a deadline can interrupt.', 'She sees a sample of the first update before anything starts.'],
       render: function () {
         if (ui.phase === 2) {
           return '<div class="done"><div class="mark">' + ic('check') + '</div><div class="kicker">Running</div><h4>First update ' + firstUpdate() + '.</h4>' +
@@ -625,12 +625,11 @@
           for (var x = 0; x < EXAMPLES.length; x++) ex += '<button class="excard" data-fill="' + EXAMPLES[x][0] + '">' + ic(EXAMPLES[x][3]) + '<b>' + EXAMPLES[x][1] + '</b><span>' + EXAMPLES[x][2] + '</span></button>';
           body = ph(ic('radar') + '<span>Radar</span><span>&middot;</span><span>New agent</span>', 'Tell Radar what to watch', 'Say it the way you\'d say it to a colleague. Radar turns it into an agent you can edit, and shows you a sample first.') +
             '<div class="composer"><div class="c-in">' + ic('sparkle') + '<input id="np" value="' + ui.prompt.replace(/"/g, '&quot;') + '" aria-label="What should Radar watch?" placeholder="e.g. anything that could hurt my magnesium line at Target"></div>' +
-            '<div class="c-foot"><span class="hint">You\'ll get a card to check before anything starts.</span><button class="btn btn-primary btn-sm" data-phase="1">Ask Radar ' + ic('arrowr') + '</button></div></div>' +
+            '<div class="c-foot"><span></span><button class="btn btn-primary btn-sm" data-phase="1">Ask Radar ' + ic('arrowr') + '</button></div></div>' +
             '<div class="c-head" style="margin-top:22px">' + ic('users') + 'Or start from what other brand managers watch</div><div class="examples">' + ex + '</div>';
         } else {
           var e = ui.ed;
-          var sample = '<div class="mini"><div class="sl-msg"><div class="av rmark"><i></i></div><div><div class="who"><b>Radar</b><span class="apptag">APP</span><span class="ts">' + (e.rh === 'weekly' ? 'Mon 8:30' : e.rh === 'periodic' ? 'Sep 29, 8:30' : 'Thu 8:30') + '</span></div>' +
-            '<div class="txt">' + e.name + ', ' + RH_LABEL[e.rh].toLowerCase() + ', ' + whereText(e) + '.</div>' +
+          var sample = '<div class="mini"><div class="sl-msg"><div class="av rmark"><i></i></div><div><div class="who"><b>Radar</b><span class="apptag">APP</span><span class="ts">' + (e.rh === 'weekly' ? 'Mon 8:30' : e.rh === 'periodic' ? 'Sep 24, 8:30' : 'Wed 8:30') + '</span></div>' +
             '<div class="bk"><div class="bk-h">Sunveil cut its magnesium price 15% at Target</div>' +
             '<div class="bk-s"><b>Why it matters:</b> your price gap is now 22%, and the promo runs to Oct 5.</div>' +
             '<div class="bk-urg warm">' + ic('clock') + '<span><b>Promo ends Oct 5, 13 days.</b> Worth a decision before then.</span></div>' +
@@ -640,7 +639,7 @@
             '<div class="one">' + editor({
               isNew: true, pill: '<span class="pill neutral">Draft</span>', sample: sample,
               cta: '<button class="btn btn-primary btn-sm" data-phase="2"' + (!e.slack && !e.email ? ' disabled' : '') + '>' + ic('check') + 'Start watching</button>',
-              secondary: '<button class="btn btn-ghost btn-sm" data-phase="0">Edit the request</button>'
+              secondary: '<button class="btn btn-ghost btn-sm" data-phase="0">Edit prompt</button>'
             }) + '</div>';
         }
         return app('<a data-go="5">Radar</a>' + sep + '<b>New agent</b>', body, { url: 'radar/new' });

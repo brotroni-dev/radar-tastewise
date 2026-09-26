@@ -614,11 +614,6 @@
       where: 'The platform, new agent', when: 'Tuesday, 8:50',
       notes: ['She writes what she wants in her own words. Radar turns it into an agent she can edit.', 'She chooses the rhythm, the channel, and whether a deadline can interrupt.', 'She sees a sample of the first update before anything starts.'],
       render: function () {
-        if (ui.phase === 2) {
-          return '<div class="done"><div class="mark radar"><i class="core"></i><b></b><b></b><b></b><b></b><b></b><b></b></div><div class="kicker">Running</div><h4>First update ' + firstUpdate() + '.</h4>' +
-            '<p>Radar is watching now. You can adjust it anytime from Your radar.</p>' +
-            '<div class="btns" style="justify-content:center"><button class="btn btn-ghost btn-sm" data-go="5">See all agents</button></div></div>';
-        }
         var body;
         if (ui.phase === 0) {
           var ex = '';
@@ -642,7 +637,11 @@
               secondary: '<button class="btn btn-ghost btn-sm" data-phase="0">Edit prompt</button>'
             }) + '</div>';
         }
-        return app('<a data-go="5">Radar</a>' + sep + '<b>New agent</b>', body, { url: 'radar/new' });
+        var out = app('<a data-go="5">Radar</a>' + sep + '<b>New agent</b>', body, { url: 'radar/new' });
+        if (ui.phase === 2) out = out.replace(/<\/div>$/, '<div class="app-modal" role="dialog" aria-modal="true">' + '<div class="done"><div class="mark radar"><i class="core"></i><b></b><b></b><b></b><b></b><b></b><b></b></div><div class="kicker">Running</div><h4>First update ' + firstUpdate() + '.</h4>' +
+            '<p>Radar is watching now. You can adjust it anytime from Your radar.</p>' +
+            '<div class="btns" style="justify-content:center"><button class="btn btn-ghost btn-sm" data-go="5">See all agents</button></div></div>' + '</div></div>');
+        return out;
       }
     }
   ];
@@ -742,7 +741,7 @@
       var np = +t.getAttribute('data-phase');
       if (np === 1) { var inp = stage.querySelector('#np'); if (inp) ui.prompt = inp.value.trim() || ui.prompt; ui.ed = fromPrompt(ui.prompt); }
       if (np === 2) { var ed = ui.ed; ui.created = true; AGENTS.length = 5; ui.agents.length = 5; AGENTS.push({ name: ed.name, rh: ed.rh, slack: ed.slack, email: ed.email, ask: ed.ask, chips: ed.chips.slice(), watch: ed.chips.join('. ') + '.', last: '<b>' + firstUpdate() + '</b>', lastLabel: 'First update: ', isNew: true, ed: JSON.parse(JSON.stringify(ed)) }); ui.agents.push(true); }
-      ui.phase = np; render(); return;
+      ui.phase = np; render(); if (np === 2) { try { window.scrollTo(0, 0); } catch (e) {} } return;
     }
     if (t.hasAttribute('data-fill')) { var inp2 = stage.querySelector('#np'); if (inp2) { inp2.value = t.getAttribute('data-fill'); ui.prompt = inp2.value; inp2.focus(); } return; }
     if (t.hasAttribute('data-rmchip')) { ui.ed.chips.splice(+t.getAttribute('data-rmchip'), 1); render(); return; }

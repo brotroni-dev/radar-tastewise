@@ -108,8 +108,8 @@
     }
     var K = curve(kr), B = curve(bw);
     var area = function (c) { return c.d + ' L' + c.last[0] + ',' + BASE + ' L' + c.first[0] + ',' + BASE + ' Z'; };
-    return '<div class="chart-legend"><span><i class="sw bw"></i>Bloomwell gummies <b>2.1x</b></span><span><i class="sw kr"></i>Kindroot capsules <b>0.95x</b></span><span><i class="sw cat"></i>Category average <b>1.0x</b></span></div>' +
-      '<svg viewBox="0 0 560 226" role="img" aria-label="Weekly velocity index at Target, last 10 weeks. Bloomwell gummies rise to 2.1 times the category average since launch; Kindroot capsules drift down to 0.95.">' +
+    return '<div class="chart-legend"><span><i class="sw bw"></i>Bloomwell gummies <b>2.1x</b></span><span><i class="sw kr"></i>Kind Root capsules <b>0.95x</b></span><span><i class="sw cat"></i>Category average <b>1.0x</b></span></div>' +
+      '<svg viewBox="0 0 560 226" role="img" aria-label="Weekly velocity index at Target, last 10 weeks. Bloomwell gummies rise to 2.1 times the category average since launch; Kind Root capsules drift down to 0.95.">' +
       '<defs><linearGradient id="gbw' + id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--risk);stop-opacity:.22"/><stop offset="1" style="stop-color:var(--risk);stop-opacity:0"/></linearGradient>' +
       '<linearGradient id="gkr' + id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--accent);stop-opacity:.18"/><stop offset="1" style="stop-color:var(--accent);stop-opacity:0"/></linearGradient></defs>' +
       '<line class="grid" x1="44" y1="' + y(200) + '" x2="548" y2="' + y(200) + '"/><line class="grid" x1="44" y1="' + y(150) + '" x2="548" y2="' + y(150) + '"/>' +
@@ -204,10 +204,10 @@
   /* Agents: the presets, in Maya's words */
   var AGENTS = [
     { name: 'Competitor launches', rh: 'daily', slack: true, email: false, ask: 'Watch for new magnesium products or sleep-related claims from competitors at Target, CVS and Amazon.', chips: ['New magnesium products', 'Sleep-related claims', 'Competitors', 'Target, CVS, Amazon'], watch: 'Magnesium, sleep claims. Target, CVS, Amazon.', last: '<b>Today, 1 new</b>' },
-    { name: 'Kindroot\u2019s share at key retailers', rh: 'weekly', slack: true, email: false, ask: 'how my five SKUs are doing at Target, CVS and Amazon, every Monday', chips: ['Kindroot, 5 SKUs', 'Share and velocity', 'Target, CVS, Amazon'], watch: 'Kindroot\'s 5 SKUs at Target, CVS, Amazon. For Monday\'s numbers.', last: 'Monday' },
+    { name: 'Kind Root\u2019s share at key retailers', rh: 'weekly', slack: true, email: false, ask: 'how my five SKUs are doing at Target, CVS and Amazon, every Monday', chips: ['Kind Root, 5 SKUs', 'Share and velocity', 'Target, CVS, Amazon'], watch: 'Kind Root\'s 5 SKUs at Target, CVS, Amazon. For Monday\'s numbers.', last: 'Monday' },
     { name: 'Claims and ingredients gaining traction', rh: 'weekly', slack: false, email: true, ask: 'which claims and ingredients are rising in natural supplements', chips: ['Natural supplements', 'Claims', 'Ingredients'], watch: 'Claims and ingredients on the rise in natural supplements. For the management update.', last: 'Monday' },
     { name: 'Consumer trends: sleep, stress, gut', rh: 'periodic', slack: false, email: true, ask: 'what consumers say and search in sleep, stress and gut health, for the Q4 plan', chips: ['Sleep', 'Stress', 'Gut health', 'Conversation and search'], watch: 'Consumer conversation and search in your three need states. Feeds the Q4 plan and the innovation pipeline.', last: 'Sep 8' },
-    { name: 'Retailer review prep', rh: 'periodic', slack: false, email: true, ask: 'everything I need for the Target review on Oct 1', chips: ['Target', 'Kindroot range', 'Category and competitors', 'Deck, built over time'], watch: 'Everything for Target, Oct 1. Builds the deck as things change.', last: '<b>Draft deck: 4 slides</b>' }
+    { name: 'Retailer review prep', rh: 'periodic', slack: false, email: true, ask: 'everything I need for the Target review on Oct 1', chips: ['Target', 'Kind Root range', 'Category and competitors', 'Deck, built over time'], watch: 'Everything for Target, Oct 1. Builds the deck as things change.', last: '<b>Draft deck: 4 slides</b>' }
   ];
   var RHYTHMS = [
     ['daily', 'Daily, 8:30', 'What may need attention today'],
@@ -233,7 +233,7 @@
     if (t.indexOf('gut') >= 0) out = { name: 'Launches in gut health', ask: text, chips: ['Competitor launches (gut health)', 'Probiotics, fiber, prebiotics', 'Target, CVS, Amazon'], rh: 'weekly', slack: true, email: false };
     else if (t.indexOf('price') >= 0) out = { name: 'Price moves on my SKUs at Amazon', ask: text, chips: ['Price and promo moves (your SKUs)', 'Competitor prices (magnesium, probiotic)', 'Promo calendars at your retailers'], rh: 'daily', slack: true, email: false };
     else if (t.indexOf('claim') >= 0) out = { name: 'Claims growing in women\'s health', ask: text, chips: ['Claims (women\'s health)', 'Ingredients on the rise', 'Search and conversation'], rh: 'weekly', slack: false, email: true };
-    else out = { name: 'Threats to magnesium at Target', ask: text || ui.prompt, chips: ['Competitor launches (magnesium, Target)', 'Price and promo moves (magnesium, Target)', 'Share drops (Kindroot Magnesium Glycinate, Target)', 'Negative review spikes (Kindroot Magnesium)'], rh: 'daily', slack: true, email: false };
+    else out = { name: 'Threats to magnesium at Target', ask: text || ui.prompt, chips: ['Competitor launches (magnesium, Target)', 'Price and promo moves (magnesium, Target)', 'Share drops (Kind Root Magnesium Glycinate, Target)', 'Negative review spikes (Kind Root Magnesium)'], rh: 'daily', slack: true, email: false };
     for (var k in base) out[k] = base[k];
     return out;
   }
@@ -316,18 +316,18 @@
     var side = function (icon, label, cls) { return '<div class="it' + (cls ? ' ' + cls : '') + '">' + (icon ? ic(icon) : '') + label + '</div>'; };
     return '<div class="sl" aria-label="Slack, desktop">' +
       '<div class="sl-top"><div class="lights"><i></i><i></i><i></i></div><div class="sl-nav">' + ic('back') + ic('fwd') + ic('history') + '</div>' +
-      '<div class="search">' + ic('search') + ' Search Kindroot</div>' + ic('help') + '<div class="me">' + AVA + '</div></div>' +
+      '<div class="search">' + ic('search') + ' Search Kind Root</div>' + ic('help') + '<div class="me">' + AVA + '</div></div>' +
       '<div class="sl-body">' +
       '<div class="sl-rail"><div class="ws kr"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 21V11"/><path d="M12 12C12 8 9 6 5 6c0 4 3 6 7 6z" fill="#fff"/><path d="M12 10c0-3.5 2.5-6 7-6 0 4-2.5 6-7 6z" fill="#fff"/></svg></div><div class="ws2">A</div><div class="plus">+</div></div>' +
-      '<div class="sl-side"><div class="hd">Kindroot ' + ic('chevd') + '<span class="grow"></span><span class="ed">' + ic('edit') + '</span></div>' +
+      '<div class="sl-side"><div class="hd">Kind Root ' + ic('chevd') + '<span class="grow"></span><span class="ed">' + ic('edit') + '</span></div>' +
       side('thread', 'Threads') + side('inbox', 'All DMs') + side('draft', 'Drafts') + side('at', 'Mentions &amp; reactions') + side('bookmark', 'Saved items') + side('more', 'More') +
-      '<div class="sec">' + ic('star') + ' Starred</div>' + side('hash', 'brand-kindroot', 'sub bold') + side('hash', 'retail-target', 'sub') +
+      '<div class="sec">' + ic('star') + ' Starred</div>' + side('hash', 'brand-kind-root', 'sub bold') + side('hash', 'retail-target', 'sub') +
       '<div class="sec">' + ic('chevd') + ' Channels</div>' + side('hash', 'launches', 'sub') + side('hash', 'announcements', 'sub') + side('plus', 'Add channel', 'sub') +
       '<div class="sec">' + ic('chevd') + ' Direct messages</div>' + '<div class="it sub"><span class="dm"></span>Dana</div><div class="it sub"><span class="dm b"></span>Omri</div>' +
       '<div class="sec">' + ic('chevd') + ' Apps</div>' + '<div class="it sub on"><span class="appic rmark"><i></i></span>Radar</div>' +
       '</div>' +
       '<div class="sl-main">' +
-      '<div class="sl-head"><b>Radar</b><span class="apptag">APP</span>' + ic('chevd') + '<span class="desc">Agents that notice for Kindroot</span><span class="members"><i></i><i></i><i></i>3</span></div>' +
+      '<div class="sl-head"><b>Radar</b><span class="apptag">APP</span>' + ic('chevd') + '<span class="desc">Agents that notice for Kind Root</span><span class="members"><i></i><i></i><i></i>3</span></div>' +
       '<div class="sl-tabs"><span class="on">' + ic('thread') + ' Messages</span><span>' + ic('help') + ' About</span><span>' + ic('plus') + '</span></div>' +
       '<div class="sl-msgs">' +
       '<div class="sl-day"><span>Monday, September 21</span></div>' +
@@ -388,7 +388,7 @@
     var nav = function (icon, label, on, badge) { return '<a' + (on ? ' class="on"' : '') + '>' + ic(icon) + label + (badge ? '<span class="badge">' + badge + '</span>' : '') + '</a>'; };
     return '<div class="app" aria-label="The platform">' +
       '<div class="app-chrome"><div class="lights"><i></i><i></i><i></i></div><div class="url">app.platform/' + (opts.url || 'radar') + '</div></div>' +
-      '<nav class="app-nav"><div class="ws"><span class="kr-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 21V11"/><path d="M12 12C12 8 9 6 5 6c0 4 3 6 7 6z" fill="#fff"/><path d="M12 10c0-3.5 2.5-6 7-6 0 4-2.5 6-7 6z" fill="#fff"/></svg></span>Kindroot' + ic('chevd') + '</div>' +
+      '<nav class="app-nav"><div class="ws"><span class="kr-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 21V11"/><path d="M12 12C12 8 9 6 5 6c0 4 3 6 7 6z" fill="#fff"/><path d="M12 10c0-3.5 2.5-6 7-6 0 4-2.5 6-7 6z" fill="#fff"/></svg></span>Kind Root' + ic('chevd') + '</div>' +
       nav('home', 'Home') + nav('ask', 'Ask') + nav('radar', 'Radar', true, '1') + nav('reports', 'Reports') + nav('brand', 'Brand profile') +
       '<div class="sec">Radar</div>' + '<a data-go="5">' + ic('sun') + 'Daily</a><a data-go="5">' + ic('week') + 'Weekly</a><a data-go="5">' + ic('flag') + 'Periodic</a>' +
       '<div class="me"><span class="av">' + AVA + '</span><div>Maya K.<span>Brand Manager</span></div></div></nav>' +
@@ -429,7 +429,7 @@
       where: 'Maya\'s desk, between meetings', when: 'Tuesday, September 22, 8:40',
       notes: ['This screen establishes the context Radar needs: what Maya is responsible for, how her week is structured, and which moments are worth interrupting.', 'Her three rhythms become the system\u2019s delivery logic.'],
       render: function () {
-        return '<div class="scene"><div class="scene-top"><div class="who"><span class="avatar-lg">' + AVA + '</span><div><h4>Maya K.</h4><p class="role">Brand Manager at Kindroot, a mid-sized CPG company, responsible for five natural supplement SKUs.</p></div></div>' +
+        return '<div class="scene"><div class="scene-top"><div class="who"><span class="avatar-lg">' + AVA + '</span><div><h4>Maya K.</h4><p class="role">Brand Manager at Kind Root, a mid-sized CPG company, responsible for five natural supplement SKUs.</p></div></div>' +
           '</div>' +
           '<div class="scene-body"><div class="persona-mini">' +
           '<div><div class="k">Measured on</div><p>Sales across her existing range, and whether new products succeed.</p></div>' +
@@ -488,13 +488,13 @@
           '<li>' + ic('ask') + '<div>"Gummy" appears in 54% more magnesium conversations than 90 days ago.<span class="src">Social listening, US, 90 days</span></div></li>' +
           '<li>' + ic('star') + '<div>Reviews praise taste and "no pill fatigue". 4.6 stars.<span class="src">Review analysis, n=1,214</span></div></li>' +
           '</ul><div class="chart">' + chart('i') + '<div class="cap">Weekly velocity index at Target, weeks 28-37. Index 100 = category average.</div></div></div>' +
-          '<div class="c"><div class="c-head">' + ic('brand') + 'Why it matters to Kindroot</div><ul class="why-list">' +
+          '<div class="c"><div class="c-head">' + ic('brand') + 'Why it matters to Kind Root</div><ul class="why-list">' +
           '<li>Your Magnesium Glycinate capsules are your <b>#2 SKU</b>, 31% of range revenue.</li>' +
           '<li>Your share of magnesium at Target is <b>down 1.4 pts in 8 weeks</b>. The drop starts the week Bloomwell landed on shelf.</li>' +
           '<li>You win on <b>"no fillers"</b>: the most cited theme in your reviews (27% of mentions). You lose on format: "capsule" is your top negative theme (11%).</li>' +
           '</ul><span class="pill">' + ic('check') + 'Three independent sources agree</span></div></div>' +
           '<div class="c" style="margin-top:14px"><div class="c-head">' + ic('zap') + 'Suggested moves<span class="r">one per outcome: retailer, campaign, launch</span></div><div class="moves" style="margin-top:0">' +
-          '<div class="move"><div class="k"><i>1</i>Target review, in 9 days</div><p>The category is up 22% YoY and sleep is the driver. Kindroot is the #1-reviewed clean-label magnesium at Target. Ask for the sleep endcap before the Oct 1 window, not just shelf defense.</p><button class="btn btn-primary btn-sm" data-go="3" data-tab="slide">' + ic('slide') + 'Create slide</button></div>' +
+          '<div class="move"><div class="k"><i>1</i>Target review, in 9 days</div><p>The category is up 22% YoY and sleep is the driver. Kind Root is the #1-reviewed clean-label magnesium at Target. Ask for the sleep endcap before the Oct 1 window, not just shelf defense.</p><button class="btn btn-primary btn-sm" data-go="3" data-tab="slide">' + ic('slide') + 'Create slide</button></div>' +
           '<div class="move"><div class="k"><i>2</i>Campaign angle</div><p>Lead with "sleep" on the existing capsule. Your product page mentions sleep once. Bloomwell\'s says it nine times.</p><button class="btn btn-ghost btn-sm" data-go="3" data-tab="email">' + ic('mail') + 'Draft email to the team</button></div>' +
           '<div class="move"><div class="k"><i>3</i>Launch consideration</div><p>The format gap is real. A gummy or powder extension keeps the clean-label story. Worth a 30-minute innovation discussion.</p><button class="btn btn-ghost btn-sm" data-go="3" data-tab="meeting">' + ic('calendar') + 'Schedule meeting</button></div>' +
           '</div></div>' +
@@ -523,8 +523,8 @@
             '<div class="slide"><h5>Sleep is reshaping magnesium at Target</h5><div class="chart">' + chart('s') + '</div>' +
             '<div><ul><li>Magnesium at Target is up 22% YoY. Sleep is the growth driver: +38% searches, quarter over quarter.</li>' +
             '<li>Bloomwell Sleep Gummies run at 2.1x category velocity since launch, winning on format.</li>' +
-            '<li>Kindroot is the #1-reviewed clean-label magnesium at Target. 27% of reviews cite "no fillers".</li></ul>' +
-            '<p class="ask">Proposal: place Kindroot Magnesium in the sleep endcap for Q4. Request by Oct 1, ahead of the Oct 6 reset.</p></div>' +
+            '<li>Kind Root is the #1-reviewed clean-label magnesium at Target. 27% of reviews cite "no fillers".</li></ul>' +
+            '<p class="ask">Proposal: place Kind Root Magnesium in the sleep endcap for Q4. Request by Oct 1, ahead of the Oct 6 reset.</p></div>' +
             '<div class="src">Retail sales data (Target, weeks 32-37), search data (US, Q3 vs Q2), review analysis (n=1,214), Target vendor calendar.</div></div></div>' +
             '<div class="act-btns"><button class="btn btn-primary btn-sm" data-toast="Added to Q4 Target review.pptx as slide 3.">' + ic('check') + 'Add to deck</button>' +
             '<button class="btn btn-ghost btn-sm" data-toast="Downloaded.">' + ic('download') + 'Download .pptx</button>' +
@@ -550,8 +550,8 @@
         } else if (ui.tab === 'ask') {
           var qs = [
             ['How is Bloomwell doing at CVS?', 'Bloomwell gummies at CVS: 1.3x category velocity, on shelf for 3 weeks. Your magnesium share at CVS is flat so far. Worth watching, not acting.', 'Retail sales data, CVS, weeks 35-37'],
-            ['Which claims are growing in sleep?', '"Magnesium glycinate" (+41%), "no melatonin" (+29%) and "non-habit forming" (+18%) lead sleep conversation this quarter. Kindroot already owns two of the three.', 'Social listening and search, US, Q3'],
-            ['Show me our reviews that mention format', '132 of 1,180 Kindroot magnesium reviews mention format. 71% ask for a smaller capsule or a gummy. 4.1 stars in this group vs 4.6 overall.', 'Review analysis, all retailers, 12 months']
+            ['Which claims are growing in sleep?', '"Magnesium glycinate" (+41%), "no melatonin" (+29%) and "non-habit forming" (+18%) lead sleep conversation this quarter. Kind Root already owns two of the three.', 'Social listening and search, US, Q3'],
+            ['Show me our reviews that mention format', '132 of 1,180 Kind Root magnesium reviews mention format. 71% ask for a smaller capsule or a gummy. 4.1 stars in this group vs 4.6 overall.', 'Review analysis, all retailers, 12 months']
           ];
           body = '<div class="act-head"><h5>Ask a follow-up</h5><span class="hint">The pull is still here. Radar just made it optional.</span></div><div class="chips">';
           for (var q = 0; q < qs.length; q++) body += '<button class="chip" data-ask="' + q + '" aria-pressed="' + (ui.ask === q) + '">' + qs[q][0] + '</button>';
@@ -559,7 +559,7 @@
           if (ui.ask >= 0) body += '<div class="answer">' + qs[ui.ask][1] + '<span class="src">' + qs[ui.ask][2] + '</span></div>';
         } else {
           body = '<div class="act-head"><h5>Share</h5><span class="hint">The team gets the same card, with the same sources and the same date.</span></div>' +
-            '<div class="act-btns"><button class="btn btn-primary btn-sm" data-toast="Posted to #brand-kindroot.">' + ic('hash') + 'Post to #brand-kindroot</button>' +
+            '<div class="act-btns"><button class="btn btn-primary btn-sm" data-toast="Posted to #brand-kind-root.">' + ic('hash') + 'Post to #brand-kind-root</button>' +
             '<button class="btn btn-ghost btn-sm" data-toast="Link copied.">' + ic('link') + 'Copy link</button></div>';
         }
         var head = ph(ic('radar') + '<span>Competitor launches</span><span>&middot;</span><span>Bloomwell gummies at Target</span>', 'Use this insight', 'Everything stays a draft until you choose to use it.');
@@ -592,7 +592,7 @@
       notes: ['This view gives Maya a starting point instead of an empty setup.', 'Radar creates five agents from her brand profile and organizes them around her daily, weekly and periodic work.', 'She can turn off, adjust or add agents as her needs change. Only a closing window interrupts the usual rhythm.'],
       render: function () {
         var count = ui.agents.filter(Boolean).length;
-        var h = ph(ic('radar') + '<span>Radar</span>', 'Your radar', (['No agents are','One agent is','Two agents are','Three agents are','Four agents are','Five agents are','Six agents are','Seven agents are'][count] || count + ' agents are') + ' already watching Kindroot for you, based on your brand profile and organized by rhythm. Turn off anything you don\u2019t need.',
+        var h = ph(ic('radar') + '<span>Radar</span>', 'Your radar', (['No agents are','One agent is','Two agents are','Three agents are','Four agents are','Five agents are','Six agents are','Seven agents are'][count] || count + ' agents are') + ' already watching Kind Root for you, based on your brand profile and organized by rhythm. Turn off anything you don\u2019t need.',
           '<button class="btn btn-primary btn-sm" data-go="6">' + ic('plus') + 'New agent</button>') +
           '<div class="rule">' + ic('clock') + '<span><b>Only a closing window interrupts the usual rhythm.</b> When one is approaching, Radar alerts you in Slack with the date.' + (ui.urgent ? '' : ' <span class="pill warn">Off: windows wait for their rhythm</span>') + '</span><span class="grow"></span><button class="toggle" role="switch" aria-checked="' + ui.urgent + '" data-urgent aria-label="Urgent updates break through"></button></div>';
         for (var g = 0; g < RHYTHMS.length; g++) {

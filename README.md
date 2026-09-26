@@ -52,7 +52,7 @@ does with it.
 2. **Progressive disclosure, with a preview.** Presets, then tweak, then create by prompt. A new agent shows its first update before it's enabled. (New agent)
 3. **Her rhythms, not ours.** Daily, weekly, periodic: every agent reports in one of Maya's three rhythms, so an update lands where it will be used. (Radar home)
 4. **Urgency breaks the rhythm.** A closing window carries a date and comes today, whatever the rhythm. It's the only thing that interrupts. (The moment)
-5. **Earn the interruption.** Every update opens with why it matters to Kindroot. (The moment)
+5. **Earn the interruption.** Every update opens with why it matters to Kind Root. (The moment)
 6. **Control at the point of delivery.** Adjust and Not relevant live inside the message. (Tune)
 7. **Ready, not raw.** Outputs are her artifacts: slide, email, meeting. Editable, never auto-sent. The window travels with them. (Act)
 8. **Defensible by default.** Every number has a source, a timeframe, a confidence. (The insight)

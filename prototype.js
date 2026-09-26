@@ -632,13 +632,14 @@
             '<span class="hint">What your first update would look like, from last week\'s data.</span>';
           body = ph(ic('radar') + '<span>Radar</span><span>&middot;</span><span>New agent</span>', 'Review your new agent', 'Check it, change what you like, then start.') +
             '<div class="one">' + editor({
-              isNew: true, pill: '<span class="pill neutral">Draft</span>', sample: sample,
-              cta: '<button class="btn btn-primary btn-sm" data-phase="2"' + (!e.slack && !e.email ? ' disabled' : '') + '>' + ic('check') + 'Start watching</button>',
-              secondary: '<button class="btn btn-ghost btn-sm" data-phase="0">Edit prompt</button>'
+              isNew: true, sample: sample,
+              pill: ui.phase === 3 ? '<span class="pill">On &middot; ' + RH_LABEL[e.rh].toLowerCase() + '</span>' : '<span class="pill neutral">Draft</span>',
+              cta: ui.phase === 3 ? '<button class="btn btn-primary btn-sm" data-toast="Saved. Applies from the next update.">' + ic('check') + 'Save</button>' : '<button class="btn btn-primary btn-sm" data-phase="2"' + (!e.slack && !e.email ? ' disabled' : '') + '>' + ic('check') + 'Start watching</button>',
+              secondary: ui.phase === 3 ? '<button class="btn btn-ghost btn-sm" data-go="5">See all agents</button>' : '<button class="btn btn-ghost btn-sm" data-phase="0">Edit prompt</button>'
             }) + '</div>';
         }
         var out = app('<a data-go="5">Radar</a>' + sep + '<b>New agent</b>', body, { url: 'radar/new' });
-        if (ui.phase === 2) out = out.replace(/<\/div>$/, '<div class="app-modal" role="dialog" aria-modal="true">' + '<div class="done"><div class="mark radar"><i class="core"></i><b></b><b></b><b></b><b></b><b></b><b></b></div><div class="kicker">Running</div><h4>First update ' + firstUpdate() + '.</h4>' +
+        if (ui.phase === 2) out = out.replace(/<\/div>$/, '<div class="app-modal" role="dialog" aria-modal="true" data-closemodal>' + '<div class="done"><button class="mclose" data-closemodal aria-label="Close">' + ic('x') + '</button><div class="mark radar"><i class="core"></i><b></b><b></b><b></b><b></b><b></b><b></b></div><div class="kicker">Running</div><h4>First update ' + firstUpdate() + '.</h4>' +
             '<p>Radar is watching now. You can adjust it anytime from Your radar.</p>' +
             '<div class="btns" style="justify-content:center"><button class="btn btn-ghost btn-sm" data-go="5">See all agents</button></div></div>' + '</div></div>');
         return out;
@@ -714,7 +715,7 @@
 
   mount.addEventListener('click', function (e) {
     if (!ui.hinted && e.target.closest('#p-stage button, #p-stage a')) ui.hinted = true;
-    var t = e.target.closest('[data-go],[data-channel],[data-tab],[data-toast],[data-edit],[data-copy],[data-ask],[data-prev],[data-next],[data-restart],[data-fb],[data-reason],[data-agent],[data-preset],[data-phase],[data-fill],[data-rmchip],[data-seg],[data-urgent],[data-menu],[data-editagent],[data-where],[data-like],[data-day],[data-sfb]');
+    var t = e.target.closest('[data-go],[data-channel],[data-tab],[data-toast],[data-edit],[data-copy],[data-ask],[data-prev],[data-next],[data-restart],[data-fb],[data-reason],[data-agent],[data-preset],[data-phase],[data-fill],[data-rmchip],[data-seg],[data-urgent],[data-menu],[data-editagent],[data-where],[data-like],[data-day],[data-sfb],[data-closemodal]');
     var menuWasOpen = ui.menu !== -1;
     if (!t || !mount.contains(t)) { if (menuWasOpen) { ui.menu = -1; render(); } return; }
     if (t.hasAttribute('data-tab')) ui.tab = t.getAttribute('data-tab');
@@ -730,6 +731,7 @@
     if (t.hasAttribute('data-edit')) { ui.edit = !ui.edit; render(); if (ui.edit) { var b = stage.querySelector('#draft-body'); if (b) b.focus(); } return; }
     if (t.hasAttribute('data-fb')) { ui.fb = ui.fb === 'no' ? null : t.getAttribute('data-fb'); ui.liked = false; if (!ui.fb) ui.reason = null; render(); return; }
     if (t.hasAttribute('data-reason')) { ui.reason = t.getAttribute('data-reason'); render(); return; }
+    if (t.hasAttribute('data-closemodal')) { if (t.classList.contains('app-modal') && e.target !== t) return; ui.phase = 3; render(); return; }
     if (t.hasAttribute('data-sfb')) { var sp = t.getAttribute('data-sfb').split('|'), cur = ui.sfb[sp[0]]; ui.sfb[sp[0]] = (cur === sp[1] || (sp[1] === 'down' && cur && cur.indexOf('r:') === 0)) ? null : sp[1]; render(); return; }
     if (t.hasAttribute('data-day')) { var di = +t.getAttribute('data-day'); ui.ed.days[di] = !ui.ed.days[di]; render(); return; }
     if (t.hasAttribute('data-like')) { ui.liked = !ui.liked; if (ui.liked) { ui.fb = null; } render(); toast(ui.liked ? 'Thanks. More like this in your daily.' : 'Noted.'); return; }
@@ -783,6 +785,7 @@
     if (e.key === 'Enter' && e.target.id === 'edq') { reread(); e.preventDefault(); return; }
     if (e.key === 'Enter' && e.target.id === 'np') { ui.prompt = e.target.value.trim() || ui.prompt; ui.ed = fromPrompt(ui.prompt); ui.phase = 1; render(); e.preventDefault(); return; }
     if (e.key === 'Escape' && ui.menu !== -1) { ui.menu = -1; render(); return; }
+    if (e.key === 'Escape' && ui.i === 6 && ui.phase === 2) { ui.phase = 3; render(); return; }
     var tag = (e.target.tagName || '').toLowerCase();
     if (tag === 'input' || tag === 'textarea' || e.target.isContentEditable) return;
     if (e.key === 'ArrowRight') { go(ui.i === STATES.length - 1 ? ui.i : ui.i + 1); e.preventDefault(); }

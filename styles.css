@@ -1197,3 +1197,16 @@ body.page { font-size: 15px; }
 .signoff{padding-block:8px 56px}
 .signoff p{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--muted);margin:0;padding-top:28px;border-top:1px solid var(--line)}
 .signoff i{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);flex:none}
+
+/* End card radar */
+.done .mark.radar{position:relative;background:var(--accent-soft) repeating-radial-gradient(circle at center,transparent 0 8px,rgba(14,122,90,.22) 8px 9px,transparent 9px 17px,rgba(14,122,90,.22) 17px 18px,transparent 18px)}
+.done .mark.radar .core{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.done .mark.radar b{position:absolute;width:4px;height:4px;margin:-2px 0 0 -2px;border-radius:50%;background:#E8A33D;opacity:0;animation:blip6 6s linear infinite}
+.done .mark.radar b:nth-of-type(1){left:39.4px;top:14.8px;animation-delay:0s}
+.done .mark.radar b:nth-of-type(2){left:21.8px;top:18.6px;animation-delay:1s}
+.done .mark.radar b:nth-of-type(3){left:9.6px;top:32.0px;animation-delay:2s}
+.done .mark.radar b:nth-of-type(4){left:23.1px;top:34.0px;animation-delay:3s}
+.done .mark.radar b:nth-of-type(5){left:34.8px;top:41.2px;animation-delay:4s}
+.done .mark.radar b:nth-of-type(6){left:34.0px;top:28.9px;animation-delay:5s}
+@keyframes blip6{0%{opacity:0;transform:scale(.4)}4%{opacity:1;transform:scale(1.25)}15%{opacity:0;transform:scale(1)}100%{opacity:0}}
+@media (prefers-reduced-motion: reduce){.done .mark.radar b:first-of-type{opacity:1}}

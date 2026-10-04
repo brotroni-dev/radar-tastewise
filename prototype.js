@@ -12,7 +12,7 @@
     agents: [true, true, true, true, true],
     presets: [false, false, false, false, false],
     phase: 0, created: false, createdAgent: null,
-    view: 'overview', filter: null,
+    view: 'overview',
     liked: false, sfb: {}, ed: null, editAgent: 0, menu: -1, prompt: 'anything that could hurt my magnesium line at Target'
   };
 
@@ -387,13 +387,11 @@
   function app(crumb, body, opts) {
     opts = opts || {};
     var nav = function (icon, label) { return '<a>' + ic(icon) + label + '</a>'; };
-    var sub = function (rh, badge) { return '<a data-go="5" data-filter="' + rh + '"' + (opts.rh === rh ? ' class="on"' : '') + '>' + ic(RH_ICON[rh]) + RH_LABEL[rh] + (badge ? '<span class="badge">' + badge + '</span>' : '') + '</a>'; };
     return '<div class="app" aria-label="The platform">' +
       '<div class="app-chrome"><div class="lights"><i></i><i></i><i></i></div><div class="url">app.platform/' + (opts.url || 'radar') + '</div></div>' +
       '<nav class="app-nav"><div class="ws"><span class="kr-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 21V11"/><path d="M12 12C12 8 9 6 5 6c0 4 3 6 7 6z" fill="#fff"/><path d="M12 10c0-3.5 2.5-6 7-6 0 4-2.5 6-7 6z" fill="#fff"/></svg></span>Kind Root' + ic('chevd') + '</div>' +
       nav('home', 'Home') + nav('ask', 'Ask') +
-      '<a class="' + (opts.rh ? 'open' : 'on') + '" data-go="5">' + ic('radar') + 'Radar<span class="cv">' + ic('chevd') + '</span></a>' +
-      '<div class="sub">' + sub('daily', '1') + sub('weekly') + sub('periodic') + '</div>' +
+      '<a class="on" data-go="5">' + ic('radar') + 'Radar<span class="badge">1</span></a>' +
       nav('reports', 'Reports') + nav('brand', 'Brand profile') +
       '<div class="me"><span class="av">' + AVA + '</span><div>Maya K.<span>Brand Manager</span></div></div></nav>' +
       '<div class="app-main"><div class="app-top"><div class="crumb">' + crumb + '</div><span class="ask">' + ic('sparkle') + 'Ask anything</span><span class="bell">' + ic('bell') + '<i></i></span></div>' +
@@ -423,21 +421,18 @@
       (f.due ? '<span class="pill warn">' + f.due + '</span>' : '<span></span>') + ic('chevr') + '</div>';
   }
   function overview(count) {
-    var fl = ui.filter;
-    var h = ph(ic('radar') + '<span>Radar</span>' + (fl ? '<span>&middot;</span>' + ic(RH_ICON[fl]) + '<span>' + RH_LABEL[fl] + '</span>' : ''),
-      fl ? RH_LABEL[fl] + ' updates' : 'Your radar', 'Everything your ' + (fl ? fl + ' ' : '') + 'agents found, with the most time-sensitive first.',
+    var h = ph(ic('radar') + '<span>Radar</span>', 'Your radar', 'Everything your agents found, with the most time-sensitive first.',
       '<button class="btn btn-primary btn-sm" data-go="6">' + ic('plus') + 'New agent</button>', '',
       '<div class="runline"><i></i><b>' + count + (count === 1 ? ' agent' : ' agents') + ' running</b><span>&middot;</span><a data-go="5" data-view="agents">Manage</a></div>');
     for (var g = 0; g < FEED_GROUPS.length; g++) {
       var G = FEED_GROUPS[g], rows = '';
       for (var i = 0; i < FEED.length; i++) {
         var f = FEED[i];
-        if (fl && f.rh !== fl) continue;
         if (G[0] === 'due' ? !!f.due : (!f.due && f.rh === G[0])) rows += irow(f);
       }
       if (rows) h += '<div class="rgroup"><div class="rhead"><span class="k">' + ic(G[1]) + G[2] + '</span><span class="hint">' + G[3] + '</span></div><div class="ilist">' + rows + '</div></div>';
     }
-    return app(fl ? '<a data-go="5">Radar</a>' + sep + '<b>' + RH_LABEL[fl] + '</b>' : '<b>Radar</b>', h, { url: 'radar' + (fl ? '/' + fl : ''), rh: fl });
+    return app('<b>Radar</b>', h, { url: 'radar' });
   }
 
   /* Your agents: one list, grouped by rhythm */
@@ -540,7 +535,7 @@
           '<div class="row">' + ic('flag') + '<div><span class="ag">Consumer trends &middot; periodic</span>"GLP-1 companion" searches (fiber, electrolytes) +61% in 6 months. For the Q4 plan.</div><span class="when">no window</span></div>' +
           '<div class="row">' + ic('week') + '<div><span class="ag">Claims and ingredients &middot; weekly</span>Ashwagandha conversation cooling, -12% in 90 days. Your Ashwagandha SKU.</div><span class="when">Monday</span></div></div>' +
           '<div class="ins-foot"><span>Why you\'re seeing this: you asked Competitor launches to watch magnesium at Target. The window made it urgent.</span></div>';
-        return app('<a data-go="5">Radar</a>' + sep + '<a data-go="5">Competitor launches</a>' + sep + '<b>September 22</b>', body, { url: 'radar/competitor-launches/sep-22', rh: 'daily' });
+        return app('<a data-go="5">Radar</a>' + sep + '<a data-go="5">Competitor launches</a>' + sep + '<b>September 22</b>', body, { url: 'radar/competitor-launches/sep-22' });
       }
     },
     {
@@ -601,7 +596,7 @@
             '<button class="btn btn-ghost btn-sm" data-toast="Link copied.">' + ic('link') + 'Copy link</button></div>';
         }
         var head = ph(ic('radar') + '<span>Competitor launches</span><span>&middot;</span><span>Bloomwell gummies at Target</span>', 'Use this insight', 'Everything stays a draft until you choose to use it.');
-        return app('<a data-go="5">Radar</a>' + sep + '<a data-go="2">Bloomwell gummies at Target</a>' + sep + '<b>Act</b>', head + t + body, { url: 'radar/competitor-launches/sep-22/act', rh: 'daily' });
+        return app('<a data-go="5">Radar</a>' + sep + '<a data-go="2">Bloomwell gummies at Target</a>' + sep + '<b>Act</b>', head + t + body, { url: 'radar/competitor-launches/sep-22/act' });
       }
     },
     {
@@ -621,7 +616,7 @@
         });
         var head = ph(ic('radar') + '<span>Radar</span><span>&middot;</span>' + ic(RH_ICON[a.rh]) + '<span>' + RH_LABEL[a.rh] + '</span>', 'Review this agent', 'See what it watches, when it runs and where it reaches you.',
           '<button class="btn btn-ghost btn-sm" data-go="5" data-view="agents">' + ic('radar') + 'All agents</button>');
-        return app('<a data-go="5">Radar</a>' + sep + '<a data-go="2">' + a.name + '</a>' + sep + '<b>Adjust</b>', head + '<div class="one">' + fb + card + '</div>', { url: 'radar/' + a.name.toLowerCase().replace(/[^a-z]+/g, '-') + '/tune', rh: a.rh });
+        return app('<a data-go="5">Radar</a>' + sep + '<a data-go="2">' + a.name + '</a>' + sep + '<b>Adjust</b>', head + '<div class="one">' + fb + card + '</div>', { url: 'radar/' + a.name.toLowerCase().replace(/[^a-z]+/g, '-') + '/tune' });
       }
     },
     {
@@ -736,10 +731,10 @@
     if (m) { var days = m.querySelectorAll('.sl-day'); var t = days[days.length - 1]; if (t) m.scrollTop = t.getBoundingClientRect().top - m.getBoundingClientRect().top - 4; }
   }
 
-  function go(i, keepFb, view, filter) {
+  function go(i, keepFb, view) {
     if (i < 0 || i >= STATES.length) return;
     ui.i = i; ui.edit = false; ui.ask = -1; ui.menu = -1; ui.phase = 0;
-    ui.view = view === 'agents' ? 'agents' : 'overview'; ui.filter = filter || null;
+    ui.view = view === 'agents' ? 'agents' : 'overview';
     if (!keepFb) { ui.fb = null; }
     if (i === 4) ui.ed = fromAgent(ui.editAgent);
     if (FULL) { try { history.replaceState(null, '', '#step-' + (i + 1) + (i === 5 && ui.view === 'agents' ? '-agents' : '')); } catch (e) {} }
@@ -769,7 +764,7 @@
     if (!t || !mount.contains(t)) { if (menuWasOpen) { ui.menu = -1; render(); } return; }
     if (t.hasAttribute('data-tab')) ui.tab = t.getAttribute('data-tab');
     if (t.hasAttribute('data-fb') && t.hasAttribute('data-go')) { ui.fb = t.getAttribute('data-fb'); ui.reason = null; ui.editAgent = 0; go(+t.getAttribute('data-go'), true); return; }
-    if (t.hasAttribute('data-go')) { var gi = +t.getAttribute('data-go'); if (gi === 4) ui.editAgent = 0; go(gi, false, t.getAttribute('data-view'), t.getAttribute('data-filter')); return; }
+    if (t.hasAttribute('data-go')) { var gi = +t.getAttribute('data-go'); if (gi === 4) ui.editAgent = 0; go(gi, false, t.getAttribute('data-view')); return; }
     if (t.hasAttribute('data-editagent')) { ui.editAgent = +t.getAttribute('data-editagent'); go(4); return; }
     if (t.hasAttribute('data-prev')) { prev(); return; }
     if (t.hasAttribute('data-next')) { if (ui.i === STATES.length - 1) { location.href = BACK; return; } next(); return; }

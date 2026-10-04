@@ -10,7 +10,6 @@
     i: 0, channel: 'slack', tab: 'slide', notes: true, edit: false, ask: -1, toastTimer: null,
     fb: null, reason: null, urgent: true,
     agents: [true, true, true, true, true],
-    presets: [false, false, false, false, false],
     phase: 0, created: false, createdAgent: null,
     view: 'overview',
     liked: false, sfb: {}, ed: null, editAgent: 0, menu: -1, prompt: 'anything that could hurt my magnesium line at Target'
@@ -215,7 +214,6 @@
     ['weekly', 'Weekly, Monday', 'What goes into Monday\'s status and the management update'],
     ['periodic', 'Periodic', 'For reviews, planning and launches']
   ];
-  var PRESETS = [['Format shifts', 'weekly', 'Monday, by email'], ['Price and promo moves', 'daily', 'tomorrow 8:30, in Slack'], ['GLP-1 companion', 'periodic', 'before the Q4 plan'], ['Regulatory and claims watch', 'weekly', 'Monday, by email'], ['Retailer assortment changes', 'daily', 'tomorrow 8:30, in Slack']];
   var EXAMPLES = [
     ['who\'s launching in gut health', 'Who\'s launching in gut health', 'Competitor launches, weekly', 'shelf'],
     ['price moves on my SKUs at Amazon', 'Price moves on my SKUs at Amazon', 'Price and promo, daily', 'dollar'],
@@ -639,11 +637,6 @@
           for (var i = 0; i < AGENTS.length; i++) if (AGENTS[i].rh === rh[0]) h += row(AGENTS[i], ui.agents[i], i, !!AGENTS[i].isNew);
           h += '</div></div>';
         }
-        h += '<div class="presets"><div class="c-head">' + ic('plus') + 'More to switch on</div><div class="row">';
-        for (var p = 0; p < PRESETS.length; p++) {
-          h += '<span class="preset' + (ui.presets[p] ? ' on' : '') + '">' + PRESETS[p][0] + ' <span class="rhx">&middot; ' + PRESETS[p][1] + '</span><button data-preset="' + p + '">' + (ui.presets[p] ? 'On' : 'Turn on') + '</button></span>';
-        }
-        h += '</div></div>';
         return app('<a data-go="5">Radar</a>' + sep + '<b>Your agents</b>', h, { url: 'radar/agents' });
       }
     },
@@ -759,7 +752,7 @@
 
   mount.addEventListener('click', function (e) {
     if (!ui.hinted && e.target.closest('#p-stage button, #p-stage a')) ui.hinted = true;
-    var t = e.target.closest('[data-go],[data-channel],[data-tab],[data-toast],[data-edit],[data-copy],[data-ask],[data-prev],[data-next],[data-restart],[data-fb],[data-reason],[data-agent],[data-preset],[data-phase],[data-fill],[data-rmchip],[data-seg],[data-urgent],[data-menu],[data-editagent],[data-where],[data-like],[data-day],[data-sfb],[data-closemodal]');
+    var t = e.target.closest('[data-go],[data-channel],[data-tab],[data-toast],[data-edit],[data-copy],[data-ask],[data-prev],[data-next],[data-restart],[data-fb],[data-reason],[data-agent],[data-phase],[data-fill],[data-rmchip],[data-seg],[data-urgent],[data-menu],[data-editagent],[data-where],[data-like],[data-day],[data-sfb],[data-closemodal]');
     var menuWasOpen = ui.menu !== -1;
     if (!t || !mount.contains(t)) { if (menuWasOpen) { ui.menu = -1; render(); } return; }
     if (t.hasAttribute('data-tab')) ui.tab = t.getAttribute('data-tab');
@@ -768,7 +761,7 @@
     if (t.hasAttribute('data-editagent')) { ui.editAgent = +t.getAttribute('data-editagent'); go(4); return; }
     if (t.hasAttribute('data-prev')) { prev(); return; }
     if (t.hasAttribute('data-next')) { if (ui.i === STATES.length - 1) { location.href = BACK; return; } next(); return; }
-    if (t.hasAttribute('data-restart')) { ui.channel = 'slack'; ui.tab = 'slide'; ui.created = false; AGENTS.length = 5; ui.urgent = true; ui.agents = [true, true, true, true, true]; ui.presets = [false, false, false, false, false]; ui.ed = null; ui.editAgent = 0; ui.prompt = 'anything that could hurt my magnesium line at Target'; go(0); return; }
+    if (t.hasAttribute('data-restart')) { ui.channel = 'slack'; ui.tab = 'slide'; ui.created = false; AGENTS.length = 5; ui.urgent = true; ui.agents = [true, true, true, true, true]; ui.ed = null; ui.editAgent = 0; ui.prompt = 'anything that could hurt my magnesium line at Target'; go(0); return; }
     if (t.hasAttribute('data-channel')) { ui.channel = t.getAttribute('data-channel'); render(); return; }
     if (t.hasAttribute('data-tab')) { ui.edit = false; ui.ask = -1; render(); return; }
     if (t.hasAttribute('data-ask')) { ui.ask = +t.getAttribute('data-ask'); render(); return; }
@@ -782,7 +775,6 @@
     if (t.hasAttribute('data-urgent')) { ui.urgent = !ui.urgent; render(); toast(ui.urgent ? 'Urgent updates break through to today again.' : 'Urgent updates will wait for their rhythm. Windows can close.'); return; }
     if (t.hasAttribute('data-menu')) { var mi = +t.getAttribute('data-menu'); ui.menu = ui.menu === mi ? -1 : mi; render(); return; }
     if (t.hasAttribute('data-agent')) { var ai = +t.getAttribute('data-agent'); ui.agents[ai] = !ui.agents[ai]; ui.menu = -1; render(); toast(ui.agents[ai] ? AGENTS[ai].name + ' is back on.' : AGENTS[ai].name + ' paused. Nothing from it until you turn it on.'); return; }
-    if (t.hasAttribute('data-preset')) { var pi = +t.getAttribute('data-preset'); ui.presets[pi] = !ui.presets[pi]; render(); toast(ui.presets[pi] ? PRESETS[pi][0] + ' is on, in your ' + PRESETS[pi][1] + '. First update ' + PRESETS[pi][2] + '.' : PRESETS[pi][0] + ' is off.'); return; }
     if (t.hasAttribute('data-phase')) {
       var np = +t.getAttribute('data-phase');
       if (np === 1) { var inp = stage.querySelector('#np'); if (inp) ui.prompt = inp.value.trim() || ui.prompt; ui.ed = fromPrompt(ui.prompt); }

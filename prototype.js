@@ -12,6 +12,7 @@
     agents: [true, true, true, true, true],
     presets: [false, false, false, false, false],
     phase: 0, created: false, createdAgent: null,
+    view: 'overview', filter: null,
     liked: false, sfb: {}, ed: null, editAgent: 0, menu: -1, prompt: 'anything that could hurt my magnesium line at Target'
   };
 
@@ -386,12 +387,12 @@
   function app(crumb, body, opts) {
     opts = opts || {};
     var nav = function (icon, label) { return '<a>' + ic(icon) + label + '</a>'; };
-    var sub = function (rh, badge) { return '<a data-go="5"' + (opts.rh === rh ? ' class="on"' : '') + '>' + ic(RH_ICON[rh]) + RH_LABEL[rh] + (badge ? '<span class="badge">' + badge + '</span>' : '') + '</a>'; };
+    var sub = function (rh, badge) { return '<a data-go="5" data-filter="' + rh + '"' + (opts.rh === rh ? ' class="on"' : '') + '>' + ic(RH_ICON[rh]) + RH_LABEL[rh] + (badge ? '<span class="badge">' + badge + '</span>' : '') + '</a>'; };
     return '<div class="app" aria-label="The platform">' +
       '<div class="app-chrome"><div class="lights"><i></i><i></i><i></i></div><div class="url">app.platform/' + (opts.url || 'radar') + '</div></div>' +
       '<nav class="app-nav"><div class="ws"><span class="kr-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 21V11"/><path d="M12 12C12 8 9 6 5 6c0 4 3 6 7 6z" fill="#fff"/><path d="M12 10c0-3.5 2.5-6 7-6 0 4-2.5 6-7 6z" fill="#fff"/></svg></span>Kind Root' + ic('chevd') + '</div>' +
       nav('home', 'Home') + nav('ask', 'Ask') +
-      '<a class="' + (opts.rh ? 'open' : 'on') + '">' + ic('radar') + 'Radar<span class="cv">' + ic('chevd') + '</span></a>' +
+      '<a class="' + (opts.rh ? 'open' : 'on') + '" data-go="5">' + ic('radar') + 'Radar<span class="cv">' + ic('chevd') + '</span></a>' +
       '<div class="sub">' + sub('daily', '1') + sub('weekly') + sub('periodic') + '</div>' +
       nav('reports', 'Reports') + nav('brand', 'Brand profile') +
       '<div class="me"><span class="av">' + AVA + '</span><div>Maya K.<span>Brand Manager</span></div></div></nav>' +
@@ -405,7 +406,41 @@
   }
   var sep = ' ' + ic('chevr') + ' ';
 
-  /* Radar home: one list, grouped by rhythm */
+  /* Radar overview: every insight, most time-sensitive first */
+  var FEED = [
+    { t: 'Bloomwell Magnesium Sleep Gummies is gaining fast at Target', ag: 'Competitor launches', rh: 'daily', when: 'Today, 8:30', due: 'Window closes Oct 1, 9 days', isNew: true, go: 2 },
+    { t: 'Sunveil cut its magnesium price 15% at Target', ag: 'Competitor launches', rh: 'daily', when: 'Today, 8:30', due: 'Promo ends Oct 5, 13 days', isNew: true },
+    { t: 'Nature\u2019s Path launched Ashwagandha Calm Gummies at CVS', ag: 'Competitor launches', rh: 'daily', when: 'Today, 8:30', isNew: true },
+    { t: 'Your magnesium share at Target is down 1.4 pts in 8 weeks', ag: 'Kind Root\u2019s share at key retailers', rh: 'weekly', when: 'Monday' },
+    { t: 'Ashwagandha conversation is cooling, down 12% in 90 days', ag: 'Claims and ingredients gaining traction', rh: 'weekly', when: 'Monday' },
+    { t: '\u201cGLP-1 companion\u201d searches are up 61% in 6 months', ag: 'Consumer trends: sleep, stress, gut', rh: 'periodic', when: 'Sep 8' }
+  ];
+  var FEED_GROUPS = [['due', 'clock', 'Time-sensitive', 'These have a deadline'], ['daily', 'sun', 'Today', 'From your daily agents'], ['weekly', 'week', 'This week', 'From your weekly agents'], ['periodic', 'flag', 'Periodic', 'For reviews, planning and launches']];
+  function irow(f) {
+    var act = f.go != null ? ' data-go="' + f.go + '" role="link" tabindex="0"' : ' data-toast="Opens that insight. This walkthrough follows the Bloomwell one."';
+    return '<div class="irow' + (f.due ? ' due' : '') + '"' + act + '><span class="irow-i">' + ic(f.due ? 'clock' : RH_ICON[f.rh]) + '</span>' +
+      '<div class="irow-t"><b>' + (f.isNew ? '<i class="irow-n" title="New"></i>' : '') + f.t + '</b><span>' + f.ag + ' &middot; ' + f.when + '</span></div>' +
+      (f.due ? '<span class="pill warn">' + f.due + '</span>' : '<span></span>') + ic('chevr') + '</div>';
+  }
+  function overview(count) {
+    var fl = ui.filter;
+    var h = ph(ic('radar') + '<span>Radar</span>' + (fl ? '<span>&middot;</span>' + ic(RH_ICON[fl]) + '<span>' + RH_LABEL[fl] + '</span>' : ''),
+      fl ? RH_LABEL[fl] + ' updates' : 'Your radar', 'Everything your ' + (fl ? fl + ' ' : '') + 'agents found, with the most time-sensitive first.',
+      '<button class="btn btn-primary btn-sm" data-go="6">' + ic('plus') + 'New agent</button>', '',
+      '<div class="runline"><i></i><b>' + count + (count === 1 ? ' agent' : ' agents') + ' running</b><span>&middot;</span><a data-go="5" data-view="agents">Manage</a></div>');
+    for (var g = 0; g < FEED_GROUPS.length; g++) {
+      var G = FEED_GROUPS[g], rows = '';
+      for (var i = 0; i < FEED.length; i++) {
+        var f = FEED[i];
+        if (fl && f.rh !== fl) continue;
+        if (G[0] === 'due' ? !!f.due : (!f.due && f.rh === G[0])) rows += irow(f);
+      }
+      if (rows) h += '<div class="rgroup"><div class="rhead"><span class="k">' + ic(G[1]) + G[2] + '</span><span class="hint">' + G[3] + '</span></div><div class="ilist">' + rows + '</div></div>';
+    }
+    return app(fl ? '<a data-go="5">Radar</a>' + sep + '<b>' + RH_LABEL[fl] + '</b>' : '<b>Radar</b>', h, { url: 'radar' + (fl ? '/' + fl : ''), rh: fl });
+  }
+
+  /* Your agents: one list, grouped by rhythm */
   function row(a, on, idx, isNew) {
     var chans = (a.slack ? '<span>' + ic('hash') + 'Slack</span>' : '') + (a.email ? '<span>' + ic('mail') + 'Email</span>' : '');
     return '<div class="arow' + (on ? '' : ' off') + '"' + (idx !== null ? ' data-editagent="' + idx + '" role="link" tabindex="0" aria-label="Open ' + a.name + '"' : '') + '>' +
@@ -582,20 +617,25 @@
           pill: learned ? '<span class="pill">Changed just now</span>' : '<span class="pill">On &middot; ' + RH_LABEL[ui.ed.rh].toLowerCase() + '</span>',
           learned: learned,
           cta: '<button class="btn btn-primary btn-sm" data-toast="Saved. Applies from the next update.">' + ic('check') + 'Save</button>',
-          secondary: '<button class="btn btn-ghost btn-sm" data-go="5">See all agents</button>'
+          secondary: '<button class="btn btn-ghost btn-sm" data-go="5" data-view="agents">See all agents</button>'
         });
         var head = ph(ic('radar') + '<span>Radar</span><span>&middot;</span>' + ic(RH_ICON[a.rh]) + '<span>' + RH_LABEL[a.rh] + '</span>', 'Review this agent', 'See what it watches, when it runs and where it reaches you.',
-          '<button class="btn btn-ghost btn-sm" data-go="5">' + ic('radar') + 'All agents</button>');
+          '<button class="btn btn-ghost btn-sm" data-go="5" data-view="agents">' + ic('radar') + 'All agents</button>');
         return app('<a data-go="5">Radar</a>' + sep + '<a data-go="2">' + a.name + '</a>' + sep + '<b>Adjust</b>', head + '<div class="one">' + fb + card + '</div>', { url: 'radar/' + a.name.toLowerCase().replace(/[^a-z]+/g, '-') + '/tune', rh: a.rh });
       }
     },
     {
-      title: 'Your radar', desc: 'Agents by rhythm', cap: 'Five agents, three rhythms. She switches things off, not on.',
-      where: 'The platform, Your radar', when: 'Tuesday, 8:48',
-      notes: ['This view gives Maya a starting point instead of an empty setup.', 'Radar creates five agents from her brand profile and organizes them around her daily, weekly and periodic work.', 'She can turn off, adjust or add agents as her needs change. Only a closing window interrupts the usual rhythm.'],
+      title: 'Your radar', desc: 'Insights and agents', cap: 'Everything her agents found, and the agents behind it.',
+      where: function () { return ui.view === 'agents' ? 'The platform, Your agents' : 'The platform, Your radar'; }, when: 'Tuesday, 8:48',
+      notes: function () {
+        return ui.view === 'agents' ?
+          ['This view gives Maya a starting point instead of an empty setup.', 'Radar creates five agents from her brand profile and organizes them around her daily, weekly and periodic work.', 'She can turn off, adjust or add agents as her needs change. Only a closing window interrupts the usual rhythm.'] :
+          ['Everything Radar sent her is kept here, so nothing is lost if she misses a message.', 'Anything with a deadline sits on top. The rest follows her daily, weekly and periodic work.', 'Her agents are one click away. She can see what is running and change it.'];
+      },
       render: function () {
         var count = ui.agents.filter(Boolean).length;
-        var h = ph(ic('radar') + '<span>Radar</span>', 'Your radar', (['No agents are','One agent is','Two agents are','Three agents are','Four agents are','Five agents are','Six agents are','Seven agents are'][count] || count + ' agents are') + ' already watching Kind Root for you, based on your brand profile and organized by rhythm. Turn off anything you don\u2019t need.',
+        if (ui.view !== 'agents') return overview(count);
+        var h = ph(ic('radar') + '<span>Radar</span><span>&middot;</span><span>Agents</span>', 'Your agents', (['No agents are','One agent is','Two agents are','Three agents are','Four agents are','Five agents are','Six agents are','Seven agents are'][count] || count + ' agents are') + ' already watching Kind Root for you, based on your brand profile and organized by rhythm. Turn off anything you don\u2019t need.',
           '<button class="btn btn-primary btn-sm" data-go="6">' + ic('plus') + 'New agent</button>') +
           '<div class="rule">' + ic('clock') + '<span><b>Only a closing window interrupts the usual rhythm.</b> When one is approaching, Radar alerts you in Slack with the date.' + (ui.urgent ? '' : ' <span class="pill warn">Off: windows wait for their rhythm</span>') + '</span><span class="grow"></span><button class="toggle" role="switch" aria-checked="' + ui.urgent + '" data-urgent aria-label="Urgent updates break through"></button></div>';
         for (var g = 0; g < RHYTHMS.length; g++) {
@@ -609,7 +649,7 @@
           h += '<span class="preset' + (ui.presets[p] ? ' on' : '') + '">' + PRESETS[p][0] + ' <span class="rhx">&middot; ' + PRESETS[p][1] + '</span><button data-preset="' + p + '">' + (ui.presets[p] ? 'On' : 'Turn on') + '</button></span>';
         }
         h += '</div></div>';
-        return app('<b>Radar</b>' + sep + 'Your radar', h, { url: 'radar' });
+        return app('<a data-go="5">Radar</a>' + sep + '<b>Your agents</b>', h, { url: 'radar/agents' });
       }
     },
     {
@@ -638,13 +678,13 @@
               isNew: true, sample: sample,
               pill: ui.phase === 3 ? '<span class="pill">On &middot; ' + RH_LABEL[e.rh].toLowerCase() + '</span>' : '<span class="pill neutral">Draft</span>',
               cta: ui.phase === 3 ? '<button class="btn btn-primary btn-sm" data-toast="Saved. Applies from the next update.">' + ic('check') + 'Save</button>' : '<button class="btn btn-primary btn-sm" data-phase="2"' + (!e.slack && !e.email ? ' disabled' : '') + '>' + ic('check') + 'Start watching</button>',
-              secondary: ui.phase === 3 ? '<button class="btn btn-ghost btn-sm" data-go="5">See all agents</button>' : '<button class="btn btn-ghost btn-sm" data-phase="0">Edit prompt</button>'
+              secondary: ui.phase === 3 ? '<button class="btn btn-ghost btn-sm" data-go="5" data-view="agents">See all agents</button>' : '<button class="btn btn-ghost btn-sm" data-phase="0">Edit prompt</button>'
             }) + '</div>';
         }
         var out = app('<a data-go="5">Radar</a>' + sep + '<b>New agent</b>', body, { url: 'radar/new' });
         if (ui.phase === 2) out = out.replace(/<\/div>$/, '<div class="app-modal" role="dialog" aria-modal="true" data-closemodal>' + '<div class="done"><button class="mclose" data-closemodal aria-label="Close">' + ic('x') + '</button><div class="mark radar"><i class="core"></i><b></b><b></b><b></b><b></b><b></b><b></b></div><div class="kicker">Running</div><h4>First update ' + firstUpdate() + '.</h4>' +
-            '<p>Radar is watching now. You can adjust it anytime from Your radar.</p>' +
-            '<div class="btns" style="justify-content:center"><button class="btn btn-ghost btn-sm" data-go="5">See all agents</button></div></div>' + '</div></div>');
+            '<p>Radar is watching now. You can adjust it anytime from Your agents.</p>' +
+            '<div class="btns" style="justify-content:center"><button class="btn btn-ghost btn-sm" data-go="5" data-view="agents">See all agents</button></div></div>' + '</div></div>');
         return out;
       }
     }
@@ -675,7 +715,7 @@
     stage.innerHTML = s.render();
     mount.querySelector('#p-step').textContent = 'Step ' + (ui.i + 1) + ' of ' + STATES.length + ' · ' + s.title;
     mount.querySelector('#p-cap').textContent = s.cap;
-    mount.querySelector('#p-ctx').innerHTML = '<span>' + ic('pin') + 'Where: <b>' + s.where + '</b></span><span>' + ic('clock') + 'When: <b>' + s.when + '</b></span>';
+    mount.querySelector('#p-ctx').innerHTML = '<span>' + ic('pin') + 'Where: <b>' + (typeof s.where === 'function' ? s.where() : s.where) + '</b></span><span>' + ic('clock') + 'When: <b>' + s.when + '</b></span>';
     var prog = '', html = '';
     for (var i = 0; i < STATES.length; i++) {
       prog += '<i class="' + (i < ui.i ? 'past' : i === ui.i ? 'here' : '') + '"></i>';
@@ -684,7 +724,8 @@
     mount.querySelector('#p-prog').innerHTML = prog;
     stepsEl.innerHTML = html;
     var n = '<h4>Design note</h4>';
-    for (var j = 0; j < s.notes.length; j++) n += '<p>' + s.notes[j] + '</p>';
+    var notes = typeof s.notes === 'function' ? s.notes() : s.notes;
+    for (var j = 0; j < notes.length; j++) n += '<p>' + notes[j] + '</p>';
     notesBox.innerHTML = n;
     notesBox.hidden = !ui.notes;
     mount.querySelector('[data-prev]').disabled = ui.i === 0;
@@ -695,14 +736,19 @@
     if (m) { var days = m.querySelectorAll('.sl-day'); var t = days[days.length - 1]; if (t) m.scrollTop = t.getBoundingClientRect().top - m.getBoundingClientRect().top - 4; }
   }
 
-  function go(i, keepFb) {
+  function go(i, keepFb, view, filter) {
     if (i < 0 || i >= STATES.length) return;
     ui.i = i; ui.edit = false; ui.ask = -1; ui.menu = -1; ui.phase = 0;
+    ui.view = view === 'agents' ? 'agents' : 'overview'; ui.filter = filter || null;
     if (!keepFb) { ui.fb = null; }
     if (i === 4) ui.ed = fromAgent(ui.editAgent);
-    if (FULL) { try { history.replaceState(null, '', '#step-' + (i + 1)); } catch (e) {} }
+    if (FULL) { try { history.replaceState(null, '', '#step-' + (i + 1) + (i === 5 && ui.view === 'agents' ? '-agents' : '')); } catch (e) {} }
     render();
   }
+
+  /* Step 6 has two screens: the overview, then the agents */
+  function next() { if (ui.i === 5 && ui.view !== 'agents') go(5, false, 'agents'); else go(ui.i + 1); }
+  function prev() { if (ui.i === 5 && ui.view === 'agents') go(5); else if (ui.i === 6) go(5, false, 'agents'); else go(ui.i - 1); }
 
   function toast(msg) {
     var old = stage.querySelector('.toast');
@@ -723,10 +769,10 @@
     if (!t || !mount.contains(t)) { if (menuWasOpen) { ui.menu = -1; render(); } return; }
     if (t.hasAttribute('data-tab')) ui.tab = t.getAttribute('data-tab');
     if (t.hasAttribute('data-fb') && t.hasAttribute('data-go')) { ui.fb = t.getAttribute('data-fb'); ui.reason = null; ui.editAgent = 0; go(+t.getAttribute('data-go'), true); return; }
-    if (t.hasAttribute('data-go')) { var gi = +t.getAttribute('data-go'); if (gi === 4) ui.editAgent = 0; go(gi); return; }
+    if (t.hasAttribute('data-go')) { var gi = +t.getAttribute('data-go'); if (gi === 4) ui.editAgent = 0; go(gi, false, t.getAttribute('data-view'), t.getAttribute('data-filter')); return; }
     if (t.hasAttribute('data-editagent')) { ui.editAgent = +t.getAttribute('data-editagent'); go(4); return; }
-    if (t.hasAttribute('data-prev')) { go(ui.i - 1); return; }
-    if (t.hasAttribute('data-next')) { if (ui.i === STATES.length - 1) { location.href = BACK; return; } go(ui.i + 1); return; }
+    if (t.hasAttribute('data-prev')) { prev(); return; }
+    if (t.hasAttribute('data-next')) { if (ui.i === STATES.length - 1) { location.href = BACK; return; } next(); return; }
     if (t.hasAttribute('data-restart')) { ui.channel = 'slack'; ui.tab = 'slide'; ui.created = false; AGENTS.length = 5; ui.urgent = true; ui.agents = [true, true, true, true, true]; ui.presets = [false, false, false, false, false]; ui.ed = null; ui.editAgent = 0; ui.prompt = 'anything that could hurt my magnesium line at Target'; go(0); return; }
     if (t.hasAttribute('data-channel')) { ui.channel = t.getAttribute('data-channel'); render(); return; }
     if (t.hasAttribute('data-tab')) { ui.edit = false; ui.ask = -1; render(); return; }
@@ -791,13 +837,13 @@
     if (e.key === 'Escape' && ui.i === 6 && ui.phase === 2) { ui.phase = 3; render(); return; }
     var tag = (e.target.tagName || '').toLowerCase();
     if (tag === 'input' || tag === 'textarea' || e.target.isContentEditable) return;
-    if (e.key === 'ArrowRight') { go(ui.i === STATES.length - 1 ? ui.i : ui.i + 1); e.preventDefault(); }
-    if (e.key === 'ArrowLeft') { go(ui.i - 1); e.preventDefault(); }
+    if (e.key === 'ArrowRight') { if (ui.i < STATES.length - 1) next(); e.preventDefault(); }
+    if (e.key === 'ArrowLeft') { prev(); e.preventDefault(); }
   });
 
   window.radarProto = { go: go, count: STATES.length };
-  var hm = (location.hash || '').match(/step-(\d)/);
-  if (hm && +hm[1] >= 1 && +hm[1] <= STATES.length) ui.i = +hm[1] - 1;
+  var hm = (location.hash || '').match(/step-(\d)(-agents)?/);
+  if (hm && +hm[1] >= 1 && +hm[1] <= STATES.length) { ui.i = +hm[1] - 1; if (ui.i === 5 && hm[2]) ui.view = 'agents'; }
   if (ui.i === 4) ui.ed = fromAgent(0);
   render();
 })();

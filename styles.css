@@ -1224,3 +1224,10 @@ body.page { font-size: 15px; }
 .explored>.thead+div{border-top:1px solid var(--line)}
 @media(max-width:640px){.explored>.thead{display:none}}
 .ai-cards{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+/* App sidebar: rhythms nested under Radar */
+.app-nav .sub{display:flex;flex-direction:column;gap:2px;margin:0 0 6px 18px;padding-left:8px;border-left:1px solid var(--line)}
+.app-nav .sub a{padding:6px 10px;font-size:13px}
+.app-nav a.open{color:var(--ink)}
+.app-nav a.open .ic{color:var(--accent)}
+.app-nav a .cv{margin-left:auto;display:grid}
+.app-nav a .cv .ic,.app-nav a.on .cv .ic,.app-nav a.open .cv .ic{width:13px;height:13px;color:var(--muted)}

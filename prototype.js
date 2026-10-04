@@ -391,7 +391,7 @@
       '<div class="app-chrome"><div class="lights"><i></i><i></i><i></i></div><div class="url">app.platform/' + (opts.url || 'radar') + '</div></div>' +
       '<nav class="app-nav"><div class="ws"><span class="kr-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 21V11"/><path d="M12 12C12 8 9 6 5 6c0 4 3 6 7 6z" fill="#fff"/><path d="M12 10c0-3.5 2.5-6 7-6 0 4-2.5 6-7 6z" fill="#fff"/></svg></span>Kind Root' + ic('chevd') + '</div>' +
       nav('home', 'Home') + nav('ask', 'Ask') +
-      '<a class="on" data-go="5">' + ic('radar') + 'Radar<span class="badge">1</span></a>' +
+      '<a class="on" data-go="5">' + ic('radar') + 'Radar<span class="badge">3</span></a>' +
       nav('reports', 'Reports') + nav('brand', 'Brand profile') +
       '<div class="me"><span class="av">' + AVA + '</span><div>Maya K.<span>Brand Manager</span></div></div></nav>' +
       '<div class="app-main"><div class="app-top"><div class="crumb">' + crumb + '</div><span class="ask">' + ic('sparkle') + 'Ask anything</span><span class="bell">' + ic('bell') + '<i></i></span></div>' +

@@ -142,7 +142,7 @@
     retailer: 'Competitor launches will focus on Target and CVS, where your magnesium sells.',
     product: 'Competitor launches will stay on your magnesium and probiotic lines.',
     small: 'Competitor launches will skip launches under 1x category velocity and stay on magnesium at Target.',
-    urgent: 'Competitor launches will keep items like this in your daily rhythm, and only break through when a window is under a week.',
+    urgent: 'Competitor launches will keep items like this in your daily cadence, and only break through when a window is under a week.',
     knew: 'Competitor launches will report right away when it\'s big, instead of waiting for the digest.'
   };
   function feedbackRow() {
@@ -264,7 +264,7 @@
       '<div class="field"><span>Name</span><div><span class="name" contenteditable="true" spellcheck="false">' + e.name + '</span></div></div>' +
       '<div class="field"><span>Watches</span><div class="tags">' + chips + '</div></div></div>' +
       '<div class="ed-sec"><div class="ed-title">' + ic('clock') + 'When and where</div>' +
-      '<div class="field"><span>Rhythm</span><div>' + seg('ed', 'rh', RHY) + '</div></div>' +
+      '<div class="field"><span>Cadence</span><div>' + seg('ed', 'rh', RHY) + '</div></div>' +
       '<div class="field"><span>Schedule</span><div>' + schedule(e) + '<span class="hint seg-hint">' + schedHint(e) + '</span></div></div>' +
       '<div class="field"><span>Where</span><div><div class="wsel"><button class="wopt" data-where="slack" aria-pressed="' + e.slack + '">' + ic('hash') + 'Slack DM</button><button class="wopt" data-where="email" aria-pressed="' + e.email + '">' + ic('mail') + 'Email</button></div><span class="hint">' + (bothOff ? 'Pick at least one.' : 'One or both.') + '</span></div></div>' +
       urgencyToggle() + '</div>' +
@@ -456,9 +456,9 @@
 
   var STATES = [
     {
-      title: 'Scene', desc: 'Her three rhythms', cap: 'Tuesday, 8:40. This is Maya.',
+      title: 'Scene', desc: 'Her three cadences', cap: 'Tuesday, 8:40. This is Maya.',
       where: 'Maya\'s desk, between meetings', when: 'Tuesday, September 22, 8:40',
-      notes: ['This screen establishes the context Radar needs: what Maya is responsible for, how her week is structured, and which moments are worth interrupting.', 'Her three rhythms become the system\u2019s delivery logic.'],
+      notes: ['This screen establishes the context Radar needs: what Maya is responsible for, how her week is structured, and which moments are worth interrupting.', 'Her three cadences become the system\u2019s delivery logic.'],
       render: function () {
         return '<div class="scene"><div class="scene-top"><div class="who"><span class="avatar-lg">' + AVA + '</span><div><h4>Maya K.</h4><p class="role">Brand Manager at Kind Root, a mid-sized CPG company, responsible for five natural supplement SKUs.</p></div></div>' +
           '</div>' +
@@ -467,7 +467,7 @@
           '<div><div class="k">Her day</div><p>Meetings, email, spreadsheets and decks. She isn\u2019t an analyst and doesn\u2019t spend her day in the product.</p></div>' +
           '<div><div class="k">How she uses it today</div><p>About twice a month, usually for a quarterly review, retailer meeting or launch brief.</p></div>' +
           '<div><div class="k">What she needs</div><p>Walk into retailer meetings with data she can defend. Choose the next launch and explain why. Spot important changes before they become surprises.</p></div>' +
-          '</div><p class="scene-lead">Her week runs in three rhythms. Radar fits into them.</p>' +
+          '</div><p class="scene-lead">Her week runs on three cadences. Radar fits into them.</p>' +
           '<div class="rhythms">' +
           '<div class="rh"><div class="k">' + ic('sun') + 'Daily</div><ul><li><span class="t">9:00</span>Brand team sync</li><li><span class="t">11:00</span>Agency review</li><li><span class="t">14:00</span>1:1 with Dana</li><li>Approvals, emails, questions from the team</li></ul></div>' +
           '<div class="rh"><div class="k">' + ic('week') + 'Weekly</div><ul><li><span class="t">Mon</span>Performance and sales</li><li>Project status</li><li>Management update</li></ul></div>' +
@@ -496,7 +496,7 @@
     },
     {
       title: 'The insight', desc: 'Deadline, evidence, next steps', cap: 'The window first. Then what changed, why it matters, and what to do.',
-      where: 'The platform, Radar', when: 'Tuesday, 8:43',
+      where: 'Tastewise, Radar', when: 'Tuesday, 8:43',
       notes: [
         'A three-sentence summary and the deadline come first, so Maya knows right away what happened and whether to act now.',
         'The supporting numbers are sourced, so she can use them in front of a buyer.',
@@ -539,7 +539,7 @@
     },
     {
       title: 'Act', desc: 'Slide, email, meeting', cap: 'Radar drafts. Maya sends.',
-      where: 'The platform, Radar, acting on the insight', when: 'Tuesday, 8:45',
+      where: 'Tastewise, Radar, acting on the insight', when: 'Tuesday, 8:45',
       notes: ['The insight turns into something Maya can use: a slide, an email, or a meeting. Radar prepares the draft; Maya reviews and decides what to use.',
         { h: 'Next iteration' },
         'Within the four-hour scope, this step illustrates the intended outcomes. In a next iteration, I\u2019d refine the action hierarchy and the flows for editing, choosing recipients or destinations, and confirming before sending or sharing.'],
@@ -602,7 +602,7 @@
     },
     {
       title: 'Adjust', desc: 'Review and update', cap: 'One card: what the agent watches, and how it reaches her.',
-      where: 'The platform, agent settings', when: 'Tuesday, 8:47',
+      where: 'Tastewise, agent settings', when: 'Tuesday, 8:47',
       notes: ['Maya can return to this setup from the insight, Slack or email.', 'It uses the same structure she saw when creating the agent.', 'Any feedback she gives is reflected here, so she can see what changed.'],
       render: function () {
         var a = AGENTS[ui.editAgent];
@@ -622,18 +622,18 @@
     },
     {
       title: 'Your radar', desc: 'Insights and agents', cap: 'Everything her agents found, and the agents behind it.',
-      where: function () { return ui.view === 'agents' ? 'The platform, Your agents' : 'The platform, Your radar'; }, when: 'Tuesday, 8:48',
+      where: function () { return ui.view === 'agents' ? 'Tastewise, Your agents' : 'Tastewise, Your radar'; }, when: 'Tuesday, 8:48',
       notes: function () {
         return ui.view === 'agents' ?
-          ['This view gives Maya a starting point instead of an empty setup.', 'Radar creates five agents from her brand profile and organizes them around her daily, weekly and periodic work.', 'She can turn off, adjust or add agents as her needs change. Only a closing window interrupts the usual rhythm.'] :
+          ['This view gives Maya a starting point instead of an empty setup.', 'Radar creates five agents from her brand profile and organizes them around her daily, weekly and periodic work.', 'She can turn off, adjust or add agents as her needs change. Only a closing window interrupts the usual cadence.'] :
           ['Everything Radar sent her is kept here, so nothing is lost if she misses a message.', 'Anything with a deadline sits on top. The rest follows her daily, weekly and periodic work.', 'Her agents are one click away. She can see what is running and change it.'];
       },
       render: function () {
         var count = ui.agents.filter(Boolean).length;
         if (ui.view !== 'agents') return overview(count);
-        var h = ph(ic('radar') + '<span>Radar</span><span>&middot;</span><span>Agents</span>', 'Your agents', (['No agents are','One agent is','Two agents are','Three agents are','Four agents are','Five agents are','Six agents are','Seven agents are'][count] || count + ' agents are') + ' already watching Kind Root for you, based on your brand profile and organized by rhythm. Turn off anything you don\u2019t need.',
+        var h = ph(ic('radar') + '<span>Radar</span><span>&middot;</span><span>Agents</span>', 'Your agents', (['No agents are','One agent is','Two agents are','Three agents are','Four agents are','Five agents are','Six agents are','Seven agents are'][count] || count + ' agents are') + ' already watching Kind Root for you, based on your brand profile and organized by cadence. Turn off anything you don\u2019t need.',
           '<button class="btn btn-primary btn-sm" data-go="6">' + ic('plus') + 'New agent</button>') +
-          '<div class="rule">' + ic('clock') + '<span><b>Only a closing window interrupts the usual rhythm.</b> When one is approaching, Radar alerts you in Slack with the date.' + (ui.urgent ? '' : ' <span class="pill warn">Off: windows wait for their rhythm</span>') + '</span><span class="grow"></span><button class="toggle" role="switch" aria-checked="' + ui.urgent + '" data-urgent aria-label="Urgent updates break through"></button></div>';
+          '<div class="rule">' + ic('clock') + '<span><b>Only a closing window interrupts the usual cadence.</b> When one is approaching, Radar alerts you in Slack with the date.' + (ui.urgent ? '' : ' <span class="pill warn">Off: windows wait for their cadence</span>') + '</span><span class="grow"></span><button class="toggle" role="switch" aria-checked="' + ui.urgent + '" data-urgent aria-label="Urgent updates break through"></button></div>';
         for (var g = 0; g < RHYTHMS.length; g++) {
           var rh = RHYTHMS[g];
           h += '<div class="rgroup"><div class="rhead"><span class="k">' + ic(RH_ICON[rh[0]]) + rh[1] + '</span><span class="hint">' + rh[2] + '</span></div><div class="alist">';
@@ -645,8 +645,8 @@
     },
     {
       title: 'New agent', desc: 'Prompt to card', cap: 'Say it in your words. Get a card you can edit, and a sample first.',
-      where: 'The platform, new agent', when: 'Tuesday, 8:50',
-      notes: ['She writes what she wants in her own words. Radar turns it into an agent she can edit.', 'She chooses the rhythm, the channel, and whether a deadline can interrupt.', 'She sees a sample of the first update before anything starts.'],
+      where: 'Tastewise, new agent', when: 'Tuesday, 8:50',
+      notes: ['She writes what she wants in her own words. Radar turns it into an agent she can edit.', 'She chooses the cadence, the channel, and whether a deadline can interrupt.', 'She sees a sample of the first update before anything starts.'],
       render: function () {
         var body;
         if (ui.phase === 0) {
@@ -775,7 +775,7 @@
     if (t.hasAttribute('data-sfb')) { var sp = t.getAttribute('data-sfb').split('|'), cur = ui.sfb[sp[0]]; ui.sfb[sp[0]] = (cur === sp[1] || (sp[1] === 'down' && cur && cur.indexOf('r:') === 0)) ? null : sp[1]; render(); return; }
     if (t.hasAttribute('data-day')) { var di = +t.getAttribute('data-day'); ui.ed.days[di] = !ui.ed.days[di]; render(); return; }
     if (t.hasAttribute('data-like')) { ui.liked = !ui.liked; if (ui.liked) { ui.fb = null; } render(); toast(ui.liked ? 'Thanks. More like this in your daily.' : 'Noted.'); return; }
-    if (t.hasAttribute('data-urgent')) { ui.urgent = !ui.urgent; render(); toast(ui.urgent ? 'Urgent updates break through to today again.' : 'Urgent updates will wait for their rhythm. Windows can close.'); return; }
+    if (t.hasAttribute('data-urgent')) { ui.urgent = !ui.urgent; render(); toast(ui.urgent ? 'Urgent updates break through to today again.' : 'Urgent updates will wait for their cadence. Windows can close.'); return; }
     if (t.hasAttribute('data-menu')) { var mi = +t.getAttribute('data-menu'); ui.menu = ui.menu === mi ? -1 : mi; render(); return; }
     if (t.hasAttribute('data-agent')) { var ai = +t.getAttribute('data-agent'); ui.agents[ai] = !ui.agents[ai]; ui.menu = -1; render(); toast(ui.agents[ai] ? AGENTS[ai].name + ' is back on.' : AGENTS[ai].name + ' paused. Nothing from it until you turn it on.'); return; }
     if (t.hasAttribute('data-phase')) {

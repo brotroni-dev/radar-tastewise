@@ -498,18 +498,23 @@
       title: 'The insight', desc: 'Deadline, evidence, next steps', cap: 'The window first. Then what changed, why it matters, and what to do.',
       where: 'Tastewise, Radar', when: 'Tuesday, 8:43',
       notes: [
-        'A three-sentence summary and the deadline come first, so Maya knows right away what happened and whether to act now.',
-        'The supporting numbers are sourced, so she can use them in front of a buyer.',
-        'The insight ends with three concrete paths forward: retailer, campaign or product.'
+        'A short summary comes first, so Maya knows what happened, why it matters and by when.',
+        'Three suggested moves follow: one for the retailer, one for the campaign and one for the product.',
+        'The numbers sit below, each with its source, so she can use them in front of a buyer.'
       ],
       render: function () {
         var body = ph(ic('radar') + '<span>Competitor launches</span><span>&middot;</span>' + ic('sun') + '<span>Daily</span><span>&middot;</span><span class="pill warn">' + ic('clock') + 'Window closes Oct 1</span>',
           'Bloomwell Magnesium Sleep Gummies is gaining fast at Target',
           '', '',
-          '<button class="btn btn-ghost btn-ic" data-go="4" aria-label="Adjust this agent" title="Adjust this agent">' + ic('tune') + '</button>',
-          '<div class="sumcard"><div class="sum-k">Summary</div>' +
-          '<p>Bloomwell\u2019s sleep gummies sell at 2.1x the category average at Target and compete with your #2 product. Your share there is down 1.4 pts. Ask for the sleep endcap by Oct 1.</p>' +
-          '<div class="sum-foot"><button class="btn btn-primary btn-sm" data-go="3" data-tab="slide">' + ic('slide') + 'Create slide</button><button class="btn btn-ghost btn-sm" data-go="3" data-tab="share">' + ic('share') + 'Share</button>' + feedbackRow() + '</div></div>') +
+          '<button class="btn btn-ghost btn-sm" data-go="3" data-tab="share">' + ic('share') + 'Share</button><button class="btn btn-ghost btn-ic" data-go="4" aria-label="Adjust this agent" title="Adjust this agent">' + ic('tune') + '</button>',
+          '<div class="sumtext"><p>Bloomwell launched Magnesium Sleep Gummies at Target six weeks ago, and they are already selling at 2.1x the category average. Sleep is driving the category: searches for \u201cmagnesium for sleep\u201d are up 38% this quarter, and gummies come up in 54% more magnesium conversations than three months ago.</p>' +
+          '<p>For Kind Root, this hits your #2 product. Your magnesium share at Target is down 1.4 pts since Bloomwell arrived. You still win on clean label, but you are losing on format. Target closes endcap requests for its Q4 reset on <b>Oct 1</b>, the day of your review, so the time to respond is now.</p></div>' +
+          '<div class="sum-fb">' + feedbackRow() + '</div>') +
+          '<div class="c moves-top"><div class="c-head">' + ic('zap') + 'Suggested moves</div><div class="moves" style="margin-top:0">' +
+          '<div class="move"><div class="k"><i>1</i>Target review</div><p>Ask Target for the sleep endcap before Oct 1. Kind Root is the #1-reviewed clean-label magnesium there.</p><button class="btn btn-primary btn-sm" data-go="3" data-tab="slide">' + ic('slide') + 'Create slide</button></div>' +
+          '<div class="move"><div class="k"><i>2</i>Campaign angle</div><p>Lead with \u201csleep\u201d on the capsule page. It says sleep once. Bloomwell\u2019s says it nine times.</p><button class="btn btn-ghost btn-sm" data-go="3" data-tab="email">' + ic('mail') + 'Draft email</button></div>' +
+          '<div class="move"><div class="k"><i>3</i>Launch consideration</div><p>Close the format gap. Discuss a gummy or powder extension with the innovation team.</p><button class="btn btn-ghost btn-sm" data-go="3" data-tab="meeting">' + ic('calendar') + 'Schedule meeting</button></div>' +
+          '</div></div>' +
           urgencyBanner('Target locks Q4 planograms on <b>Oct 6</b>. Endcap requests close <b>Oct 1</b>, the day of your review. After that, the next shot at placement is January.', 'Target vendor calendar, Q4') +
           '<div class="tiles"><div class="tile"><div class="n">2.1x</div><div class="l">Category velocity at Target, last 6 weeks</div><div class="s">Retail sales data, weeks 32-37</div></div>' +
           '<div class="tile"><div class="n">+38%</div><div class="l">"Magnesium for sleep" searches, quarter over quarter</div><div class="s">Search data, US, Q3 vs Q2</div></div>' +
@@ -525,11 +530,6 @@
           '<li>Your share of magnesium at Target is <b>down 1.4 pts in 8 weeks</b>. The drop starts the week Bloomwell landed on shelf.</li>' +
           '<li>You win on <b>"no fillers"</b>: the most cited theme in your reviews (27% of mentions). You lose on format: "capsule" is your top negative theme (11%).</li>' +
           '</ul><span class="pill">' + ic('check') + 'Three independent sources agree</span></div></div>' +
-          '<div class="c" style="margin-top:14px"><div class="c-head">' + ic('zap') + 'Suggested moves<span class="r">one per outcome: retailer, campaign, launch</span></div><div class="moves" style="margin-top:0">' +
-          '<div class="move"><div class="k"><i>1</i>Target review, in 9 days</div><p>The category is up 22% YoY and sleep is the driver. Kind Root is the #1-reviewed clean-label magnesium at Target. Ask for the sleep endcap before the Oct 1 window, not just shelf defense.</p><button class="btn btn-primary btn-sm" data-go="3" data-tab="slide">' + ic('slide') + 'Create slide</button></div>' +
-          '<div class="move"><div class="k"><i>2</i>Campaign angle</div><p>Lead with "sleep" on the existing capsule. Your product page mentions sleep once. Bloomwell\'s says it nine times.</p><button class="btn btn-ghost btn-sm" data-go="3" data-tab="email">' + ic('mail') + 'Draft email to the team</button></div>' +
-          '<div class="move"><div class="k"><i>3</i>Launch consideration</div><p>The format gap is real. A gummy or powder extension keeps the clean-label story. Worth a 30-minute innovation discussion.</p><button class="btn btn-ghost btn-sm" data-go="3" data-tab="meeting">' + ic('calendar') + 'Schedule meeting</button></div>' +
-          '</div></div>' +
           '<div class="also"><div class="c-head" style="margin-bottom:4px">' + ic('radar') + 'Also on your radar</div>' +
           '<div class="row">' + ic('flag') + '<div><span class="ag">Consumer trends &middot; periodic</span>"GLP-1 companion" searches (fiber, electrolytes) +61% in 6 months. For the Q4 plan.</div><span class="when">no window</span></div>' +
           '<div class="row">' + ic('week') + '<div><span class="ag">Claims and ingredients &middot; weekly</span>Ashwagandha conversation cooling, -12% in 90 days. Your Ashwagandha SKU.</div><span class="when">Monday</span></div></div>' +

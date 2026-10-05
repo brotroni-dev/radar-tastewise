@@ -498,14 +498,14 @@
       title: 'The insight', desc: 'Deadline, evidence, next steps', cap: 'The window first. Then what changed, why it matters, and what to do.',
       where: 'The platform, Radar', when: 'Tuesday, 8:43',
       notes: [
-        'The deadline comes first, so Maya immediately knows whether this needs action now.',
+        'A three-sentence summary and the deadline come first, so Maya knows right away what happened and whether to act now.',
         'The supporting numbers are sourced, so she can use them in front of a buyer.',
         'The insight ends with three concrete paths forward: retailer, campaign or product.'
       ],
       render: function () {
         var body = ph(ic('radar') + '<span>Competitor launches</span><span>&middot;</span>' + ic('sun') + '<span>Daily</span><span>&middot;</span><span class="pill warn">' + ic('clock') + 'Window closes Oct 1</span>',
           'Bloomwell Magnesium Sleep Gummies is gaining fast at Target',
-          'Launched 6 weeks ago. Magnesium glycinate + L-theanine. Positioned "sleep + stress".',
+          '<span class="sum">Bloomwell\u2019s new sleep gummies are selling at 2.1x the category average at Target, six weeks after launch. They compete with your Magnesium Glycinate capsules, your #2 product, and your share at Target is down 1.4 pts since they arrived. You have until Oct 1 to ask Target for the sleep endcap.</span>',
           '<button class="btn btn-primary btn-sm" data-go="3" data-tab="slide">' + ic('slide') + 'Create slide</button><button class="btn btn-ghost btn-sm" data-go="3" data-tab="share">' + ic('share') + 'Share</button>',
           '<button class="btn btn-ghost btn-ic" data-go="4" aria-label="Adjust this agent" title="Adjust this agent">' + ic('tune') + '</button>',
           feedbackRow()) +

@@ -195,7 +195,7 @@
   }
 
   function urgencyBanner(text, src) {
-    return '<div class="urg" role="status">' + ic('clock') + '<div><span class="urg-k">Window closing</span> ' + text + (src ? '<span class="src">' + src + '</span>' : '') + '</div><div class="date"><b>Oct 1</b><span>9 days</span></div></div>';
+    return '<div class="urg slim" role="status">' + ic('clock') + '<div>' + text + '</div>' + (src ? '<span class="urg-src">' + src + '</span>' : '') + '</div>';
   }
   function urgencyToggle() {
     return '<div class="field"><span>Urgency</span><div class="urgrow"><button class="toggle" role="switch" aria-checked="' + ui.urgent + '" data-urgent aria-label="Break through when a window is closing"></button><span class="hint">Tell me right away when a deadline is close.</span></div></div>';
@@ -498,7 +498,7 @@
       title: 'The insight', desc: 'Deadline, evidence, next steps', cap: 'The window first. Then what changed, why it matters, and what to do.',
       where: 'Tastewise, Radar', when: 'Tuesday, 8:43',
       notes: [
-        'A short summary comes first, so Maya knows what happened, why it matters and by when.',
+        'The deadline comes first, then a short summary, so Maya knows what happened, why it matters and by when.',
         'Three suggested moves follow: one for the retailer, one for the campaign and one for the product.',
         'The numbers sit below, each with its source, so she can use them in front of a buyer.'
       ],
@@ -507,6 +507,7 @@
           'Bloomwell Magnesium Sleep Gummies is gaining fast at Target',
           '', '',
           '<button class="btn btn-ghost btn-sm" data-go="3" data-tab="share">' + ic('share') + 'Share</button><button class="btn btn-ghost btn-ic" data-go="4" aria-label="Adjust this agent" title="Adjust this agent">' + ic('tune') + '</button>',
+          urgencyBanner('<b>Window closes Oct 1.</b> 9 days left to request the sleep endcap at Target.', 'Target vendor calendar') +
           '<div class="sumtext"><p>Bloomwell launched Magnesium Sleep Gummies at Target six weeks ago, and they are already selling at 2.1x the category average. Sleep is driving the category: searches for \u201cmagnesium for sleep\u201d are up 38% this quarter, and gummies come up in 54% more magnesium conversations than three months ago.</p>' +
           '<p>For Kind Root, this hits your #2 product. Your magnesium share at Target is down 1.4 pts since Bloomwell arrived. You still win on clean label, but you are losing on format. Target closes endcap requests for its Q4 reset on <b>Oct 1</b>, the day of your review, so the time to respond is now.</p></div>' +
           '<div class="sum-fb">' + feedbackRow() + '</div>') +
@@ -515,7 +516,6 @@
           '<div class="move"><div class="k"><i>2</i>Campaign angle</div><p>Lead with \u201csleep\u201d on the capsule page. It says sleep once. Bloomwell\u2019s says it nine times.</p><button class="btn btn-ghost btn-sm" data-go="3" data-tab="email">' + ic('mail') + 'Draft email</button></div>' +
           '<div class="move"><div class="k"><i>3</i>Launch consideration</div><p>Close the format gap. Discuss a gummy or powder extension with the innovation team.</p><button class="btn btn-ghost btn-sm" data-go="3" data-tab="meeting">' + ic('calendar') + 'Schedule meeting</button></div>' +
           '</div></div>' +
-          urgencyBanner('Target locks Q4 planograms on <b>Oct 6</b>. Endcap requests close <b>Oct 1</b>, the day of your review. After that, the next shot at placement is January.', 'Target vendor calendar, Q4') +
           '<div class="tiles"><div class="tile"><div class="n">2.1x</div><div class="l">Category velocity at Target, last 6 weeks</div><div class="s">Retail sales data, weeks 32-37</div></div>' +
           '<div class="tile"><div class="n">+38%</div><div class="l">"Magnesium for sleep" searches, quarter over quarter</div><div class="s">Search data, US, Q3 vs Q2</div></div>' +
           '<div class="tile risk"><div class="n">-1.4 pts</div><div class="l">Your share of magnesium at Target, 8 weeks</div><div class="s">Retail sales data, Target</div></div></div>' +

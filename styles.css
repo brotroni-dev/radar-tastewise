@@ -1250,3 +1250,8 @@ body.page { font-size: 15px; }
 .c.moves-top{margin-bottom:16px}
 /* Design note: second part, after a divider */
 .notes h5{margin:12px 0 6px;padding-top:12px;border-top:1px solid var(--note-line);font:700 13.5px/1.5 var(--font-body);color:inherit}
+.urg.slim{padding:7px 12px;gap:8px;margin:10px 0 14px;border-radius:10px;font-size:13px;flex-wrap:nowrap}
+.urg.slim>.ic{width:15px;height:15px}
+.urg.slim>div{min-width:0}
+.urg.slim .urg-src{flex:none;margin-left:auto;font:11px var(--font-mono);color:var(--muted);white-space:nowrap}
+@media(max-width:640px){.urg.slim{flex-wrap:wrap}.urg.slim .urg-src{margin-left:23px}}

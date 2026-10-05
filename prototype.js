@@ -505,10 +505,11 @@
       render: function () {
         var body = ph(ic('radar') + '<span>Competitor launches</span><span>&middot;</span>' + ic('sun') + '<span>Daily</span><span>&middot;</span><span class="pill warn">' + ic('clock') + 'Window closes Oct 1</span>',
           'Bloomwell Magnesium Sleep Gummies is gaining fast at Target',
-          '<span class="sum">Bloomwell\u2019s new sleep gummies are selling at 2.1x the category average at Target, six weeks after launch. They compete with your Magnesium Glycinate capsules, your #2 product, and your share at Target is down 1.4 pts since they arrived. You have until Oct 1 to ask Target for the sleep endcap.</span>',
-          '<button class="btn btn-primary btn-sm" data-go="3" data-tab="slide">' + ic('slide') + 'Create slide</button><button class="btn btn-ghost btn-sm" data-go="3" data-tab="share">' + ic('share') + 'Share</button>',
+          '', '',
           '<button class="btn btn-ghost btn-ic" data-go="4" aria-label="Adjust this agent" title="Adjust this agent">' + ic('tune') + '</button>',
-          feedbackRow()) +
+          '<div class="sumcard"><div class="sum-k">Summary</div>' +
+          '<p>Bloomwell\u2019s sleep gummies sell at 2.1x the category average at Target and compete with your #2 product. Your share there is down 1.4 pts. Ask for the sleep endcap by Oct 1.</p>' +
+          '<div class="sum-foot"><button class="btn btn-primary btn-sm" data-go="3" data-tab="slide">' + ic('slide') + 'Create slide</button><button class="btn btn-ghost btn-sm" data-go="3" data-tab="share">' + ic('share') + 'Share</button>' + feedbackRow() + '</div></div>') +
           urgencyBanner('Target locks Q4 planograms on <b>Oct 6</b>. Endcap requests close <b>Oct 1</b>, the day of your review. After that, the next shot at placement is January.', 'Target vendor calendar, Q4') +
           '<div class="tiles"><div class="tile"><div class="n">2.1x</div><div class="l">Category velocity at Target, last 6 weeks</div><div class="s">Retail sales data, weeks 32-37</div></div>' +
           '<div class="tile"><div class="n">+38%</div><div class="l">"Magnesium for sleep" searches, quarter over quarter</div><div class="s">Search data, US, Q3 vs Q2</div></div>' +

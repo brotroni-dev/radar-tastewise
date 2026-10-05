@@ -540,7 +540,9 @@
     {
       title: 'Act', desc: 'Slide, email, meeting', cap: 'Radar drafts. Maya sends.',
       where: 'The platform, Radar, acting on the insight', when: 'Tuesday, 8:45',
-      notes: ['The insight turns into something Maya can use right away: a slide, an email or a meeting.', 'Radar prepares the draft, but Maya reviews and sends it.', 'The deadline stays visible so the next step happens in time.'],
+      notes: ['The insight turns into something Maya can use: a slide, an email, or a meeting. Radar prepares the draft; Maya reviews and decides what to use.',
+        { h: 'Next iteration' },
+        'Within the four-hour scope, this step illustrates the intended outcomes. In a next iteration, I\u2019d refine the action hierarchy and the flows for editing, choosing recipients or destinations, and confirming before sending or sharing.'],
       render: function () {
         var tabs = [['slide', 'slide', 'Create slide'], ['email', 'mail', 'Draft email'], ['meeting', 'calendar', 'Schedule meeting'], ['ask', 'ask', 'Ask a follow-up'], ['share', 'share', 'Share']];
         var t = '<div class="tabs" role="tablist">';
@@ -714,7 +716,7 @@
     stepsEl.innerHTML = html;
     var n = '<h4>Design note</h4>';
     var notes = typeof s.notes === 'function' ? s.notes() : s.notes;
-    for (var j = 0; j < notes.length; j++) n += '<p>' + notes[j] + '</p>';
+    for (var j = 0; j < notes.length; j++) n += notes[j].h ? '<h5>' + notes[j].h + '</h5>' : '<p>' + notes[j] + '</p>';
     notesBox.innerHTML = n;
     notesBox.hidden = !ui.notes;
     mount.querySelector('[data-prev]').disabled = ui.i === 0;

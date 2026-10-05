@@ -1118,7 +1118,6 @@ body.page { font-size: 15px; }
 .kept span{background:var(--surface);border:1px solid var(--note-line);border-radius:999px;padding:5px 12px;font-size:13px}
 .kept b{font-weight:600}
 .assume{margin-top:28px;max-width:720px}
-.cover-note{font-size:13.5px;color:var(--muted);margin:-10px 0 22px}
 .sl{aspect-ratio:auto;height:auto;max-height:none}
 .sl-msgs{overflow:visible}
 .rmark{background:#171F1C !important;display:grid;place-items:center}
@@ -1250,3 +1249,5 @@ body.page { font-size: 15px; }
 .sum-foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
 .sum-foot .thumbs{margin:0 0 0 auto}
 .sum-foot .whyoff{flex-basis:100%}
+/* Design note: second part, after a divider */
+.notes h5{margin:12px 0 6px;padding-top:12px;border-top:1px solid var(--note-line);font:700 13.5px/1.5 var(--font-body);color:inherit}
